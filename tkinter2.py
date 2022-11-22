@@ -1,4 +1,5 @@
 from tkinter import *
+import os
 
 root = Tk()
 root.title("Tk Example")
@@ -6,7 +7,9 @@ root.minsize(200, 200)  # width, height
 root.geometry("300x300+50+50")
 
 # Create Label in our window
-image = PhotoImage(file="C:\Users\nicop\Documents\GitHub\zoo\icons\noun-kangaroo-1866921.svg")
+dirname = os.path.dirname(__file__)
+filename = os.path.join(dirname, 'icons', 'noun-kangaroo-1866921.png')
+image = PhotoImage(file=filename)
 img = Label(root, image=image)
 img.pack()
 root.mainloop()
