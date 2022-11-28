@@ -8,7 +8,7 @@ class Zoo(object):
         self.eröffnungsdatum = eröffnungsdatum
 
 class Personal(object):
-    def __init__(self, name, anrede, geburtsdatum, strasse, hausnummer, plz, berufsbezeichnung, personalnummer, telefonnummer, gehalt):
+    def __init__(self, name, anrede, geburtsdatum, strasse, hausnummer, plz, ort, berufsbezeichnung, personalnummer, telefonnummer, gehalt):
         self.name = name
         self.anrede = anrede
         self.geburtsdatum = geburtsdatum
@@ -37,7 +37,7 @@ class Tier(Tierart):
         Tierart.__init__(artname, tierklasse, futter)
         self.name = name
         self.geburtsdatum = geburtsdatum
-        slef.geschlecht = geschlecht
+        self.geschlecht = geschlecht
 
 class Futter(object):
     def __init__(self, name, preis):
