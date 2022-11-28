@@ -2,10 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
 import os
-# Pillow Modul installieren:
-# Erstens dieses: pip install --upgrade pip
-# Zweitens dieses: pip install --upgrade Pillow
-# -m pip install Pillow
+# python -m pip install Pillow
 
 root = tk.Tk()
 root.title("Hauptfenster von deinem Zoo")
@@ -25,7 +22,7 @@ label2.pack()
 
 dirname = os.path.dirname(__file__)
 filename = os.path.join(dirname, 'icons', 'noun-kangaroo-1866921.png')
-image = Image.open(filename)
+image = Image.open(filename).resize((100, 100))
 photo = ImageTk.PhotoImage(image)
 
 label3 = ttk.Label(root, image=photo)
@@ -35,7 +32,7 @@ label3.pack()
 
 
 
-label2 = ttk.Label(root, text="Weiterer Text")
+label2 = ttk.Label(root, text="Schön, dass du da bist!")
 label2.pack(side="top")
 
 root.mainloop()
