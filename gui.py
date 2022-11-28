@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
+import os
 # Pillow Modul installieren:
 # Erstens dieses: pip install --upgrade pip
 # Zweitens dieses: pip install --upgrade Pillow
@@ -21,7 +22,14 @@ label1.pack(side="top")
 label2 = ttk.Label(root, text="Hier ist ein Känguruh für dich.")
 label2.pack()
 
-# image = Image.open("/icons/noun-kangaroo-1866921.png")
+
+dirname = os.path.dirname(__file__)
+filename = os.path.join(dirname, 'icons', 'noun-kangaroo-1866921.png')
+image = Image.open(filename)
+photo = ImageTk.PhotoImage(image)
+
+label3 = ttk.Label(root, image=photo)
+label3.pack()
 
 # label1.configure(text="Anderer Text")
 
