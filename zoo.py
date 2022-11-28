@@ -1,11 +1,14 @@
 class Zoo(object):
     def __init__(self, name, strasse, hausnummer, plz, ort, eröffnungsdatum):
-        self,name = name
+        self.name = name
         self.strasse = strasse
         self.hausnummer = hausnummer
         self.plz = plz
         self.ort = ort
         self.eröffnungsdatum = eröffnungsdatum
+
+    def __str__(self) -> str:
+        return 'ZOO: ' + self.name + '\nAdresse: ' + self.strasse + ' ' + str(self.hausnummer) + ', ' + str(self.plz) + ' ' + self.ort + '\nEröffnet am: ' + str(self.eröffnungsdatum)
 
 class Personal(object):
     def __init__(self, name, anrede, geburtsdatum, strasse, hausnummer, plz, ort, berufsbezeichnung, personalnummer, telefonnummer, gehalt):

@@ -1,9 +1,8 @@
 #test
+import zoo
 
 # immer was neues reincoden!
 
-print('Nico hat die meiste Arbeit gemacht!')
+HamburgerZoo = zoo.Zoo('Hamburger Zoo', 'Zoostrasse', 1, 23563, 'Hamburg', 'Eröffnungsdatum') 
 
-print('Gleich nach Richard!')
-
-print('Robbi macht den Job')
+print(HamburgerZoo)
