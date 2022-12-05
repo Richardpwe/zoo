@@ -27,7 +27,7 @@ def say_hello():
 def kanguruAdd():
     global mengeKangurus
     mengeKangurus += 1
-    label = tk.Label(root, image=photo)
+    label = ttk.Label(root, image=photo)
     label.grid(row=2, column=2+len(label_list))
     label_list.append(label)
     labelKanguruMenge["text"] =  "Kangurus: " + str(mengeKangurus)
