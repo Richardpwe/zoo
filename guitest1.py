@@ -38,6 +38,7 @@ def kanguruRemove():
     if label_list:
         label_list[-1].grid_forget()
         del label_list[-1]
+    labelKanguruMenge["text"] =  "Kangurus: " + str(mengeKangurus)
     print("Kanguru wurde enfernt")
 
 #dinge erstellen
