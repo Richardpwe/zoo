@@ -16,34 +16,28 @@ dirname = os.path.dirname(__file__)
 filename = os.path.join(dirname, 'icons', 'noun-kangaroo-1866921.png')
 
 #kangurumenge definieren
-mengeKangurus = 5
+mengeKangurus = 0
 
+label_list = []
 
 def say_hello():
     print("Hallo, du hast du Button gedrückt.")
 
-def kangurus_updaten():
-    global mengeKangurus
-    
-    #Kangurus erstellen
-    for x in range(mengeKangurus):
-        labelname = "labelKangurubild"+ str(x)
-        print(labelname)
-        labelname = ttk.Label(root, image=photo)
-        labelname.grid(row=2, column=x+2)
-
-    labelKanguruMenge["text"] =  "Kangurus: " + str(mengeKangurus)
-
 def kanguruAdd():
     global mengeKangurus
     mengeKangurus += 1
-    kangurus_updaten()
+    label = tk.Label(root, image=photo)
+    label.grid(row=2, column=2+len(label_list))
+    label_list.append(label)
+    labelKanguruMenge["text"] =  "Kangurus: " + str(mengeKangurus)
     print("Kanguru wurde hinzugefügt")
 
 def kanguruRemove():
     global mengeKangurus
     mengeKangurus -= 1
-    kangurus_updaten()
+    if label_list:
+        label_list[-1].grid_forget()
+        del label_list[-1]
     print("Kanguru wurde enfernt")
 
 #dinge erstellen
@@ -66,7 +60,11 @@ labelKanguruMenge.grid(row=2, column=1)
 buttonKanguruAdd.grid(row=3, column=1)
 buttonKanguruRemove.grid(row=3, column=2)
 
+for x in range(mengeKangurus):
+        labelname = "labelKangurubild"+ str(x)
+        labelname = ttk.Label(root, image=photo)
+        labelname.grid(row=2, column=x+2)
+        label_list.append(labelname)
 
-
-
+print(len(label_list))
 root.mainloop()
