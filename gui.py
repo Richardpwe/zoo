@@ -9,7 +9,7 @@ import os
 root = tk.Tk()
 root.title("Hauptfenster von deinem Zoo")
 root.geometry("800x600")
-# root.iconbitmap("myIcon.ico")
+root.iconbitmap("favicon-zoo.ico")
 # root.minsize(width=200, height=100)
 # root.maxsize(width=1000, height=1000)
 # root.resizable(width=False, height=False)
