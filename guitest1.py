@@ -25,7 +25,7 @@ def say_hello():
 def kangurus_updaten():
     global mengeKangurus
     
-    #Kangurus erstellen
+    #Kangurus erstellen    
     for x in range(mengeKangurus):
         labelname = "labelKangurubild"+ str(x)
         print(labelname)
