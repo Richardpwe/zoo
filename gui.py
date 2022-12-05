@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
+from tkinter.ttk import *
 import os
 # python -m pip install Pillow
 
@@ -18,7 +19,13 @@ root.iconbitmap("favicon-zoo.ico")
 # style = ttk.Style()
 # style.theme_use("clam")
 
-
+# This will create style object
+# styleButton = Style()
+ 
+# This will be adding style, and
+# naming that style variable as
+# W.Tbutton (TButton is used for ttk.Button).
+#styleButton.configure('W.TButton', font = ('calibri', 10, 'bold', 'underline'), foreground = 'red')
 
 
 label1 = ttk.Label(root, text="Willkommen in deinem Zoo", background="grey", padding=40, relief="sunken", justify="center")
@@ -90,10 +97,6 @@ button_delete.pack()
 
 
 
-# Mehrere Kängurus
-
-
-
 # Beenden-Button
 quit_button = ttk.Button(root, text="Programm beenden", padding=5, command=root.destroy)
 quit_button.pack(side="bottom")
@@ -105,6 +108,8 @@ def say_hello():
 button1 = ttk.Button(root, text="Klick mich", padding=5, command=say_hello)
 button1.pack(side="bottom")
 
+for item in button1.keys():
+    print(item, ": ", button1[item])
 
 
 root.mainloop()
