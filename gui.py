@@ -9,6 +9,7 @@ import os
 root = tk.Tk()
 root.title("Hauptfenster von deinem Zoo")
 root.geometry("800x600")
+# root.iconbitmap("myIcon.ico")
 # root.minsize(width=200, height=100)
 # root.maxsize(width=1000, height=1000)
 # root.resizable(width=False, height=False)
@@ -16,6 +17,8 @@ root.geometry("800x600")
 # man kann grundsätzliches Aussehen über Themes erreichen
 # style = ttk.Style()
 # style.theme_use("clam")
+
+
 
 
 label1 = ttk.Label(root, text="Willkommen in deinem Zoo", background="grey", padding=40, relief="sunken", justify="center")
@@ -29,13 +32,31 @@ label2 = ttk.Label(root, text="Hier ist ein Känguruh für dich.")
 label2.pack()
 
 
+# methode definieren
+#def kangurubild():
+    #dirname = os.path.dirname(__file__)
+    #filename = os.path.join(dirname, 'icons', 'noun-kangaroo-1866921.png')
+    #image = Image.open(filename).resize((100, 100))
+    #photo = ImageTk.PhotoImage(image)
+
+    #label3 = ttk.Label(root, image = photo)
+    #label3.pack()
+
+# Mehtode callen
+#kangurubild()
+
 dirname = os.path.dirname(__file__)
 filename = os.path.join(dirname, 'icons', 'noun-kangaroo-1866921.png')
 image = Image.open(filename).resize((100, 100))
 photo = ImageTk.PhotoImage(image)
 
 label3 = ttk.Label(root, image=photo)
-label3.pack()
+label3.pack(side="top")
+
+label4 = ttk.Label(root, image=photo)
+label4.pack(side="bottom")
+
+
 
 # label1.configure(text="Anderer Text")
 
@@ -66,6 +87,12 @@ def delete_content():
     
 button_delete = ttk.Button(root, text="Clear", command=delete_content)
 button_delete.pack()
+
+
+
+# Mehrere Kängurus
+
+
 
 # Beenden-Button
 quit_button = ttk.Button(root, text="Programm beenden", padding=5, command=root.destroy)
