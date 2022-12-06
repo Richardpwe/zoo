@@ -11,7 +11,6 @@ def tier_erstellen():
 class App:
     def __init__(self, master):
         self.master = master
-        master.title("STL Creator")
 
         self.startzeile = 3
         self.startspalte = 1
@@ -77,5 +76,8 @@ class App:
 
 if __name__ == "__main__":
     root = tk.Tk()
+    root.title("Hauptfenster von deinem Zoo")
+    root.geometry(str(konstanten.MAX_LABELS_PER_ROW)*100 + "x600")
+    root.iconbitmap("favicon-zoo.ico")
     app = App(root)
     root.mainloop()
