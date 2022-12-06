@@ -1,0 +1,17 @@
+ToDO-Liste:
+
+Hautpmenue-Fenster
+Personaluebersicht-Fenster
+Tieruebersicht-Fenster
+Hinzufuege-Fenster
+
+Personalicons in "Konstanten" verknüpfen
+
+
+
+Bonus-Features:
+
+Fellfarben-Feature
+Tiere mit verschiedenen Fellfarben, damit nicht alle gleich aussehen
+Müsste beim erstellen des Tiers zufällig ausgewählt werden.
+
