@@ -48,7 +48,7 @@ class App:
     def __init__(self, master):
         self.master = master
 
-        master.title("STL Creator")
+        master.title("ZOO")
 
         #dinge erstellen
         #label = ttk.Label(text="Inside the LabelFrame")
@@ -77,13 +77,17 @@ class App:
         self.label_kanguru_menge["text"] =  "Kangurus: " + text
 
     def tier_erstellen_fenster_öffnen(self):
-        self.tier_erstellen_fenster.show()
+        self.tier_erstellen_fenster = tk.Toplevel(self.master)
+        self.tier_erstellen_fenster("500x500")
+        self.tier_erstellen_fenster.title("Tier erstellen")
+        self.app = TierErstellenFenster(self.tier_erstellen_fenster)
+
 class TierErstellenFenster:
     def __init__(self, master):
         self.master = master
-        self.fenster = tk.Toplevel(self.master)
-        self.fenster.geometry("500x500")
-        self.fenster.title("Tier erstellen")
+
+        self.fenster = tk.Frame(self.master)
+
         # Erstelle Eingabefelder
         self.entry_name = ttk.Entry(self.fenster)
         self.entry_art = ttk.Entry(self.fenster)
@@ -124,12 +128,10 @@ class TierErstellenFenster:
                                                                                 self.entry_geschlecht.get()))
         self.button_tier_erstellen.grid(row=7, column=1, columnspan=2)
 
-    def show(self):
-        self.fenster.deiconify()
-
     def tier_erstellen(self, name, art, futter, pfleger, geburtsdatum, geschlecht):
         tier = zoo.Tier(name, art, futter, pfleger, geburtsdatum, geschlecht)
         self.fenster.withdraw()
+
 if __name__ == "__main__":
     # Root ist das Hautpfenster
     root = tk.Tk()
