@@ -22,7 +22,7 @@ class App:
         self.button_kanguru_remove = tk.Button(root, text="Entfernen", command=self.kanguru_remove)
 
         try:
-            self.image = Image.open(konstanten.KANGURUPFAD)
+            self.image = Image.open(konstanten.KANGAROO_PFAD)
             self.image = self.image.resize((100, 100))
             #if konstanten.DARK_MODE:  
             self.photo = ImageTk.PhotoImage(self.image)
