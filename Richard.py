@@ -8,7 +8,7 @@ def tier_erstellen():
     tier = zoo.Tier("kaenguru", "Beuteltier", "Gras", "Peter", 1/1/2022, "maennlich")
 
 
-class App:
+class TierUebersichtFenster:
     def __init__(self, master):
         self.master = master
 
@@ -79,5 +79,5 @@ if __name__ == "__main__":
     root.title("Hauptfenster von deinem Zoo")
     root.geometry(str(konstanten.MAX_LABELS_PER_ROW)*100 + "x600")
     root.iconbitmap("favicon-zoo.ico")
-    app = App(root)
+    tier_uebersicht_fenster = TierUebersichtFenster(root)
     root.mainloop()
