@@ -4,7 +4,7 @@ from gui import TierUebersichtFenster
 
 # Hauptfenster erstellen
 root = tk.Tk()
-#root.title("Hauptmenü")
+root.title("Hauptmenü")
 root.geometry("500"+"x350")
 root.iconbitmap("favicon-zoo.ico")
 
