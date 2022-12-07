@@ -7,7 +7,6 @@ root = tk.Tk()
 #root.title("Hauptmenü")
 root.geometry("500"+"x350")
 root.iconbitmap("favicon-zoo.ico")
-root.wm_overrideredirect(True)
 
 # Funktionen für die Menüpunkte erstellen
 def open_window_1():
