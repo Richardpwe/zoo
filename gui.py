@@ -10,16 +10,19 @@ def tier_erstellen():
 
 class TierUebersichtFenster:
     def __init__(self, master):
-        self.master = master
+        self.window = tk.Toplevel(master)
+        self.window.title("Tier Übersicht")
+        self.window.geometry(str(konstanten.MAX_LABELS_PER_ROW)*100 + "x600")
+        self.window.iconbitmap("favicon-zoo.ico")
 
         self.startzeile = 3
         self.startspalte = 1
 
         self.label_list = []
 
-        self.label_kanguru_menge = tk.Label(root, text="Kangurus: 0")
-        self.button_kanguru_add = tk.Button(root, text="Hinzufügen", command=self.kanguru_add)
-        self.button_kanguru_remove = tk.Button(root, text="Entfernen", command=self.kanguru_remove)
+        self.label_kanguru_menge = tk.Label(self.window, text="Kangurus: 0")
+        self.button_kanguru_add = tk.Button(self.window, text="Hinzufügen", command=self.kanguru_add)
+        self.button_kanguru_remove = tk.Button(self.window, text="Entfernen", command=self.kanguru_remove)
 
         try:
             self.image = Image.open(konstanten.KANGAROO_PFAD)
@@ -38,7 +41,7 @@ class TierUebersichtFenster:
                 self.kanguru_add()
 
         if konstanten.DARK_MODE:
-            root.config(bg=konstanten.DARK_MODE_COLOR)
+            self.window.config(bg=konstanten.DARK_MODE_COLOR)
             self.label_kanguru_menge.config(bg=konstanten.DARK_MODE_COLOR)
             self.button_kanguru_add.config(bg=konstanten.DARK_MODE_COLOR)
             self.button_kanguru_remove.config(bg=konstanten.DARK_MODE_COLOR)
@@ -53,9 +56,9 @@ class TierUebersichtFenster:
             self.startspalte = 1
 
         if konstanten.DARK_MODE:
-            label = tk.Label(root, image=self.photo, bg=konstanten.DARK_MODE_COLOR)
+            label = tk.Label(self.window, image=self.photo, bg=konstanten.DARK_MODE_COLOR)
         else:
-            label = tk.Label(root, image=self.photo)
+            label = tk.Label(self.window, image=self.photo)
         label.grid(row=self.startzeile, column=self.startspalte)
         
         self.startspalte += 1
@@ -76,8 +79,5 @@ class TierUebersichtFenster:
 
 if __name__ == "__main__":
     root = tk.Tk()
-    root.title("Hauptfenster von deinem Zoo")
-    root.geometry(str(konstanten.MAX_LABELS_PER_ROW)*100 + "x600")
-    root.iconbitmap("favicon-zoo.ico")
     tier_uebersicht_fenster = TierUebersichtFenster(root)
     root.mainloop()
