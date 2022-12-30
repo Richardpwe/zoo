@@ -1,7 +1,7 @@
 import os
 MAX_LABELS_PER_ROW = 10
 TESTKONSTANTE = 60
-DARK_MODE = True
+DARK_MODE = False
 DARK_MODE_COLOR = "#777777"
 
 #Dateipfade Tiere
