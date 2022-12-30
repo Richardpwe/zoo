@@ -1,6 +1,6 @@
 import tkinter as tk
 import konstanten
-from gui import TierUebersichtFenster
+from Alt.gui import TierUebersichtFenster
 
 # Hauptfenster erstellen
 root = tk.Tk()
