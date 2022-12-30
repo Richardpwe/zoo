@@ -7,11 +7,13 @@ Hinzufuege-Fenster
 
 Personalicons in "Konstanten" verknüpfen
 
+Aktuellen Zoo in einer/mehreren Datei speichern und beim Start neu laden - csv/xml o. Ä.
+
 
 
 Bonus-Features:
 
-Fellfarben-Feature
+Fellfarben-Feature, weitere Bildbearbeitungsfeatures um die Tiere zu personalisieren
 Tiere mit verschiedenen Fellfarben, damit nicht alle gleich aussehen
-Müsste beim erstellen des Tiers zufällig ausgewählt werden.
+Müsste beim erstellen des Tiers zufällig ausgewählt werden, kann über editor angepasst werden.
 

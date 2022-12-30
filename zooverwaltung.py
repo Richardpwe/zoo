@@ -10,15 +10,15 @@ root.iconbitmap("favicon-zoo.ico")
 
 # Funktionen für die Menüpunkte erstellen
 def open_window_1():
-    # Fenster 1 öffnen
+    # Fenster 1 öffnen Tierübersicht
     TierUebersichtFenster(root)
 
 def open_window_2():
-    # Fenster 2 öffnen
+    # Fenster 2 öffnen Personalübersicht
     TierUebersichtFenster(root)
 
 def open_window_3():
-    # Fenster 3 öffnen
+    # Fenster 3 öffnen Einstellungen
     TierUebersichtFenster(root)
 
 def open_window_4():
@@ -30,15 +30,15 @@ frame = tk.Frame(root)
 frame.pack(padx=20, pady=20)
 
 # Button erstellen, um Fenster 1 zu öffnen
-button_1 = tk.Button(frame, text="Fenster 1 öffnen", command=open_window_1, width=500)
+button_1 = tk.Button(frame, text="Fenster 1 öffnen Tierübersicht", command=open_window_1, width=500)
 button_1.pack(pady=10)
 
 # Button erstellen, um Fenster 2 zu öffnen
-button_2 = tk.Button(frame, text="Fenster 2 öffnen", command=open_window_2, width=500)
+button_2 = tk.Button(frame, text="Fenster 2 öffnen Personalübersicht", command=open_window_2, width=500)
 button_2.pack(pady=10)
 
 # Button erstellen, um Fenster 3 zu öffnen
-button_3 = tk.Button(frame, text="Fenster 3 öffnen", command=open_window_3, width=500)
+button_3 = tk.Button(frame, text="Fenster 3 öffnen Einstellungen", command=open_window_3, width=500)
 button_3.pack(pady=10)
 
 # Button erstellen, um Fenster 4 zu öffnen
