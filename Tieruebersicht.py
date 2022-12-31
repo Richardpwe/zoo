@@ -21,9 +21,9 @@ class TierUebersichtFenster:
 
         self.label_list = []
 
-        self.label_kanguru_menge = tk.Label(self.window, text="Kangurus: 0")
-        self.button_kanguru_add = tk.Button(self.window, text="Hinzufügen", command=self.kanguru_add)
-        self.button_kanguru_remove = tk.Button(self.window, text="Entfernen", command=self.kanguru_remove)
+        # self.label_kanguru_menge = tk.Label(self.window, text="Kangurus: 0")
+        # self.button_kanguru_add = tk.Button(self.window, text="Hinzufügen", command=self.kanguru_add)
+        # self.button_kanguru_remove = tk.Button(self.window, text="Entfernen", command=self.kanguru_remove)
         self.button_tier_hinzufuegen = tk.Button(self.window, text="Tier Hinzufügen", command=self.open_formular)
 
         try:
@@ -34,51 +34,26 @@ class TierUebersichtFenster:
         except FileNotFoundError:
             print("Bilddatei nicht gefunden")
 
-        self.label_kanguru_menge.grid(row=1, column=3)
-        self.button_kanguru_add.grid(row=1, column=1)
-        self.button_kanguru_remove.grid(row=1, column=2)
+        # self.label_kanguru_menge.grid(row=1, column=3)
+        # self.button_kanguru_add.grid(row=1, column=1)
+        # self.button_kanguru_remove.grid(row=1, column=2)
         self.button_tier_hinzufuegen.grid(row=1, column=4)
 
-        if isinstance(konstanten.TESTKONSTANTE, int) and konstanten.TESTKONSTANTE > 0:
-            for i in range(konstanten.TESTKONSTANTE):
-                self.kanguru_add()
+        # if isinstance(konstanten.TESTKONSTANTE, int) and konstanten.TESTKONSTANTE > 0:
+        # for i in range(konstanten.TESTKONSTANTE):
+        # self.kanguru_add()
 
         if konstanten.DARK_MODE:
             self.window.config(bg=konstanten.DARK_MODE_COLOR)
-            self.label_kanguru_menge.config(bg=konstanten.DARK_MODE_COLOR)
-            self.button_kanguru_add.config(bg=konstanten.DARK_MODE_COLOR)
-            self.button_kanguru_remove.config(bg=konstanten.DARK_MODE_COLOR)
-            self.label_kanguru_menge.config(fg='#FFFFFF')
-            self.button_kanguru_add.config(fg='#FFFFFF')
-            self.button_kanguru_remove.config(fg='#FFFFFF')
+            # self.label_kanguru_menge.config(bg=konstanten.DARK_MODE_COLOR)
+            # self.button_kanguru_add.config(bg=konstanten.DARK_MODE_COLOR)
+            # self.button_kanguru_remove.config(bg=konstanten.DARK_MODE_COLOR)
+            # self.label_kanguru_menge.config(fg='#FFFFFF')
+            # self.button_kanguru_add.config(fg='#FFFFFF')
+            # self.button_kanguru_remove.config(fg='#FFFFFF')
 
-    def kanguru_add(self):
-        if len(self.label_list) % konstanten.MAX_LABELS_PER_ROW == 0 and self.label_list != []:
-            # Wenn das Maximum erreicht ist, in die nächste Zeile wechseln
-            self.startzeile += 1
-            self.startspalte = 1
-
-        if konstanten.DARK_MODE:
-            label = tk.Label(self.window, image=self.photo, bg=konstanten.DARK_MODE_COLOR)
-        else:
-            label = tk.Label(self.window, image=self.photo)
-        label.grid(row=self.startzeile, column=self.startspalte)
-
-        self.startspalte += 1
-        self.label_list.append(label)
-        self.label_kanguru_menge["text"] = "Kangurus: " + str(len(self.label_list))
-        print("Kanguru wurde hinzugefügt")
-
-    def kanguru_remove(self):
-        if self.label_list:
-            self.label_list[-1].grid_forget()
-            del self.label_list[-1]
-            self.startspalte -= 1
-            if self.startspalte == 0:
-                self.startspalte = konstanten.MAX_LABELS_PER_ROW
-                self.startzeile -= 1
-        self.label_kanguru_menge["text"] = "Kangurus: " + str(len(self.label_list))
-        print("Kanguru wurde enfernt")
+    def tiere_anzeigen(self):
+        print(self)
 
     def open_formular(self):
         formular_window = tk.Toplevel(self.window)
@@ -128,7 +103,8 @@ class TierErstellen:
         geburtsdatum = self.entry_geburtsdatum.get()
         geschlecht = self.entry_geschlecht.get()
         new_tier = zoo.Tier(artname, tierklasse, futter, name, geburtsdatum, geschlecht)
-        print(new_tier)
+        zoo.neuer_zoo.tiere.append(new_tier)
+        print(zoo.neuer_zoo)
 
 
 if __name__ == "__main__":

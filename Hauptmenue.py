@@ -1,6 +1,7 @@
 import tkinter as tk
 import konstanten
-from Alt.gui import TierUebersichtFenster
+import zoo
+from Tieruebersicht import TierUebersichtFenster
 
 # Hauptfenster erstellen
 root = tk.Tk()
@@ -8,22 +9,27 @@ root.title("Hauptmenü")
 root.geometry("500"+"x350")
 root.iconbitmap("favicon-zoo.ico")
 
+
 # Funktionen für die Menüpunkte erstellen
 def open_window_1():
     # Fenster 1 öffnen Tierübersicht
-    TierUebersichtFenster(root)
+    TierUebersichtFenster()
+
 
 def open_window_2():
     # Fenster 2 öffnen Personalübersicht
-    TierUebersichtFenster(root)
+    TierUebersichtFenster()
+
 
 def open_window_3():
     # Fenster 3 öffnen Einstellungen
-    TierUebersichtFenster(root)
+    TierUebersichtFenster()
+
 
 def open_window_4():
     # Fenster 4 öffnen
-    TierUebersichtFenster(root)
+    TierUebersichtFenster()
+
 
 # Frame erstellen
 frame = tk.Frame(root)

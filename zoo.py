@@ -58,3 +58,6 @@ class Futter(object):
     def __init__(self, name, preis):
         self.name = name
         self.preis = preis
+
+
+neuer_zoo = Zoo("name", "strasse", 1, 22222, "ort", "eroeffnungsdatum", [], [], [])
