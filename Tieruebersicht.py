@@ -68,9 +68,19 @@ class TierErstellen:
         self.master = master
         master.title("Tier Erstellung Formular")
         self.label_artname = tk.Label(master, text="Tierart:")
-        self.entry_artname = tk.Entry(master)
+
+        if zoo.neuer_zoo.tierarten:
+            self.artname = tk.StringVar()
+            self.artname.set("Tierart...")
+            self.entry_artname = tk.OptionMenu(master, self.artname, *zoo.neuer_zoo.tierarten)
+            self.entry_artname.grid(row=0, column=1)
+
+        self.button_tierart_hinzufuegen = tk.Button(master, text="+", command=self.open_tierart_formular)
+
         self.label_tierklasse = tk.Label(master, text="Tierklasse:")
-        self.entry_tierklasse = tk.Entry(master)
+        self.tierklasse = tk.StringVar()
+        self.tierklasse.set("Tierklasse...")
+        self.entry_tierklasse = tk.OptionMenu(master, self.tierklasse, *konstanten.TIERKLASSEN)
         self.label_futter = tk.Label(master, text="Futter:")
         self.entry_futter = tk.Entry(master)
         self.label_name = tk.Label(master, text="Name:")
@@ -78,11 +88,13 @@ class TierErstellen:
         self.label_geburtsdatum = tk.Label(master, text="Geburtsdatum:")
         self.entry_geburtsdatum = tk.Entry(master)
         self.label_geschlecht = tk.Label(master, text="Geschlecht:")
-        self.entry_geschlecht = tk.Entry(master)
+        self.tiergeschlecht = tk.StringVar()
+        self.tiergeschlecht.set("Geschlecht...")
+        self.entry_geschlecht = tk.OptionMenu(master, self.tiergeschlecht, *konstanten.TIERGESCHLECHTER)
         self.button_create = tk.Button(master, text="Erstelle Tier", command=self.create_tier)
 
         self.label_artname.grid(row=0, column=0)
-        self.entry_artname.grid(row=0, column=1)
+        self.button_tierart_hinzufuegen.grid(row=1, column=2)
         self.label_tierklasse.grid(row=1, column=0)
         self.entry_tierklasse.grid(row=1, column=1)
         self.label_futter.grid(row=2, column=0)
@@ -96,15 +108,45 @@ class TierErstellen:
         self.button_create.grid(row=6, column=0)
 
     def create_tier(self):
-        artname = self.entry_artname.get()
-        tierklasse = self.entry_tierklasse.get()
+        artname = self.artname.get()
+        tierklasse = self.tierklasse.get()
         futter = self.entry_futter.get()
         name = self.entry_name.get()
         geburtsdatum = self.entry_geburtsdatum.get()
-        geschlecht = self.entry_geschlecht.get()
+        geschlecht = self.tiergeschlecht.get()
         new_tier = zoo.Tier(artname, tierklasse, futter, name, geburtsdatum, geschlecht)
         zoo.neuer_zoo.tiere.append(new_tier)
         print(zoo.neuer_zoo)
+
+    def open_tierart_formular(self):
+        tierart_formular_window = TierartErstellen(self.master)
+
+
+class TierartErstellen:
+    def __init__(self, master):
+        self.master = master
+        self.master("Tierart Erstellung Formular")
+
+        self.label_tierart_name = tk.Label(master, text="Tierartname:")
+        self.entry_tierart_name = tk.Entry(master)
+
+        self.button_save_tierart = tk.Button(master, text="Speichern", command=self.save_tierart)
+
+        self.label_tierart_name.grid(row=0, column=0)
+        self.entry_tierart_name.grid(row=0, column=1)
+        self.button_save_tierart.grid(row=1, column=0)
+
+    def save_tierart(self):
+        # Hole den Wert aus dem entry_tierart_name Entry-Feld
+        tierart_name = self.entry_tierart_name.get()
+        # Erstelle ein neues Tierart-Objekt mit dem Namen
+        tierart = zoo.Tierart()
+        # Füge das Tierart-Objekt der Liste der Tierarten hinzu
+        zoo.neuer_zoo.tierarten.append(tierart)
+        # Aktualisiere das Dropdown-Menü mit den Tierarten im Hauptfenster
+        #self.master.entry_artname["menu"].add_command(label=tierart_name, command=tk._setit(self.master.artname, tierart_name))
+        # Schließe das Fenster
+        #self.destroy()
 
 
 if __name__ == "__main__":

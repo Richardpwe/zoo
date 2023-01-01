@@ -3,8 +3,11 @@ MAX_LABELS_PER_ROW = 10
 TESTKONSTANTE = 60
 DARK_MODE = False
 DARK_MODE_COLOR = "#777777"
+TIERKLASSEN = ["Säugetier", "Vogel", "Reptil", "Amphib", "Fisch", "Muschel", "Spinnentier", "Insekt"]
+TIERGESCHLECHTER = ["Männlich", "Weiblich", "Unbekannt"]
 
-#Dateipfade Tiere
+
+# Dateipfade Tiere
 BEAR_PFAD = os.path.join(os.path.dirname(__file__), 'icons', 'noun-bear-1866942.png')
 BUTTERFLY_PFAD = os.path.join(os.path.dirname(__file__), 'icons', 'noun-butterfly-1866908.png')
 CAMEL_PFAD = os.path.join(os.path.dirname(__file__), 'icons', 'noun-camel-1866909.png')

@@ -1,3 +1,6 @@
+import konstanten
+
+
 class Zoo(object):
     def __init__(self, name, strasse, hausnummer, plz, ort, eroeffnungsdatum, tierarten=[], tiere=[], personal=[]):
         self.name = name
