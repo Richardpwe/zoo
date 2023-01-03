@@ -37,13 +37,14 @@ class EinstellungenFenster(tk.Tk):
         if os.path.exists(file_path):
             with open(file_path, 'rb') as datei:
                 neuer_zoo = pickle.load(datei)
-        print("Du hättest den Zoo erfolgreich geladen, falls Nico nicht so unfähig wäre.")
+        print("Du hast einen Zoo geladen.")
 
     def zoo_exportieren(self):
         dateipfad = filedialog.askdirectory()
         export_zoo = zoo.neuer_zoo
-        with open(os.path.join(dateipfad, "zooExport.pickle"), "w") as file:
+        with open(os.path.join(dateipfad, "zooExport.pickle"), "wb") as file:
             pickle.dump(export_zoo, file)
+        print("Du hast einen Zoo exportiert.")
 
     def run(self):
         self.mainloop()
