@@ -92,6 +92,7 @@ class Tierart(object):
     def get_futter(self):
         return self.futter
 
+
 class Tier(Tierart):
     def __init__(self, artname, tierklasse, futter, name, geburtsdatum, geschlecht):
         Tierart.__init__(artname, tierklasse, futter)
