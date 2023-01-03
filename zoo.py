@@ -1,3 +1,6 @@
+import os
+import pickle
+
 import konstanten
 
 
@@ -41,6 +44,10 @@ class Zoo(object):
 
     def get_tiere(self):
         return self.tiere
+
+    def zoo_speichern(self):
+        with open('zoo.pickle', 'wb') as file:
+            pickle.dump(self, file)
 
     def __str__(self):
         return 'ZOO: ' + self.name + '\nAdresse: ' + self.strasse + ' ' + str(self.hausnummer) + ', ' + \
@@ -104,4 +111,9 @@ class Futter(object):
         return self.name
 
 
-neuer_zoo = Zoo("name", "strasse", 1, 22222, "ort", "eroeffnungsdatum", [], [], [])
+file_path = 'zoo.pickle'
+if os.path.exists(file_path):
+    with open(file_path, 'rb') as file:
+        neuer_zoo = pickle.load(file)
+else:
+    neuer_zoo = Zoo("name", "strasse", 1, 22222, "ort", "eroeffnungsdatum", [], [], [])

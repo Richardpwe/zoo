@@ -65,6 +65,8 @@ class TierUebersichtFenster(tk.Tk):
         self.tier_frame.grid(row=1, column=0)
         self.tiere_anzeigen()
 
+        zoo.neuer_zoo.zoo_speichern()
+
     def back_home(self):
         self.destroy()
 
@@ -126,6 +128,8 @@ class TierErstellen(tk.Toplevel):
         self.entry_artname = ttk.OptionMenu(self, self.artname, *self.tierarten_liste)
         self.entry_artname.grid(row=0, column=1)
 
+        zoo.neuer_zoo.zoo_speichern()
+
     def tierart_hinzufuegen(self):
         TierartErstellen(self)
 
@@ -182,6 +186,8 @@ class TierartErstellen(tk.Toplevel):
         self.entry_futter.destroy()
         self.entry_futter = ttk.OptionMenu(self, self.futter_auswahl, *self.futter_liste)
         self.entry_futter.grid(row=2, column=1)
+
+        zoo.neuer_zoo.zoo_speichern()
 
     def futter_hinzufuegen(self):
         FutterErstellen(self)
