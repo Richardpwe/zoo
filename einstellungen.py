@@ -9,17 +9,16 @@ import os
 
 
 class EinstellungenFenster(tk.Tk):
-    def __init__(self, parent):
+    def __init__(self):
         super().__init__()
 
         self.title("Einstellungen")
         self.geometry('500x250')
         self.iconbitmap("favicon-zoo.ico")
-        self.parent = parent
 
         self.button_zurueck_home = ttk.Button(self, text="Home", command=self.back_home)
         self.button_zoo_laden = ttk.Button(self, text="Zoo laden...", command=self.zoo_laden)
-        self.button_zoo_exportieren = ttk.Button(self, text="Zoo exportieren...", command=self.zoo_exportieren())
+        self.button_zoo_exportieren = ttk.Button(self, text="Zoo exportieren...", command=self.zoo_exportieren)
 
         if konstanten.DARK_MODE:
             self.config(bg=konstanten.DARK_MODE_COLOR)
