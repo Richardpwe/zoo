@@ -93,6 +93,7 @@ class TierInfo(tk.Toplevel):
     def __init__(self, parent, tiername):
         super().__init__(parent)
         self.title("Tierinfo")
+        self.iconbitmap("favicon-zoo.ico")
         self.parent = parent
         self.tier = zoo.neuer_zoo.get_tiere_by_name(tiername)
         print(tiername)
@@ -146,6 +147,7 @@ class TierErstellen(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.title("Tier Erstellung Formular")
+        self.iconbitmap("favicon-zoo.ico")
         self.label_artname = ttk.Label(self, text="Tierart:")
         self.parent = parent
         self.tierarten_liste = zoo.neuer_zoo.get_tierarten_namen()
@@ -206,6 +208,7 @@ class TierartErstellen(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.title("Tierart Erstellung Formular")
+        self.iconbitmap("favicon-zoo.ico")
         self.parent = parent
         self.futter_liste = zoo.neuer_zoo.get_futter_namen()
 
@@ -265,6 +268,7 @@ class FutterErstellen(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.title("Futter Erstellung Formular")
+        self.iconbitmap("favicon-zoo.ico")
         self.parent = parent
 
         self.label_futter_name = ttk.Label(self, text="Futtername:")

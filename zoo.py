@@ -147,3 +147,4 @@ if os.path.exists(file_path):
         neuer_zoo = pickle.load(datei)
 else:
     neuer_zoo = Zoo("name", "strasse", 1, 22222, "ort", "eroeffnungsdatum", [], [], [])
+

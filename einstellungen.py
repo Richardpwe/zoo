@@ -1,20 +1,21 @@
 import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
+import tkinter.filedialog as filedialog
 import zoo
 import konstanten
 import pickle
-import zoo
 import os
 
 
 class EinstellungenFenster(tk.Tk):
-    def __init__(self):
+    def __init__(self, parent):
         super().__init__()
 
         self.title("Einstellungen")
         self.geometry('500x250')
         self.iconbitmap("favicon-zoo.ico")
+        self.parent = parent
 
         self.button_zurueck_home = ttk.Button(self, text="Home", command=self.back_home)
         self.button_zoo_laden = ttk.Button(self, text="Zoo laden...", command=self.zoo_laden)
@@ -33,22 +34,17 @@ class EinstellungenFenster(tk.Tk):
         self.destroy()
 
     def zoo_laden(self):
-        #inhalt aus zoo.pickle mit dem zoo konstruktor laden
+        file_path = filedialog.askopenfilename()
+        if os.path.exists(file_path):
+            with open(file_path, 'rb') as datei:
+                neuer_zoo = pickle.load(datei)
         print("Du hättest den Zoo erfolgreich geladen, falls Nico nicht so unfähig wäre.")
 
-    def zoo_exportieren1(self):
-        # das Objekt zoo in die zoo.pickle reintun
-        print("Du hättest den Zoo erfolgreich exportiert, falls Nico nicht so unfähig wäre.")
-        dateipfad = 'C:/Users/nicop/Documents'
-        with open(dateipfad, 'wb') as file:
-            pickle.dump(self, file)
-
     def zoo_exportieren(self):
-        desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
-        with open(os.path.join(desktop, "zooExport.pickle"), "w") as file:
-            pickle.dump(self, file)
-
-
+        dateipfad = filedialog.askopenfilename()
+        export_zoo = zoo.neuer_zoo
+        with open(os.path.join(dateipfad, "zooExport.pickle"), "w") as file:
+            pickle.dump(export_zoo, file)
 
     def run(self):
         self.mainloop()
