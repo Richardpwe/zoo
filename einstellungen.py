@@ -5,6 +5,7 @@ import zoo
 import konstanten
 import pickle
 import zoo
+import os
 
 
 class EinstellungenFenster(tk.Tk):
@@ -43,10 +44,8 @@ class EinstellungenFenster(tk.Tk):
             pickle.dump(self, file)
 
     def zoo_exportieren(self):
-        import os
         desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
-
-        with open(os.path.join(desktop, "zooExport.pickle"), "w") as f:
+        with open(os.path.join(desktop, "zooExport.pickle"), "w") as file:
             pickle.dump(self, file)
 
 
