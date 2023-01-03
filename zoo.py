@@ -1,6 +1,5 @@
 import os
 import pickle
-
 import konstanten
 
 
@@ -87,6 +86,11 @@ class Tierart(object):
     def get_name(self):
         return self.artname
 
+    def get_tierklasse(self):
+        return self.tierklasse
+
+    def get_futter(self):
+        return self.futter
 
 class Tier(Tierart):
     def __init__(self, artname, tierklasse, futter, name, geburtsdatum, geschlecht):
@@ -99,7 +103,9 @@ class Tier(Tierart):
         self.name = name
         self.geburtsdatum = geburtsdatum
         self.geschlecht = geschlecht
-        self.tierart = tierart
+        self.artname = tierart.get_name()
+        self.tierklasse = tierart.get_tierklasse()
+        self.futter = tierart.get_futter()
 
 
 class Futter(object):
