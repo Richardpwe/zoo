@@ -40,7 +40,7 @@ class EinstellungenFenster(tk.Tk):
         print("Du hättest den Zoo erfolgreich geladen, falls Nico nicht so unfähig wäre.")
 
     def zoo_exportieren(self):
-        dateipfad = filedialog.askopenfilename()
+        dateipfad = filedialog.askdirectory()
         export_zoo = zoo.neuer_zoo
         with open(os.path.join(dateipfad, "zooExport.pickle"), "w") as file:
             pickle.dump(export_zoo, file)
