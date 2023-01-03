@@ -9,9 +9,6 @@ class TierUebersichtFenster(tk.Tk):
     def __init__(self):
         super().__init__()
 
-        row = 1
-        col = 0
-
         self.title("Tier Übersicht")
         self.geometry(str(konstanten.MAX_LABELS_PER_ROW) * 100 + "x600")
         self.iconbitmap("favicon-zoo.ico")
@@ -36,16 +33,38 @@ class TierUebersichtFenster(tk.Tk):
             self.button_zurueck_home.config(bg=konstanten.DARK_MODE_COLOR)
             self.button_zurueck_home.config(fg='#FFFFFF')
 
+        self.tier_frame = tk.Frame(self)
+        self.tier_frame.grid(row=1, column=0)
+        self.tiere_anzeigen()
+
     def tiere_anzeigen(self):
         tiere = zoo.neuer_zoo.get_tiere()
+        row = 0
+        col = 0
         for tier in tiere:
-            if self.grid_size()[1] < 4:
-                new_frame = tk.Frame(self)
-                new_frame.grid(row=1, column=self.grid_size()[1])
-                self.columnconfigure(self.grid_size()[1], weight=1)
+            new_frame = tk.Frame(self.tier_frame)
+            bild_label = tk.Label(new_frame, image=self.photo)
+            text_label = tk.Label(new_frame, text=tier.name)
+            text_label.grid(row=1, column=0)
+            bild_label.grid(row=0, column=0)
+
+            if col < 4:
+                new_frame.grid(row=row, column=col)
+                col += 1
+            else:
+                row += 1
+                col = 0
+                new_frame.grid(row=row, column=col)
 
     def tier_hinzufuegen(self):
         TierErstellen(self)
+
+    def update(self):
+
+        self.tier_frame.destroy()
+        self.tier_frame = tk.Frame(self)
+        self.tier_frame.grid(row=1, column=0)
+        self.tiere_anzeigen()
 
     def back_home(self):
         self.destroy()
@@ -96,11 +115,10 @@ class TierErstellen(tk.Toplevel):
         name = self.entry_name.get()
         geburtsdatum = self.entry_geburtsdatum.get()
         geschlecht = self.tiergeschlecht.get()
-        new_tier = zoo.Tier(artname, zoo.neuer_zoo.tierarten[artname].tierklasse,
-                            zoo.neuer_zoo.tierarten[artname].futter.name, name, geburtsdatum, geschlecht)
+        new_tier = zoo.Tier(name, geburtsdatum, geschlecht, zoo.neuer_zoo.get_tierart_by_name(artname))
         zoo.neuer_zoo.tiere.append(new_tier)
-        print(zoo.neuer_zoo)
 
+        self.parent.update()
         self.destroy()
 
     def update(self):
@@ -154,7 +172,7 @@ class TierartErstellen(tk.Toplevel):
         tierklasse = self.tierklasse.get()
         futter = self.futter_auswahl.get()
 
-        tierart = zoo.Tierart(tierart_name, tierklasse, zoo.neuer_zoo.futter[futter])
+        tierart = zoo.Tierart(tierart_name, tierklasse, zoo.neuer_zoo.get_futter_by_name(futter))
         zoo.neuer_zoo.tierarten.append(tierart)
 
         self.parent.update()

@@ -21,11 +21,23 @@ class Zoo(object):
             futter_namen.append(futter.name)
         return futter_namen
 
+    def get_futter_by_name(self, futter_name):
+        for futter in self.futter:
+            name = futter.get_name()
+            if name == futter_name:
+                return futter
+
     def get_tierarten_namen(self):
         tierarten_namen = []
         for tierart in self.tierarten:
-            tierarten_namen.append(tierart.name)
+            tierarten_namen.append(tierart.artname)
         return tierarten_namen
+
+    def get_tierart_by_name(self, tierart_name):
+        for tierart in self.tierarten:
+            name = tierart.get_name()
+            if name == tierart_name:
+                return tierart
 
     def get_tiere(self):
         return self.tiere
@@ -65,6 +77,9 @@ class Tierart(object):
         self.tierklasse = tierklasse
         self.futter = futter
 
+    def get_name(self):
+        return self.artname
+
 
 class Tier(Tierart):
     def __init__(self, artname, tierklasse, futter, name, geburtsdatum, geschlecht):
@@ -73,11 +88,20 @@ class Tier(Tierart):
         self.geburtsdatum = geburtsdatum
         self.geschlecht = geschlecht
 
+    def __init__(self, name, geburtsdatum, geschlecht, tierart):
+        self.name = name
+        self.geburtsdatum = geburtsdatum
+        self.geschlecht = geschlecht
+        self.tierart = tierart
+
 
 class Futter(object):
     def __init__(self, name, preis):
         self.name = name
         self.preis = preis
+
+    def get_name(self):
+        return self.name
 
 
 neuer_zoo = Zoo("name", "strasse", 1, 22222, "ort", "eroeffnungsdatum", [], [], [])
