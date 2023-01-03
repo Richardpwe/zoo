@@ -76,7 +76,7 @@ class TierErstellen(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.title("Tier Erstellung Formular")
-        self.label_artname = tk.Label(self, text="Tierart:")
+        self.label_artname = ttk.Label(self, text="Tierart:")
         self.parent = parent
         self.tierarten_liste = zoo.neuer_zoo.get_tierarten_namen()
 
@@ -86,7 +86,7 @@ class TierErstellen(tk.Toplevel):
             self.tierarten_liste = ["leer"]
 
         self.entry_artname = ttk.OptionMenu(self, self.artname, *self.tierarten_liste)
-        self.button_tierart_hinzufuegen = tk.Button(self, text="+", command=self.tierart_hinzufuegen)
+        self.button_tierart_hinzufuegen = ttk.Button(self, text="+", command=self.tierart_hinzufuegen)
 
         self.label_name = ttk.Label(self, text="Name:")
         self.entry_name = ttk.Entry(self)
@@ -123,7 +123,7 @@ class TierErstellen(tk.Toplevel):
     def update(self):
         self.tierarten_liste = zoo.neuer_zoo.get_tierarten_namen()
         self.entry_artname.destroy()
-        self.entry_artname = tk.OptionMenu(self, self.artname, *self.tierarten_liste)
+        self.entry_artname = ttk.OptionMenu(self, self.artname, *self.tierarten_liste)
         self.entry_artname.grid(row=0, column=1)
 
     def tierart_hinzufuegen(self):
@@ -137,13 +137,13 @@ class TierartErstellen(tk.Toplevel):
         self.parent = parent
         self.futter_liste = zoo.neuer_zoo.get_futter_namen()
 
-        self.label_tierart_name = tk.Label(self, text="Tierartname:")
-        self.entry_tierart_name = tk.Entry(self)
-        self.label_tierklasse = tk.Label(self, text="Tierklasse:")
+        self.label_tierart_name = ttk.Label(self, text="Tierartname:")
+        self.entry_tierart_name = ttk.Entry(self)
+        self.label_tierklasse = ttk.Label(self, text="Tierklasse:")
         self.tierklasse = tk.StringVar()
         self.tierklasse.set("Tierklasse...")
-        self.entry_tierklasse = tk.OptionMenu(self, self.tierklasse, *konstanten.TIERKLASSEN)
-        self.label_futter = tk.Label(self, text="Futter:")
+        self.entry_tierklasse = ttk.OptionMenu(self, self.tierklasse, *konstanten.TIERKLASSEN)
+        self.label_futter = ttk.Label(self, text="Futter:")
 
         self.futter_auswahl = tk.StringVar()
         if not self.futter_liste:
@@ -151,10 +151,10 @@ class TierartErstellen(tk.Toplevel):
 
         self.futter_auswahl.set("Futter...")
 
-        self.entry_futter = tk.OptionMenu(self, self.futter_auswahl, *self.futter_liste)
-        self.button_futter_hinzufuegen = tk.Button(self, text="+", command=self.futter_hinzufuegen)
+        self.entry_futter = ttk.OptionMenu(self, self.futter_auswahl, *self.futter_liste)
+        self.button_futter_hinzufuegen = ttk.Button(self, text="+", command=self.futter_hinzufuegen)
 
-        self.button_save_tierart = tk.Button(self, text="Speichern", command=self.save_tierart)
+        self.button_save_tierart = ttk.Button(self, text="Speichern", command=self.save_tierart)
 
         self.label_tierart_name.grid(row=0, column=0)
         self.entry_tierart_name.grid(row=0, column=1)
@@ -180,7 +180,7 @@ class TierartErstellen(tk.Toplevel):
     def update(self):
         self.futter_liste = zoo.neuer_zoo.get_futter_namen()
         self.entry_futter.destroy()
-        self.entry_futter = tk.OptionMenu(self, self.futter_auswahl, *self.futter_liste)
+        self.entry_futter = ttk.OptionMenu(self, self.futter_auswahl, *self.futter_liste)
         self.entry_futter.grid(row=2, column=1)
 
     def futter_hinzufuegen(self):
@@ -193,12 +193,12 @@ class FutterErstellen(tk.Toplevel):
         self.title("Futter Erstellung Formular")
         self.parent = parent
 
-        self.label_futter_name = tk.Label(self, text="Futtername:")
-        self.entry_futter_name = tk.Entry(self)
-        self.label_preis = tk.Label(self, text="Preis:")
-        self.entry_preis = tk.Entry(self)
+        self.label_futter_name = ttk.Label(self, text="Futtername:")
+        self.entry_futter_name = ttk.Entry(self)
+        self.label_preis = ttk.Label(self, text="Preis:")
+        self.entry_preis = ttk.Entry(self)
 
-        self.button_save_futter = tk.Button(self, text="Speichern", command=self.save_futter)
+        self.button_save_futter = ttk.Button(self, text="Speichern", command=self.save_futter)
 
         self.label_futter_name.grid(row=0, column=0)
         self.entry_futter_name.grid(row=0, column=1)
