@@ -17,3 +17,9 @@ Fellfarben-Feature, weitere Bildbearbeitungsfeatures um die Tiere zu personalisi
 Tiere mit verschiedenen Fellfarben, damit nicht alle gleich aussehen
 Müsste beim erstellen des Tiers zufällig ausgewählt werden, kann über editor angepasst werden.
 
+
+
+Noch auf der Strecke geblieben:
+Daten bestehender Tiere im nachhinein editieren können.
+
+Warndialog beim importieren eines Zoos, dass der derzeit geladene Zoo verloren geht.
