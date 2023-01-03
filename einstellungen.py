@@ -1,38 +1,46 @@
 import tkinter as tk
 from tkinter import ttk
-from PIL import Image, ImageTk, ImageDraw
+from PIL import Image, ImageTk
+import zoo
+import konstanten
 
-# Erstellen Sie das Hauptfenster
-root = tk.Tk()
 
-# Erstellen Sie ein neues Bild mit den Abmessungen 100x50 und der Hintergrundfarbe blau
-image = Image.new("RGB", (100, 50), "#000000") #grundform
+class EinstellungenFenster(tk.Tk):
+    def __init__(self):
+        super().__init__()
 
-# Erstellen Sie einen Zeichenkontext für das Bild
-draw = ImageDraw.Draw(image)
+        self.title("Einstellungen")
+        self.geometry('500x250')
+        self.iconbitmap("favicon-zoo.ico")
 
-# Zeichnen Sie ein Rechteck mit abgerundeten Ecken auf das Bild
-draw.rounded_rectangle((0, 0, 100, 50), fill="#00ffff", outline="#ffffff", radius=20) #abgerundet oben drauf
+        self.button_zurueck_home = ttk.Button(self, text="Home", command=self.back_home)
+        self.button_zoo_laden = ttk.Button(self, text="Zoo laden...", command=self.zoo_laden)
+        self.button_zoo_exportieren = ttk.Button(self, text="Zoo exportieren...", command=self.zoo_exportieren)
 
-# Speichern Sie das Bild als JPEG-Datei
-# draw.save("rounded_corners.jpg")
+        if konstanten.DARK_MODE:
+            self.config(bg=konstanten.DARK_MODE_COLOR)
+            # self.button_zurueck_home.configure(background=konstanten.DARK_MODE_COLOR)
+            # self.button_zurueck_home.config(fg='#FFFFFF')
 
-# Konvertieren Sie das Bild in ein PhotoImage, das von tkinter verwendet werden kann
-draw = ImageTk.PhotoImage(image)
+        self.button_zurueck_home.grid(row=0, column=0)
+        self.button_zoo_laden.grid(row=0, column=1)
+        self.button_zoo_exportieren.grid(row=0, column=2)
 
-# Erstellen Sie einen Button mit dem Bild als Hintergrund
-button2 = ttk.Button(root, image=draw, text="Klick mich")
+    def back_home(self):
+        self.destroy()
 
-# Erstellen Sie einen neuen Stil namens "Custom.TButton"
-style = ttk.Style()
-style.configure("Custom.TButton", background="#555555", foreground="#000000", font="Arial 16")
+    def zoo_laden(self):
+        #inhalt aus zoo.pickle mit dem zoo konstruktor laden
+        print("Du hättest den Zoo erfolgreich geladen, falls Nico nicht so unfähig wäre.")
 
-# Erstellen Sie einen Button mit dem Stil "Custom.TButton"
-button = ttk.Button(root, text="Klick mich", style="Custom.TButton")
+    def zoo_exportieren(self):
+        #das Objekt zoo in die zoo.pickle reintun
+        print("Du hättest den Zoo erfolgreich exportiert, falls Nico nicht so unfähig wäre.")
 
-# Packen Sie den Button in das Hauptfenster
-button.pack(padx=30, pady=30)
-button2.pack(padx=30, pady=30)
+    def run(self):
+        self.mainloop()
 
-# Starten Sie den Hauptloop
-root.mainloop()
+
+if __name__ == "__main__":
+    fenster = EinstellungenFenster()
+    fenster.run()
