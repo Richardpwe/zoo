@@ -99,12 +99,13 @@ class Tier(Tierart):
         self.name = name
         self.geburtsdatum = geburtsdatum
         self.geschlecht = geschlecht
+
 # Test
     def __init__(self, name, geburtsdatum, geschlecht, tierart):
-        super().__init__(tierart.get_name(), tierart.get_tierklasse(), tierart.get_futter())        
         self.name = name
         self.geburtsdatum = geburtsdatum
         self.geschlecht = geschlecht
+        self.tierart = tierart
 
 
 class Futter(object):
