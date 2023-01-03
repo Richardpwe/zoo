@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 import konstanten
 import zoo
 from Tieruebersicht import TierUebersichtFenster
@@ -32,27 +33,27 @@ def open_window_4():
 
 
 # Frame erstellen
-frame = tk.Frame(root)
+frame = ttk.Frame(root)
 frame.pack(padx=20, pady=20)
 
 # Button erstellen, um Fenster 1 zu öffnen
-button_1 = tk.Button(frame, text="Fenster 1 öffnen Tierübersicht", command=open_window_1, width=500)
+button_1 = ttk.Button(frame, text="Fenster 1 öffnen Tierübersicht", command=open_window_1, width=500)
 button_1.pack(pady=10)
 
 # Button erstellen, um Fenster 2 zu öffnen
-button_2 = tk.Button(frame, text="Fenster 2 öffnen Personalübersicht", command=open_window_2, width=500)
+button_2 = ttk.Button(frame, text="Fenster 2 öffnen Personalübersicht", command=open_window_2, width=500)
 button_2.pack(pady=10)
 
 # Button erstellen, um Fenster 3 zu öffnen
-button_3 = tk.Button(frame, text="Fenster 3 öffnen Einstellungen", command=open_window_3, width=500)
+button_3 = ttk.Button(frame, text="Fenster 3 öffnen Einstellungen", command=open_window_3, width=500)
 button_3.pack(pady=10)
 
 # Button erstellen, um Fenster 4 zu öffnen
-button_4 = tk.Button(frame, text="Fenster 4 öffnen", command=open_window_4, width=500)
+button_4 = ttk.Button(frame, text="Fenster 4 öffnen", command=open_window_4, width=500)
 button_4.pack(pady=10)
 
 # Button erstellen, der das Programm beendet, wenn man darauf klickt
-quit_button = tk.Button(frame, text='Beenden', command=root.destroy, width=500)
+quit_button = ttk.Button(frame, text='Beenden', command=root.destroy, width=500)
 quit_button.pack(pady=10)
 
 if konstanten.DARK_MODE:
