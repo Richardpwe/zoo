@@ -100,12 +100,10 @@ class Tier(Tierart):
         self.geschlecht = geschlecht
 
     def __init__(self, name, geburtsdatum, geschlecht, tierart):
+        Tierart.__init__(tierart.get_name(), tierart.get_tierklasse(), tierart.get_futter())        
         self.name = name
         self.geburtsdatum = geburtsdatum
         self.geschlecht = geschlecht
-        self.artname = tierart.get_name()
-        self.tierklasse = tierart.get_tierklasse()
-        self.futter = tierart.get_futter()
 
 
 class Futter(object):
