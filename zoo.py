@@ -2,7 +2,7 @@ import konstanten
 
 
 class Zoo(object):
-    def __init__(self, name, strasse, hausnummer, plz, ort, eroeffnungsdatum, tierarten=[],
+    def __init__(self, name: str, strasse, hausnummer, plz, ort, eroeffnungsdatum, tierarten=[],
                  tiere=[], personal=[], futter=[]):
         self.name = name
         self.strasse = strasse
@@ -13,9 +13,24 @@ class Zoo(object):
         self.tierarten = tierarten
         self.tiere = tiere
         self.personal = personal
-        self.futter =futter
+        self.futter = futter
 
-    def __str__(self) -> str:
+    def get_futter_namen(self):
+        futter_namen = []
+        for futter in self.futter:
+            futter_namen.append(futter.name)
+        return futter_namen
+
+    def get_tierarten_namen(self):
+        tierarten_namen = []
+        for tierart in self.tierarten:
+            tierarten_namen.append(tierart.name)
+        return tierarten_namen
+
+    def get_tiere(self):
+        return self.tiere
+
+    def __str__(self):
         return 'ZOO: ' + self.name + '\nAdresse: ' + self.strasse + ' ' + str(self.hausnummer) + ', ' + \
             str(self.plz) + ' ' + self.ort + '\nEröffnet am: ' + str(self.eroeffnungsdatum)
 

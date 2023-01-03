@@ -5,15 +5,19 @@ import zoo
 import konstanten
 
 
-class TierUebersichtFenster:
+class TierUebersichtFenster(tk.Tk):
     def __init__(self):
-        self.fenster = tk.Tk()
-        self.fenster.title("Tier Übersicht")
-        self.fenster.geometry(str(konstanten.MAX_LABELS_PER_ROW) * 100 + "x600")
-        self.fenster.iconbitmap("favicon-zoo.ico")
+        super().__init__()
 
-        self.button_zurueck_home = tk.Button(self.fenster, text="Home", command=self.back_home)
-        self.button_tier_hinzufuegen = tk.Button(self.fenster,
+        row = 1
+        col = 0
+
+        self.title("Tier Übersicht")
+        self.geometry(str(konstanten.MAX_LABELS_PER_ROW) * 100 + "x600")
+        self.iconbitmap("favicon-zoo.ico")
+
+        self.button_zurueck_home = tk.Button(self, text="Home", command=self.back_home)
+        self.button_tier_hinzufuegen = tk.Button(self,
                                                  text="Tier Hinzufügen", command=self.tier_hinzufuegen)
 
         try:
@@ -24,53 +28,60 @@ class TierUebersichtFenster:
         except FileNotFoundError:
             print("Bilddatei nicht gefunden")
 
-        self.button_zurueck_home.grid(row=1, column=2)
-        self.button_tier_hinzufuegen.grid(row=1, column=4)
+        self.button_zurueck_home.grid(row=0, column=0)
+        self.button_tier_hinzufuegen.grid(row=0, column=1)
 
         if konstanten.DARK_MODE:
-            self.fenster.config(bg=konstanten.DARK_MODE_COLOR)
+            self.config(bg=konstanten.DARK_MODE_COLOR)
             self.button_zurueck_home.config(bg=konstanten.DARK_MODE_COLOR)
             self.button_zurueck_home.config(fg='#FFFFFF')
 
     def tiere_anzeigen(self):
-        print(self)
+        tiere = zoo.neuer_zoo.get_tiere()
+        for tier in tiere:
+            if self.grid_size()[1] < 4:
+                new_frame = tk.Frame(self)
+                new_frame.grid(row=1, column=self.grid_size()[1])
+                self.columnconfigure(self.grid_size()[1], weight=1)
 
     def tier_hinzufuegen(self):
-        TierErstellen(self.fenster)
+        TierErstellen(self)
 
     def back_home(self):
-        self.fenster.destroy()
+        self.destroy()
 
     def run(self):
-        self.fenster.mainloop()
+        self.mainloop()
 
 
-class TierErstellen:
-    def __init__(self, tier_uebersicht_fenster):
-        self.fenster = tk.Tk()
-        self.fenster.title("Tier Erstellung Formular")
-        self.label_artname = tk.Label(self.fenster, text="Tierart:")
-        self.tier_uebersicht_fenster = tier_uebersicht_fenster
+class TierErstellen(tk.Toplevel):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.title("Tier Erstellung Formular")
+        self.label_artname = tk.Label(self, text="Tierart:")
+        self.parent = parent
+        self.tierarten_liste = zoo.neuer_zoo.get_tierarten_namen()
 
-        if zoo.neuer_zoo.tierarten:
-            self.artname = tk.StringVar()
-            self.artname.set("Tierart...")
-            self.entry_artname = tk.OptionMenu(self.fenster, self.artname, *zoo.neuer_zoo.tierarten)
-            self.entry_artname.grid(row=0, column=1)
+        self.artname = tk.StringVar()
+        self.artname.set("Tierart...")
+        if not self.tierarten_liste:
+            self.tierarten_liste = ["leer"]
 
-        self.button_tierart_hinzufuegen = tk.Button(self.fenster, text="+", command=self.tierart_hinzufuegen)
+        self.entry_artname = tk.OptionMenu(self, self.artname, *self.tierarten_liste)
+        self.button_tierart_hinzufuegen = tk.Button(self, text="+", command=self.tierart_hinzufuegen)
 
-        self.label_name = tk.Label(self.fenster, text="Name:")
-        self.entry_name = tk.Entry(self.fenster)
-        self.label_geburtsdatum = tk.Label(self.fenster, text="Geburtsdatum:")
-        self.entry_geburtsdatum = tk.Entry(self.fenster)
-        self.label_geschlecht = tk.Label(self.fenster, text="Geschlecht:")
+        self.label_name = tk.Label(self, text="Name:")
+        self.entry_name = tk.Entry(self)
+        self.label_geburtsdatum = tk.Label(self, text="Geburtsdatum:")
+        self.entry_geburtsdatum = tk.Entry(self)
+        self.label_geschlecht = tk.Label(self, text="Geschlecht:")
         self.tiergeschlecht = tk.StringVar()
         self.tiergeschlecht.set("Geschlecht...")
-        self.entry_geschlecht = tk.OptionMenu(self.fenster, self.tiergeschlecht, *konstanten.TIERGESCHLECHTER)
-        self.button_create = tk.Button(self.fenster, text="Erstelle Tier", command=self.create_tier)
+        self.entry_geschlecht = tk.OptionMenu(self, self.tiergeschlecht, *konstanten.TIERGESCHLECHTER)
+        self.button_create = tk.Button(self, text="Erstelle Tier", command=self.create_tier)
 
         self.label_artname.grid(row=0, column=0)
+        self.entry_artname.grid(row=0, column=1)
         self.button_tierart_hinzufuegen.grid(row=0, column=2)
         self.label_name.grid(row=3, column=0)
         self.entry_name.grid(row=3, column=1)
@@ -90,44 +101,50 @@ class TierErstellen:
         zoo.neuer_zoo.tiere.append(new_tier)
         print(zoo.neuer_zoo)
 
-        self.fenster.destroy()
+        self.destroy()
+
+    def update(self):
+        self.tierarten_liste = zoo.neuer_zoo.get_tierarten_namen()
+        self.entry_artname.destroy()
+        self.entry_artname = tk.OptionMenu(self, self.artname, *self.tierarten_liste)
+        self.entry_artname.grid(row=0, column=1)
 
     def tierart_hinzufuegen(self):
-        TierartErstellen(self.fenster)
+        TierartErstellen(self)
 
 
-class TierartErstellen:
-    def __init__(self, tier_erstellen_fenster):
-        self.tierart_erstellen_fenster = tk.Tk()
-        self.tierart_erstellen_fenster.title("Tierart Erstellung Formular")
-        self.tier_erstellen_fenster = tier_erstellen_fenster
+class TierartErstellen(tk.Toplevel):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.title("Tierart Erstellung Formular")
+        self.parent = parent
+        self.futter_liste = zoo.neuer_zoo.get_futter_namen()
 
-        self.label_tierart_name = tk.Label(self.tierart_erstellen_fenster, text="Tierartname:")
-        self.entry_tierart_name = tk.Entry(self.tierart_erstellen_fenster)
-        self.label_tierklasse = tk.Label(self.tierart_erstellen_fenster, text="Tierklasse:")
+        self.label_tierart_name = tk.Label(self, text="Tierartname:")
+        self.entry_tierart_name = tk.Entry(self)
+        self.label_tierklasse = tk.Label(self, text="Tierklasse:")
         self.tierklasse = tk.StringVar()
         self.tierklasse.set("Tierklasse...")
-        self.entry_tierklasse = tk.OptionMenu(self.tierart_erstellen_fenster, self.tierklasse, *konstanten.TIERKLASSEN)
-        self.label_futter = tk.Label(self.tierart_erstellen_fenster, text="Futter:")
+        self.entry_tierklasse = tk.OptionMenu(self, self.tierklasse, *konstanten.TIERKLASSEN)
+        self.label_futter = tk.Label(self, text="Futter:")
 
-        if zoo.neuer_zoo.futter:
-            self.futter_auswahl = tk.StringVar()
-            self.futter_auswahl.set("Futter...")
-            self.entry_futter = tk.OptionMenu(self.tierart_erstellen_fenster,
-                                              self.futter_auswahl, *zoo.neuer_zoo.futter)
-            self.entry_futter.grid(row=2, column=1)
+        self.futter_auswahl = tk.StringVar()
+        if not self.futter_liste:
+            self.futter_liste = ["leer"]
 
-        self.button_futter_hinzufuegen = tk.Button(self.tierart_erstellen_fenster, text="+",
-                                                   command=self.futter_hinzufuegen)
+        self.futter_auswahl.set("Futter...")
 
-        self.button_save_tierart = tk.Button(self.tierart_erstellen_fenster,
-                                             text="Speichern", command=self.save_tierart)
+        self.entry_futter = tk.OptionMenu(self, self.futter_auswahl, *self.futter_liste)
+        self.button_futter_hinzufuegen = tk.Button(self, text="+", command=self.futter_hinzufuegen)
+
+        self.button_save_tierart = tk.Button(self, text="Speichern", command=self.save_tierart)
 
         self.label_tierart_name.grid(row=0, column=0)
         self.entry_tierart_name.grid(row=0, column=1)
         self.label_tierklasse.grid(row=1, column=0)
         self.entry_tierklasse.grid(row=1, column=1)
         self.label_futter.grid(row=2, column=0)
+        self.entry_futter.grid(row=2, column=1)
         self.button_futter_hinzufuegen.grid(row=2, column=2)
         self.button_save_tierart.grid(row=3, column=1)
 
@@ -137,28 +154,34 @@ class TierartErstellen:
         tierklasse = self.tierklasse.get()
         futter = self.futter_auswahl.get()
 
-        tierart = zoo.Tierart(tierart_name, tierklasse, futter)
+        tierart = zoo.Tierart(tierart_name, tierklasse, zoo.neuer_zoo.futter[futter])
         zoo.neuer_zoo.tierarten.append(tierart)
 
-        self.tier_erstellen_fenster.update()
-        self.tierart_erstellen_fenster.destroy()
+        self.parent.update()
+        self.destroy()
+
+    def update(self):
+        self.futter_liste = zoo.neuer_zoo.get_futter_namen()
+        self.entry_futter.destroy()
+        self.entry_futter = tk.OptionMenu(self, self.futter_auswahl, *self.futter_liste)
+        self.entry_futter.grid(row=2, column=1)
 
     def futter_hinzufuegen(self):
-        FutterErstellen(self.tierart_erstellen_fenster)
+        FutterErstellen(self)
 
 
-class FutterErstellen:
-    def __init__(self, tierart_erstellen_fenster):
-        self.futter_erstellen_fenster = tk.Tk()
-        self.futter_erstellen_fenster.title("Futter Erstellung Formular")
-        self.tierart_erstellen_fenster = tierart_erstellen_fenster
+class FutterErstellen(tk.Toplevel):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.title("Futter Erstellung Formular")
+        self.parent = parent
 
-        self.label_futter_name = tk.Label(self.futter_erstellen_fenster, text="Futtername:")
-        self.entry_futter_name = tk.Entry(self.futter_erstellen_fenster)
-        self.label_preis = tk.Label(self.futter_erstellen_fenster, text="Preis:")
-        self.entry_preis = tk.Entry(self.futter_erstellen_fenster)
+        self.label_futter_name = tk.Label(self, text="Futtername:")
+        self.entry_futter_name = tk.Entry(self)
+        self.label_preis = tk.Label(self, text="Preis:")
+        self.entry_preis = tk.Entry(self)
 
-        self.button_save_futter = tk.Button(self.futter_erstellen_fenster, text="Speichern", command=self.save_futter)
+        self.button_save_futter = tk.Button(self, text="Speichern", command=self.save_futter)
 
         self.label_futter_name.grid(row=0, column=0)
         self.entry_futter_name.grid(row=0, column=1)
@@ -173,8 +196,8 @@ class FutterErstellen:
         futter = zoo.Futter(futter_name, preis)
         zoo.neuer_zoo.futter.append(futter)
 
-        self.tierart_erstellen_fenster.update()
-        self.futter_erstellen_fenster.destroy()
+        self.parent.update()
+        self.destroy()
 
 
 if __name__ == "__main__":
