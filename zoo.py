@@ -37,16 +37,28 @@ class Zoo(object):
 
     def get_tierart_by_name(self, tierart_name):
         for tierart in self.tierarten:
-            name = tierart.get_name()
+            name = tierart.get_artname()
             if name == tierart_name:
                 return tierart
 
     def get_tiere(self):
         return self.tiere
 
+    def get_tiere_by_name(self, tiername):
+        for tier in self.tiere:
+            name = tier.get_tiername()
+            if name == tiername:
+                return tier
+
+    def tier_loeschen(self, zu_loeschen):
+        for tier in self.tiere:
+            if tier == zu_loeschen:
+                index = self.tiere.index(tier)
+                del self.tiere[index]
+
     def zoo_speichern(self):
-        with open('zoo.pickle', 'wb') as file:
-            pickle.dump(self, file)
+        with open('zoo.pickle', 'wb') as zoo_datei:
+            pickle.dump(self, zoo_datei)
 
     def __str__(self):
         return 'ZOO: ' + self.name + '\nAdresse: ' + self.strasse + ' ' + str(self.hausnummer) + ', ' + \
@@ -83,7 +95,7 @@ class Tierart(object):
         self.tierklasse = tierklasse
         self.futter = futter
 
-    def get_name(self):
+    def get_artname(self):
         return self.artname
 
     def get_tierklasse(self):
@@ -100,12 +112,24 @@ class Tier(Tierart):
         self.geburtsdatum = geburtsdatum
         self.geschlecht = geschlecht
 
-# Test
     def __init__(self, name, geburtsdatum, geschlecht, tierart):
         self.name = name
         self.geburtsdatum = geburtsdatum
         self.geschlecht = geschlecht
+        self.artname = tierart.get_artname()
+        self.tierklasse = tierart.get_tierklasse()
+        self.futter = tierart.get_futter()
         self.tierart = tierart
+
+    def get_tiername(self):
+        name: str = self.name
+        return name
+
+    def get_geburtsdatum(self):
+        return self.geburtsdatum
+
+    def get_geschlecht(self):
+        return self.geschlecht
 
 
 class Futter(object):
@@ -119,7 +143,7 @@ class Futter(object):
 
 file_path = 'zoo.pickle'
 if os.path.exists(file_path):
-    with open(file_path, 'rb') as file:
-        neuer_zoo = pickle.load(file)
+    with open(file_path, 'rb') as datei:
+        neuer_zoo = pickle.load(datei)
 else:
     neuer_zoo = Zoo("name", "strasse", 1, 22222, "ort", "eroeffnungsdatum", [], [], [])

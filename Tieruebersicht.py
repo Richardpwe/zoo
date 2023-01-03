@@ -41,11 +41,20 @@ class TierUebersichtFenster(tk.Tk):
         row = 0
         col = 0
         for tier in tiere:
-            new_frame = tk.Frame(self.tier_frame)
-            bild_label = tk.Label(new_frame, image=self.photo)
-            text_label = tk.Label(new_frame, text=tier.name)
+            new_frame = ttk.Frame(self.tier_frame)
+            tiername = tier.get_tiername()
+            new_frame.bind("<Button-1>", lambda event, arg=tiername: self.neue_tierinfo(event, arg))
+            bild_label = ttk.Label(new_frame, image=self.photo)
+            text_label = ttk.Label(new_frame, text=tier.name)
             text_label.grid(row=1, column=0)
+            text2_label = ttk.Label(new_frame, text=tier.get_artname())
+            text2_label.grid(row=2, column=0)
+
             bild_label.grid(row=0, column=0)
+
+            for widget in new_frame.winfo_children():
+                print(tiername)
+                widget.bind("<Button-1>", lambda event, arg=tiername: self.neue_tierinfo(event, arg))
 
             if col < 4:
                 new_frame.grid(row=row, column=col)
@@ -57,6 +66,12 @@ class TierUebersichtFenster(tk.Tk):
 
     def tier_hinzufuegen(self):
         TierErstellen(self)
+
+    def neue_tierinfo(self, event, tiername):
+        widget = event.widget
+        print(widget)
+        print(tiername)
+        TierInfo(self, tiername)
 
     def update(self):
 
@@ -72,6 +87,59 @@ class TierUebersichtFenster(tk.Tk):
 
     def run(self):
         self.mainloop()
+
+
+class TierInfo(tk.Toplevel):
+    def __init__(self, parent, tiername):
+        super().__init__(parent)
+        self.title("Tierinfo")
+        self.parent = parent
+        self.tier = zoo.neuer_zoo.get_tiere_by_name(tiername)
+        print(tiername)
+
+        self.image = Image.open(konstanten.KANGAROO_PFAD)
+        self.image = self.image.resize((200, 200))
+        self.photo = ImageTk.PhotoImage(self.image)
+
+        self.bild_label = ttk.Label(self, image=self.photo)
+        self.label_tier_name = ttk.Label(self, text="Name:")
+        self.label_tier_name_wert = ttk.Label(self, text=self.tier.get_tiername())
+        self.label_tier_tierklasse = ttk.Label(self, text="Tierklasse:")
+        self.label_tier_tierklasse_wert = ttk.Label(self, text=self.tier.get_tierklasse())
+        self.label_tier_tierart = ttk.Label(self, text="Tierart:")
+        self.label_tier_tierart_wert = ttk.Label(self, text=self.tier.get_artname())
+        self.label_tier_geschlecht = ttk.Label(self, text="Geschlecht:")
+        self.label_tier_geschlecht_wert = ttk.Label(self, text=self.tier.get_geschlecht())
+        self.label_tier_geburtsdatum = ttk.Label(self, text="Geburtsdatum:")
+        self.label_tier_geburtsdatum_wert = ttk.Label(self, text=self.tier.get_geburtsdatum())
+        self.label_tier_futter = ttk.Label(self, text="Futter:")
+        self.label_tier_futter_wert = ttk.Label(self, text=self.tier.futter.get_name())
+
+        self.button_schliessen = ttk.Button(self, text="Schließen", command=self.destroy)
+        self.button_loeschen = ttk.Button(self, text="Tier löschen", command=self.tier_loeschen)
+
+        self.bild_label.grid(row=0, column=1)
+        self.label_tier_name.grid(row=1, column=0)
+        self.label_tier_name_wert.grid(row=1, column=1)
+        self.label_tier_tierklasse.grid(row=2, column=0)
+        self.label_tier_tierklasse_wert.grid(row=2, column=1)
+        self.label_tier_tierart.grid(row=3, column=0)
+        self.label_tier_tierart_wert.grid(row=3, column=1)
+        self.label_tier_geschlecht.grid(row=4, column=0)
+        self.label_tier_geschlecht_wert.grid(row=4, column=1)
+        self.label_tier_geburtsdatum.grid(row=5, column=0)
+        self.label_tier_geburtsdatum_wert.grid(row=5, column=1)
+        self.label_tier_futter.grid(row=6, column=0)
+        self.label_tier_futter_wert.grid(row=6, column=1)
+
+        self.button_schliessen.grid(row=7, column=0)
+        self.button_loeschen.grid(row=7, column=1)
+
+    def tier_loeschen(self):
+        zoo.neuer_zoo.tier_loeschen(self.tier)
+
+        self.parent.update()
+        self.destroy()
 
 
 class TierErstellen(tk.Toplevel):
