@@ -13,9 +13,8 @@ class TierUebersichtFenster(tk.Tk):
         self.geometry(str(konstanten.MAX_LABELS_PER_ROW) * 100 + "x600")
         self.iconbitmap("favicon-zoo.ico")
 
-        self.button_zurueck_home = tk.Button(self, text="Home", command=self.back_home)
-        self.button_tier_hinzufuegen = tk.Button(self,
-                                                 text="Tier Hinzufügen", command=self.tier_hinzufuegen)
+        self.button_zurueck_home = ttk.Button(self, text="Home", command=self.back_home)
+        self.button_tier_hinzufuegen = ttk.Button(self, text="Tier Hinzufügen", command=self.tier_hinzufuegen)
 
         try:
             self.image = Image.open(konstanten.KANGAROO_PFAD)
@@ -30,8 +29,8 @@ class TierUebersichtFenster(tk.Tk):
 
         if konstanten.DARK_MODE:
             self.config(bg=konstanten.DARK_MODE_COLOR)
-            self.button_zurueck_home.config(bg=konstanten.DARK_MODE_COLOR)
-            self.button_zurueck_home.config(fg='#FFFFFF')
+            # self.button_zurueck_home.configure(background=konstanten.DARK_MODE_COLOR)
+            # self.button_zurueck_home.config(fg='#FFFFFF')
 
         self.tier_frame = tk.Frame(self)
         self.tier_frame.grid(row=1, column=0)
@@ -86,18 +85,18 @@ class TierErstellen(tk.Toplevel):
         if not self.tierarten_liste:
             self.tierarten_liste = ["leer"]
 
-        self.entry_artname = tk.OptionMenu(self, self.artname, *self.tierarten_liste)
+        self.entry_artname = ttk.OptionMenu(self, self.artname, *self.tierarten_liste)
         self.button_tierart_hinzufuegen = tk.Button(self, text="+", command=self.tierart_hinzufuegen)
 
-        self.label_name = tk.Label(self, text="Name:")
-        self.entry_name = tk.Entry(self)
-        self.label_geburtsdatum = tk.Label(self, text="Geburtsdatum:")
-        self.entry_geburtsdatum = tk.Entry(self)
-        self.label_geschlecht = tk.Label(self, text="Geschlecht:")
+        self.label_name = ttk.Label(self, text="Name:")
+        self.entry_name = ttk.Entry(self)
+        self.label_geburtsdatum = ttk.Label(self, text="Geburtsdatum:")
+        self.entry_geburtsdatum = ttk.Entry(self)
+        self.label_geschlecht = ttk.Label(self, text="Geschlecht:")
         self.tiergeschlecht = tk.StringVar()
         self.tiergeschlecht.set("Geschlecht...")
-        self.entry_geschlecht = tk.OptionMenu(self, self.tiergeschlecht, *konstanten.TIERGESCHLECHTER)
-        self.button_create = tk.Button(self, text="Erstelle Tier", command=self.create_tier)
+        self.entry_geschlecht = ttk.OptionMenu(self, self.tiergeschlecht, *konstanten.TIERGESCHLECHTER)
+        self.button_create = ttk.Button(self, text="Erstelle Tier", command=self.create_tier)
 
         self.label_artname.grid(row=0, column=0)
         self.entry_artname.grid(row=0, column=1)
