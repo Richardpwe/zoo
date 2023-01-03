@@ -3,6 +3,8 @@ from tkinter import ttk
 from PIL import Image, ImageTk
 import zoo
 import konstanten
+import pickle
+import zoo
 
 
 class EinstellungenFenster(tk.Tk):
@@ -15,7 +17,7 @@ class EinstellungenFenster(tk.Tk):
 
         self.button_zurueck_home = ttk.Button(self, text="Home", command=self.back_home)
         self.button_zoo_laden = ttk.Button(self, text="Zoo laden...", command=self.zoo_laden)
-        self.button_zoo_exportieren = ttk.Button(self, text="Zoo exportieren...", command=self.zoo_exportieren)
+        self.button_zoo_exportieren = ttk.Button(self, text="Zoo exportieren...", command=self.zoo_exportieren())
 
         if konstanten.DARK_MODE:
             self.config(bg=konstanten.DARK_MODE_COLOR)
@@ -33,9 +35,21 @@ class EinstellungenFenster(tk.Tk):
         #inhalt aus zoo.pickle mit dem zoo konstruktor laden
         print("Du hättest den Zoo erfolgreich geladen, falls Nico nicht so unfähig wäre.")
 
-    def zoo_exportieren(self):
-        #das Objekt zoo in die zoo.pickle reintun
+    def zoo_exportieren1(self):
+        # das Objekt zoo in die zoo.pickle reintun
         print("Du hättest den Zoo erfolgreich exportiert, falls Nico nicht so unfähig wäre.")
+        dateipfad = 'C:/Users/nicop/Documents'
+        with open(dateipfad, 'wb') as file:
+            pickle.dump(self, file)
+
+    def zoo_exportieren(self):
+        import os
+        desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
+
+        with open(os.path.join(desktop, "zooExport.pickle"), "w") as f:
+            pickle.dump(self, file)
+
+
 
     def run(self):
         self.mainloop()
