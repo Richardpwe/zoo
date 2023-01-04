@@ -3,6 +3,7 @@ from tkinter import ttk
 from PIL import Image, ImageTk
 import zoo
 import konstanten
+import os
 
 
 class TierUebersichtFenster(tk.Tk):
@@ -19,8 +20,9 @@ class TierUebersichtFenster(tk.Tk):
         try:
             self.image = Image.open(konstanten.KANGAROO_PFAD)
             self.image = self.image.resize((100, 100))
-            # if konstanten.DARK_MODE:
             self.photo = ImageTk.PhotoImage(self.image)
+            if os.path.exists(konstanten.KANGAROO_PFAD):
+                print("Bilddatei gefunden")
         except FileNotFoundError:
             print("Bilddatei nicht gefunden")
 
@@ -44,16 +46,16 @@ class TierUebersichtFenster(tk.Tk):
             new_frame = ttk.Frame(self.tier_frame)
             tiername = tier.get_tiername()
             new_frame.bind("<Button-1>", lambda event, arg=tiername: self.neue_tierinfo(event, arg))
+
             bild_label = ttk.Label(new_frame, image=self.photo)
+            bild_label.grid(row=0, column=0)
+
             text_label = ttk.Label(new_frame, text=tier.name)
             text_label.grid(row=1, column=0)
             text2_label = ttk.Label(new_frame, text=tier.get_artname())
             text2_label.grid(row=2, column=0)
 
-            bild_label.grid(row=0, column=0)
-
             for widget in new_frame.winfo_children():
-                print(tiername)
                 widget.bind("<Button-1>", lambda event, arg=tiername: self.neue_tierinfo(event, arg))
 
             if col < 4:
@@ -69,8 +71,6 @@ class TierUebersichtFenster(tk.Tk):
 
     def neue_tierinfo(self, event, tiername):
         widget = event.widget
-        print(widget)
-        print(tiername)
         TierInfo(self, tiername)
 
     def update(self):
@@ -83,7 +83,9 @@ class TierUebersichtFenster(tk.Tk):
         zoo.neuer_zoo.zoo_speichern()
 
     def back_home(self):
+        from Hauptmenue import Hauptmenue
         self.destroy()
+        Hauptmenue()
 
     def run(self):
         self.mainloop()
@@ -96,7 +98,6 @@ class TierInfo(tk.Toplevel):
         self.iconbitmap("favicon-zoo.ico")
         self.parent = parent
         self.tier = zoo.neuer_zoo.get_tiere_by_name(tiername)
-        print(tiername)
 
         self.image = Image.open(konstanten.KANGAROO_PFAD)
         self.image = self.image.resize((200, 200))
@@ -236,7 +237,6 @@ class TierartErstellen(tk.Toplevel):
         self.button_save_tierart.grid(row=3, column=1)
 
     def save_tierart(self):
-
         tierart_name = self.entry_tierart_name.get()
         tierklasse = self.tierklasse.get()
         futter = self.futter_auswahl.get()

@@ -30,7 +30,9 @@ class EinstellungenFenster(tk.Tk):
         self.button_zoo_exportieren.grid(row=0, column=2)
 
     def back_home(self):
+        from Hauptmenue import Hauptmenue
         self.destroy()
+        Hauptmenue()
 
     def zoo_laden(self):
         file_path = filedialog.askopenfilename()
