@@ -71,6 +71,7 @@ class TierUebersichtFenster(tk.Tk):
 
     def neue_tierinfo(self, event, tiername):
         widget = event.widget
+        print(widget)
         TierInfo(self, tiername)
 
     def update(self):

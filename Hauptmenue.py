@@ -1,8 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
 import konstanten
-import zoo
-from Tieruebersicht import  TierUebersichtFenster
+# import zoo
+from Tieruebersicht import TierUebersichtFenster
 from einstellungen import EinstellungenFenster
 
 
