@@ -32,7 +32,7 @@ class TierUebersichtFenster(tk.Tk):
             # self.button_zurueck_home.configure(background=konstanten.DARK_MODE_COLOR)
             # self.button_zurueck_home.config(fg='#FFFFFF')
 
-        self.tier_frame = tk.Frame(self)
+        self.tier_frame = ttk.Frame(self)
         self.tier_frame.grid(row=1, column=0)
         self.tiere_anzeigen()
 
@@ -76,7 +76,7 @@ class TierUebersichtFenster(tk.Tk):
     def update(self):
 
         self.tier_frame.destroy()
-        self.tier_frame = tk.Frame(self)
+        self.tier_frame = ttk.Frame(self)
         self.tier_frame.grid(row=1, column=0)
         self.tiere_anzeigen()
 
@@ -153,11 +153,10 @@ class TierErstellen(tk.Toplevel):
         self.tierarten_liste = zoo.neuer_zoo.get_tierarten_namen()
 
         self.artname = tk.StringVar()
-        self.artname.set("Tierart...")
         if not self.tierarten_liste:
             self.tierarten_liste = ["leer"]
 
-        self.entry_artname = ttk.OptionMenu(self, self.artname, *self.tierarten_liste)
+        self.entry_artname = ttk.OptionMenu(self, self.artname, 'Tierart...', *self.tierarten_liste)
         self.button_tierart_hinzufuegen = ttk.Button(self, text="+", command=self.tierart_hinzufuegen)
 
         self.label_name = ttk.Label(self, text="Name:")
@@ -166,8 +165,7 @@ class TierErstellen(tk.Toplevel):
         self.entry_geburtsdatum = ttk.Entry(self)
         self.label_geschlecht = ttk.Label(self, text="Geschlecht:")
         self.tiergeschlecht = tk.StringVar()
-        self.tiergeschlecht.set("Geschlecht...")
-        self.entry_geschlecht = ttk.OptionMenu(self, self.tiergeschlecht, *konstanten.TIERGESCHLECHTER)
+        self.entry_geschlecht = ttk.OptionMenu(self, self.tiergeschlecht, 'Geschlecht...', *konstanten.TIERGESCHLECHTER)
         self.button_create = ttk.Button(self, text="Erstelle Tier", command=self.create_tier)
 
         self.label_artname.grid(row=0, column=0)
@@ -195,7 +193,7 @@ class TierErstellen(tk.Toplevel):
     def update(self):
         self.tierarten_liste = zoo.neuer_zoo.get_tierarten_namen()
         self.entry_artname.destroy()
-        self.entry_artname = ttk.OptionMenu(self, self.artname, *self.tierarten_liste)
+        self.entry_artname = ttk.OptionMenu(self, self.artname, 'Tierart...', *self.tierarten_liste)
         self.entry_artname.grid(row=0, column=1)
 
         zoo.neuer_zoo.zoo_speichern()
@@ -216,17 +214,14 @@ class TierartErstellen(tk.Toplevel):
         self.entry_tierart_name = ttk.Entry(self)
         self.label_tierklasse = ttk.Label(self, text="Tierklasse:")
         self.tierklasse = tk.StringVar()
-        self.tierklasse.set("Tierklasse...")
-        self.entry_tierklasse = ttk.OptionMenu(self, self.tierklasse, *konstanten.TIERKLASSEN)
+        self.entry_tierklasse = ttk.OptionMenu(self, self.tierklasse, 'Tierklasse...', *konstanten.TIERKLASSEN)
         self.label_futter = ttk.Label(self, text="Futter:")
 
         self.futter_auswahl = tk.StringVar()
         if not self.futter_liste:
             self.futter_liste = ["leer"]
 
-        self.futter_auswahl.set("Futter...")
-
-        self.entry_futter = ttk.OptionMenu(self, self.futter_auswahl, *self.futter_liste)
+        self.entry_futter = ttk.OptionMenu(self, self.futter_auswahl, 'Futter...', *self.futter_liste)
         self.button_futter_hinzufuegen = ttk.Button(self, text="+", command=self.futter_hinzufuegen)
 
         self.button_save_tierart = ttk.Button(self, text="Speichern", command=self.save_tierart)
@@ -257,6 +252,8 @@ class TierartErstellen(tk.Toplevel):
         self.entry_futter.destroy()
         self.entry_futter = ttk.OptionMenu(self, self.futter_auswahl, *self.futter_liste)
         self.entry_futter.grid(row=2, column=1)
+
+        self.tierklasse.set("Tierklasse...")
 
         zoo.neuer_zoo.zoo_speichern()
 
