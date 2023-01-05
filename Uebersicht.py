@@ -27,9 +27,10 @@ class UebersichtFenster(tk.Tk):
         self.label_anzahl_personal = ttk.Label(self, text="Gesamtanzahl Mitarbeiter:")
         self.label_anzahl_personal_wert = ttk.Label(self, text=zoo.neuer_zoo.get_personal_anzahl())
 
-        self.diagram = tk.StringVar()
-        diagramme = ["Futterbedarf", "Geburtsdaten", "Anzeige..."]
-        self.entry_diagram_auswahl = ttk.OptionMenu(self, self.diagram, 'Anzeige...', *diagramme)
+
+        combo = ttk.Combobox(self)
+        combo['values'] = ['Geburtsdaten Tiere', 'Geburtsdaten Personal', 'Futterbedarf', 'Geschlechterverteilung Tiere']
+        combo.current(0)  # Setze die Standardauswahl auf "Option 1"
 
         if konstanten.DARK_MODE:
             self.config(bg=konstanten.DARK_MODE_COLOR)
@@ -39,9 +40,29 @@ class UebersichtFenster(tk.Tk):
         self.button_zurueck_home.grid(row=0, column=0)
         self.label_anzahl_tiere.grid(row=1, column=3)
         self.label_anzahl_tiere_wert.grid(row=1, column=4)
-        self.entry_diagram_auswahl.grid(row=3, column=0)
+        combo.grid(row=3, column=0)
         self.label_anzahl_personal.grid(row=2, column=3)
-        self.ausgabe_geburtsdaten()
+
+        # Erstelle eine Funktion zum Bearbeiten der Auswahl in der Combobox
+        def combo_selection(event):
+            selection = combo.get()  # Lese die aktuelle Auswahl aus der Combobox
+            if selection == 'Geburtsdaten Tiere':
+                # Zeige Geburtsdaten Tiere an
+                print("Geburtsdaten Tiere")
+                self.ausgabe_geburtsdaten()
+            elif selection == 'Geburtsdaten Personal':
+                # Zeige Geburtsdaten Personal an
+                print("Geburtsdaten Personal")
+            elif selection == 'Futterbedarf':
+                # Zeige Futterbedarf an
+                print("Futterbedarf")
+            elif selection == 'Geschlechterverteilung Tiere':
+                # Zeige Geschlechterverteilung an
+                print("Geschlechterverteilung")
+
+        # Binde die Funktion an das "comboboxselected" -Ereignis
+        combo.bind("<<ComboboxSelected>>", combo_selection)
+
 
     def ausgabe_geburtsdaten(self):
         # Erstelle das Histogramm-Figure
