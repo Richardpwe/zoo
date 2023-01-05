@@ -4,6 +4,8 @@ from PIL import Image, ImageTk
 import tkinter.filedialog as filedialog
 import zoo
 import konstanten
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import pickle
 import os
 
@@ -21,10 +23,9 @@ class UebersichtFenster(tk.Tk):
 
         self.button_zurueck_home = ttk.Button(self, text="Home", command=self.back_home)
         self.label_anzahl_tiere = ttk.Label(self, text="Gesamtanzahl Tiere:")
-        anzahl_tiere = 10 #zoo.Zoo.get_tiere_anzahl(self)
-        self.label_anzahl_tiere_wert = ttk.Label(self, text=anzahl_tiere)
+        self.label_anzahl_tiere_wert = ttk.Label(self, text=zoo.neuer_zoo.get_tiere_anzahl())
         self.label_anzahl_personal = ttk.Label(self, text="Gesamtanzahl Mitarbeiter:")
-        # self.label_anzahl_personal_wert = ttk.Label(self, text=zoo.Zoo.get_personal_anzahl)
+        self.label_anzahl_personal_wert = ttk.Label(self, text=zoo.neuer_zoo.get_personal_anzahl())
 
         self.diagram = tk.StringVar()
         diagramme = ["Futterbedarf", "Geburtsdaten", "Anzeige..."]
@@ -39,10 +40,39 @@ class UebersichtFenster(tk.Tk):
         self.label_anzahl_tiere.grid(row=1, column=3)
         self.label_anzahl_tiere_wert.grid(row=1, column=4)
         self.entry_diagram_auswahl.grid(row=3, column=0)
-        # self.label_anzahl_personal.grid(row=2,column=3)
+        self.label_anzahl_personal.grid(row=2, column=3)
+        self.ausgabe_geburtsdaten()
 
-    #def ausgabe_geburtsdaten(self):
+    def ausgabe_geburtsdaten(self):
+        # Erstelle das Histogramm-Figure
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
 
+        # Liste von Geburtsdaten im Format (Jahr, Monat, Tag)
+        birthdays = [
+            (1980, 1, 1),
+            (1985, 3, 15),
+            (1990, 9, 20),
+            (1995, 4, 5),
+            (2000, 6, 30),
+            (2005, 8, 15),
+            (2010, 12, 31),
+        ]
+
+        # Extrahiere die Jahre aus den Geburtsdaten und speichere sie in einer Liste
+        years = [year for (year, month, day) in birthdays]
+
+        # Erstelle das Histogramm
+        ax.hist(years, bins=50)
+
+        # Füge eine Beschriftung hinzu
+        ax.set_xlabel('Jahr')
+        ax.set_ylabel('Anzahl der Geburten')
+
+        # Erstelle ein Canvas-Element, um das Histogramm anzuzeigen
+        canvas = FigureCanvasTkAgg(fig, master=self)
+        canvas.draw()
+        canvas.get_tk_widget().grid(row=3, column=5)
 
     def back_home(self):
         from Hauptmenue import Hauptmenue

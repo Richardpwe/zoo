@@ -57,7 +57,10 @@ class Zoo(object):
                 del self.tiere[index]
 
     def get_tiere_anzahl(self):
-        return self.tiere
+        return len(self.tiere)
+
+    def get_personal_anzahl(self):
+        return len(self.personal)
 
     def zoo_speichern(self):
         with open('zoo.pickle', 'wb') as zoo_datei:
