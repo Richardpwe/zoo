@@ -14,6 +14,8 @@ class EinstellungenFenster(tk.Tk):
 
         self.title("Einstellungen")
         self.geometry('500x250')
+        # Fenster in die Mitte des Bildschirms
+        self.geometry("+{}+{}".format(int(self.winfo_screenwidth() / 2 - 200), int(self.winfo_screenheight() / 2 - 150)))
         self.iconbitmap("favicon-zoo.ico")
 
         self.button_zurueck_home = ttk.Button(self, text="Home", command=self.back_home)

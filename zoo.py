@@ -56,6 +56,9 @@ class Zoo(object):
                 index = self.tiere.index(tier)
                 del self.tiere[index]
 
+    def get_tiere_anzahl(self):
+        return self.tiere
+
     def zoo_speichern(self):
         with open('zoo.pickle', 'wb') as zoo_datei:
             pickle.dump(self, zoo_datei)

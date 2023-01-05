@@ -4,6 +4,7 @@ import konstanten
 # import zoo
 from Tieruebersicht import TierUebersichtFenster
 from einstellungen import EinstellungenFenster
+from Uebersicht import UebersichtFenster
 
 
 class Hauptmenue(tk.Tk):
@@ -26,7 +27,7 @@ class Hauptmenue(tk.Tk):
         self.button_2.pack(pady=10)
 
         # Button erstellen, um Fenster 3 zu öffnen
-        self.button_3 = ttk.Button(self.frame, text="Fenster 3", command=self.open_tieruebersicht, width=500)
+        self.button_3 = ttk.Button(self.frame, text="Übersicht", command=self.open_uebersicht, width=500)
         self.button_3.pack(pady=10)
 
         # Button erstellen, um Fenster 4 zu öffnen
@@ -58,7 +59,9 @@ class Hauptmenue(tk.Tk):
         print("a")
 
     def open_uebersicht(self):
-        print("a")
+        self.destroy()
+        uebersicht = UebersichtFenster()
+        uebersicht.run()
 
     def open_einstellungen(self):
         self.destroy()
