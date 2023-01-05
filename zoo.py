@@ -90,7 +90,8 @@ class Tierpfleger(Personal):
 
 
 class Tierart(object):
-    def __init__(self, artname, tierklasse, futter):
+    def __init__(self, bild, artname, tierklasse, futter):
+        self.bild = bild
         self.artname = artname
         self.tierklasse = tierklasse
         self.futter = futter
@@ -104,10 +105,13 @@ class Tierart(object):
     def get_futter(self):
         return self.futter
 
+    def get_bild(self):
+        return self.bild
+
 
 class Tier(Tierart):
-    def __init__(self, artname, tierklasse, futter, name, geburtsdatum, geschlecht):
-        super().__init__(artname, tierklasse, futter)
+    def __init__(self, bild, artname, tierklasse, futter, name, geburtsdatum, geschlecht):
+        super().__init__(bild, artname, tierklasse, futter)
         self.name = name
         self.geburtsdatum = geburtsdatum
         self.geschlecht = geschlecht
@@ -116,6 +120,7 @@ class Tier(Tierart):
         self.name = name
         self.geburtsdatum = geburtsdatum
         self.geschlecht = geschlecht
+        self.bild = tierart.get_bild()
         self.artname = tierart.get_artname()
         self.tierklasse = tierart.get_tierklasse()
         self.futter = tierart.get_futter()
@@ -147,4 +152,3 @@ if os.path.exists(file_path):
         neuer_zoo = pickle.load(datei)
 else:
     neuer_zoo = Zoo("name", "strasse", 1, 22222, "ort", "eroeffnungsdatum", [], [], [])
-

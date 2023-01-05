@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, PhotoImage
 from PIL import Image, ImageTk
 import zoo
 import konstanten
@@ -212,6 +212,12 @@ class TierartErstellen(tk.Toplevel):
         self.parent = parent
         self.futter_liste = zoo.neuer_zoo.get_futter_namen()
 
+        self.label_tierart_bild = ttk.Label(self, text="Bild:")
+        self.tierart_foto = tk.PhotoImage(file=konstanten.PLATZHALTER_BILD)
+        self.tierart_foto.subsample(20, 20)
+        self.label_tierart_foto = ttk.Label(self, image=self.tierart_foto)
+        self.button_bild_aendern = ttk.Button(self, text="Bild auswählen", command=self.bild_aendern)
+
         self.label_tierart_name = ttk.Label(self, text="Tierartname:")
         self.entry_tierart_name = ttk.Entry(self)
         self.label_tierklasse = ttk.Label(self, text="Tierklasse:")
@@ -228,14 +234,20 @@ class TierartErstellen(tk.Toplevel):
 
         self.button_save_tierart = ttk.Button(self, text="Speichern", command=self.save_tierart)
 
-        self.label_tierart_name.grid(row=0, column=0)
-        self.entry_tierart_name.grid(row=0, column=1)
-        self.label_tierklasse.grid(row=1, column=0)
-        self.entry_tierklasse.grid(row=1, column=1)
-        self.label_futter.grid(row=2, column=0)
-        self.entry_futter.grid(row=2, column=1)
-        self.button_futter_hinzufuegen.grid(row=2, column=2)
-        self.button_save_tierart.grid(row=3, column=1)
+        self.label_tierart_bild.grid(row=0, column=0)
+        self.label_tierart_foto.grid(row=0, column=1)
+        self.button_bild_aendern.grid(row=0, column=2)
+        self.label_tierart_name.grid(row=1, column=0)
+        self.entry_tierart_name.grid(row=1, column=1)
+        self.label_tierklasse.grid(row=2, column=0)
+        self.entry_tierklasse.grid(row=2, column=1)
+        self.label_futter.grid(row=3, column=0)
+        self.entry_futter.grid(row=3, column=1)
+        self.button_futter_hinzufuegen.grid(row=3, column=2)
+        self.button_save_tierart.grid(row=4, column=1)
+
+    def bild_aendern(self):
+        TierartBildAuswahl(self)
 
     def save_tierart(self):
         tierart_name = self.entry_tierart_name.get()
@@ -269,25 +281,21 @@ class TierartBildAuswahl(tk.Toplevel):
         self.iconbitmap("favicon-zoo.ico")
         self.parent = parent
 
-        self.label_futter_name = ttk.Label(self, text="Futtername:")
-        self.entry_futter_name = ttk.Entry(self)
-        self.label_preis = ttk.Label(self, text="Preis:")
-        self.entry_preis = ttk.Entry(self)
+        self.bilder_frame = ttk.Frame(self)
+        self.bilder_frame.grid(row=0, column=0)
 
-        self.button_save_futter = ttk.Button(self, text="Speichern", command=self.save_futter)
+        self.bilder = konstanten.TIERFOTOS
 
-        self.label_futter_name.grid(row=0, column=0)
-        self.entry_futter_name.grid(row=0, column=1)
-        self.label_preis.grid(row=1, column=0)
-        self.entry_preis.grid(row=1, column=1)
-        self.button_save_futter.grid(row=2, column=1)
+        for bild in self.bilder:
+            foto = tk.PhotoImage(file=bild)
+            label = ttk.Label(self.bilder_frame, image=foto)
 
-    def save_futter(self):
-        futter_name = self.entry_futter_name.get()
-        preis = self.entry_preis.get()
+        self.button_abbruch = ttk.Button(self, text="OK", command=self.destroy)
+        self.button_abbruch.grid(row=1, column=0)
+        self.button_set_bild = ttk.Button(self, text="OK", command=self.bild_uebergeben)
+        self.button_set_bild.grid(row=1, column=1)
 
-        futter = zoo.Futter(futter_name, preis)
-        zoo.neuer_zoo.futter.append(futter)
+    def bild_uebergeben(self):
 
         self.parent.update()
         self.destroy()
