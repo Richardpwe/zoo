@@ -213,8 +213,9 @@ class TierartErstellen(tk.Toplevel):
         self.futter_liste = zoo.neuer_zoo.get_futter_namen()
 
         self.label_tierart_bild = ttk.Label(self, text="Bild:")
-        self.tierart_foto = tk.PhotoImage(file=konstanten.PLATZHALTER_BILD)
-        self.tierart_foto.subsample(20, 20)
+        self.tierart_bild = Image.open(konstanten.PLATZHALTER_BILD)
+        self.tierart_bild = self.tierart_bild.resize((50, 50))
+        self.tierart_foto = ImageTk.PhotoImage(self.tierart_bild)
         self.label_tierart_foto = ttk.Label(self, image=self.tierart_foto)
         self.button_bild_aendern = ttk.Button(self, text="Bild auswählen", command=self.bild_aendern)
 
@@ -285,10 +286,26 @@ class TierartBildAuswahl(tk.Toplevel):
         self.bilder_frame.grid(row=0, column=0)
 
         self.bilder = konstanten.TIERFOTOS
+        self.row = 0
+        self.col = 0
 
         for bild in self.bilder:
-            foto = tk.PhotoImage(file=bild)
-            label = ttk.Label(self.bilder_frame, image=foto)
+            if self.col < 4:
+                self.tierart_bild = Image.open(bild)
+                self.tierart_bild = self.tierart_bild.resize((50, 50))
+                self.tierart_foto = ImageTk.PhotoImage(self.tierart_bild)
+                self.label_tierart_foto = ttk.Label(self, image=self.tierart_foto)
+                self.col += 1
+            else:
+                self.col = 0
+                self.row += 1
+
+                self.tierart_bild = Image.open(bild)
+                self.tierart_bild = self.tierart_bild.resize((50, 50))
+                self.tierart_foto = ImageTk.PhotoImage(self.tierart_bild)
+                self.label_tierart_foto = ttk.Label(self, image=self.tierart_foto)
+
+            self.label_tierart_foto.grid(row=0, column=1)
 
         self.button_abbruch = ttk.Button(self, text="OK", command=self.destroy)
         self.button_abbruch.grid(row=1, column=0)
