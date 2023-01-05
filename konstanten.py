@@ -1,4 +1,5 @@
 import os
+
 MAX_LABELS_PER_ROW = 10
 TESTKONSTANTE = 60
 DARK_MODE = False
@@ -6,8 +7,45 @@ DARK_MODE_COLOR = "#777777"
 TIERKLASSEN = ["Säugetier", "Vogel", "Reptil", "Amphib", "Fisch", "Muschel", "Spinnentier", "Insekt"]
 TIERGESCHLECHTER = ["Männlich", "Weiblich", "Unbekannt"]
 
-
 # Dateipfade Tiere
+TIERFOTOS = [
+    os.path.join(os.path.dirname(__file__), 'icons', 'noun-bear-1866942.png'),
+    os.path.join(os.path.dirname(__file__), 'icons', 'noun-butterfly-1866908.png'),
+    os.path.join(os.path.dirname(__file__), 'icons', 'noun-camel-1866909.png'),
+    os.path.join(os.path.dirname(__file__), 'icons', 'noun-cat-1866911.png'),
+    os.path.join(os.path.dirname(__file__), 'icons', 'noun-cow-1866910.png'),
+    os.path.join(os.path.dirname(__file__), 'icons', 'noun-crab-1866912.png'),
+    os.path.join(os.path.dirname(__file__), 'icons', 'noun-crocodile-1866913.png'),
+    os.path.join(os.path.dirname(__file__), 'icons', 'noun-deer-1866915.png'),
+    os.path.join(os.path.dirname(__file__), 'icons', 'noun-dog-1866922.png'),
+    os.path.join(os.path.dirname(__file__), 'icons', 'noun-elephant-1866916.png'),
+    os.path.join(os.path.dirname(__file__), 'icons', 'noun-flamingo-1866938.png'),
+    os.path.join(os.path.dirname(__file__), 'icons', 'noun-fox-1866920.png'),
+    os.path.join(os.path.dirname(__file__), 'icons', 'noun-giraffe-1866914.png'),
+    os.path.join(os.path.dirname(__file__), 'icons', 'noun-goose-1866923.png'),
+    os.path.join(os.path.dirname(__file__), 'icons', 'noun-hen-1866919.png'),
+    os.path.join(os.path.dirname(__file__), 'icons', 'noun-horse-1866917.png'),
+    os.path.join(os.path.dirname(__file__), 'icons', 'noun-kangaroo-1866921.png'),
+    os.path.join(os.path.dirname(__file__), 'icons', 'noun-koala-1866918.png'),
+    os.path.join(os.path.dirname(__file__), 'icons', 'noun-lion-1866930.png'),
+    os.path.join(os.path.dirname(__file__), 'icons', 'noun-monkey-1866924.png'),
+    os.path.join(os.path.dirname(__file__), 'icons', 'noun-mouse-1866926.png'),
+    os.path.join(os.path.dirname(__file__), 'icons', 'noun-ostrich-1866925.png'),
+    os.path.join(os.path.dirname(__file__), 'icons', 'noun-owl-1866927.png'),
+    os.path.join(os.path.dirname(__file__), 'icons', 'noun-penguin-1866931.png'),
+    os.path.join(os.path.dirname(__file__), 'icons', 'noun-pig-1866940.png'),
+    os.path.join(os.path.dirname(__file__), 'icons', 'noun-rabbit-1866933.png'),
+    os.path.join(os.path.dirname(__file__), 'icons', 'noun-rhinoceros-1866928.png'),
+    os.path.join(os.path.dirname(__file__), 'icons', 'noun-shark-1866939.png'),
+    os.path.join(os.path.dirname(__file__), 'icons', 'noun-sheep-1866935.png'),
+    os.path.join(os.path.dirname(__file__), 'icons', 'noun-snake-1866936.png'),
+    os.path.join(os.path.dirname(__file__), 'icons', 'noun-squid-1866932.png'),
+    os.path.join(os.path.dirname(__file__), 'icons', 'noun-tiger-1866929.png'),
+    os.path.join(os.path.dirname(__file__), 'icons', 'noun-turtle-1866934.png'),
+    os.path.join(os.path.dirname(__file__), 'icons', 'noun-whale-1866937.png'),
+    os.path.join(os.path.dirname(__file__), 'icons', 'noun-zebra-1866941.png')
+]
+
 BEAR_PFAD = os.path.join(os.path.dirname(__file__), 'icons', 'noun-bear-1866942.png')
 BUTTERFLY_PFAD = os.path.join(os.path.dirname(__file__), 'icons', 'noun-butterfly-1866908.png')
 CAMEL_PFAD = os.path.join(os.path.dirname(__file__), 'icons', 'noun-camel-1866909.png')
