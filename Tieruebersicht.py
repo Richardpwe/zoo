@@ -262,6 +262,37 @@ class TierartErstellen(tk.Toplevel):
         FutterErstellen(self)
 
 
+class TierartBildAuswahl(tk.Toplevel):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.title("Bild auswählen")
+        self.iconbitmap("favicon-zoo.ico")
+        self.parent = parent
+
+        self.label_futter_name = ttk.Label(self, text="Futtername:")
+        self.entry_futter_name = ttk.Entry(self)
+        self.label_preis = ttk.Label(self, text="Preis:")
+        self.entry_preis = ttk.Entry(self)
+
+        self.button_save_futter = ttk.Button(self, text="Speichern", command=self.save_futter)
+
+        self.label_futter_name.grid(row=0, column=0)
+        self.entry_futter_name.grid(row=0, column=1)
+        self.label_preis.grid(row=1, column=0)
+        self.entry_preis.grid(row=1, column=1)
+        self.button_save_futter.grid(row=2, column=1)
+
+    def save_futter(self):
+        futter_name = self.entry_futter_name.get()
+        preis = self.entry_preis.get()
+
+        futter = zoo.Futter(futter_name, preis)
+        zoo.neuer_zoo.futter.append(futter)
+
+        self.parent.update()
+        self.destroy()
+
+
 class FutterErstellen(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
