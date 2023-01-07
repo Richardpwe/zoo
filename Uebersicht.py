@@ -27,7 +27,6 @@ class UebersichtFenster(tk.Tk):
         self.label_anzahl_personal = ttk.Label(self, text="Gesamtanzahl Mitarbeiter:")
         self.label_anzahl_personal_wert = ttk.Label(self, text=zoo.neuer_zoo.get_personal_anzahl())
 
-
         combo = ttk.Combobox(self)
         combo['values'] = ['Geburtsdaten Tiere', 'Geburtsdaten Personal', 'Futterbedarf', 'Geschlechterverteilung Tiere']
         combo.current(0)  # Setze die Standardauswahl auf "Option 1"

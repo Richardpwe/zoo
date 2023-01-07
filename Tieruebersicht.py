@@ -1,9 +1,8 @@
 import tkinter as tk
-from tkinter import ttk, PhotoImage
+from tkinter import ttk
 from PIL import Image, ImageTk
 import zoo
 import konstanten
-import os
 
 
 class TierUebersichtFenster(tk.Tk):
@@ -17,14 +16,9 @@ class TierUebersichtFenster(tk.Tk):
         self.button_zurueck_home = ttk.Button(self, text="Home", command=self.back_home)
         self.button_tier_hinzufuegen = ttk.Button(self, text="Tier Hinzufügen", command=self.tier_hinzufuegen)
 
-        try:
-            self.image = Image.open(konstanten.KANGAROO_PFAD)
-            self.image = self.image.resize((100, 100))
-            self.photo = ImageTk.PhotoImage(self.image)
-            if os.path.exists(konstanten.KANGAROO_PFAD):
-                print("Bilddatei gefunden")
-        except FileNotFoundError:
-            print("Bilddatei nicht gefunden")
+        self.image = Image.open(konstanten.KANGAROO_PFAD)
+        self.image = self.image.resize((100, 100))
+        self.photo = ImageTk.PhotoImage(self.image)
 
         self.button_zurueck_home.grid(row=0, column=0)
         self.button_tier_hinzufuegen.grid(row=0, column=1)
@@ -254,8 +248,9 @@ class TierartErstellen(tk.Toplevel):
         tierart_name = self.entry_tierart_name.get()
         tierklasse = self.tierklasse.get()
         futter = self.futter_auswahl.get()
+        bild = "bild"
 
-        tierart = zoo.Tierart(tierart_name, tierklasse, zoo.neuer_zoo.get_futter_by_name(futter))
+        tierart = zoo.Tierart(bild, tierart_name, tierklasse, zoo.neuer_zoo.get_futter_by_name(futter))
         zoo.neuer_zoo.tierarten.append(tierart)
 
         self.parent.update()
@@ -280,6 +275,7 @@ class TierartBildAuswahl(tk.Toplevel):
         super().__init__(parent)
         self.title("Bild auswählen")
         self.iconbitmap("favicon-zoo.ico")
+        self.geometry("800" + "x600")
         self.parent = parent
 
         self.bilder_frame = ttk.Frame(self)
@@ -290,32 +286,32 @@ class TierartBildAuswahl(tk.Toplevel):
         self.col = 0
 
         for bild in self.bilder:
+            # print(bild)
+            try:
+                tierart_bild = Image.open(bild)
+            except IOError:
+                print("Konnte Bild nicht öffnen:", bild)
+                continue
+            tierart_bild = tierart_bild.resize((50, 50))
+            tierart_bild = ImageTk.PhotoImage(tierart_bild)
+            label_tierart_foto = ttk.Label(self.bilder_frame, image=tierart_bild, text="a")
+
             if self.col < 4:
-                self.tierart_bild = Image.open(bild)
-                self.tierart_bild = self.tierart_bild.resize((50, 50))
-                self.tierart_foto = ImageTk.PhotoImage(self.tierart_bild)
-                self.label_tierart_foto = ttk.Label(self, image=self.tierart_foto)
+                label_tierart_foto.grid(row=self.row, column=self.col)
                 self.col += 1
             else:
                 self.col = 0
                 self.row += 1
+                label_tierart_foto.grid(row=self.row, column=self.col)
 
-                self.tierart_bild = Image.open(bild)
-                self.tierart_bild = self.tierart_bild.resize((50, 50))
-                self.tierart_foto = ImageTk.PhotoImage(self.tierart_bild)
-                self.label_tierart_foto = ttk.Label(self, image=self.tierart_foto)
-
-            self.label_tierart_foto.grid(row=0, column=1)
-
-        self.button_abbruch = ttk.Button(self, text="OK", command=self.destroy)
-        self.button_abbruch.grid(row=1, column=0)
-        self.button_set_bild = ttk.Button(self, text="OK", command=self.bild_uebergeben)
-        self.button_set_bild.grid(row=1, column=1)
+        self.button_ok = ttk.Button(self, text="OK", command=self.bild_uebergeben)
+        self.button_ok.grid(row=1, column=0)
+        self.button_ok2 = ttk.Button(self, text="OK", command=self.bild_uebergeben)
+        self.button_ok2.grid(row=1, column=1)
 
     def bild_uebergeben(self):
-
-        self.parent.update()
         self.destroy()
+        self.parent.update()
 
 
 class FutterErstellen(tk.Toplevel):

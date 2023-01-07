@@ -10,7 +10,10 @@ TIERGESCHLECHTER = ["Männlich", "Weiblich", "Unbekannt"]
 # Dateipfade Tiere
 TIERFOTOS = [
     os.path.join(os.path.dirname(__file__), 'icons', 'noun-bear-1866942.png'),
-    os.path.join(os.path.dirname(__file__), 'icons', 'noun-butterfly-1866908.png'),
+    os.path.join(os.path.dirname(__file__), 'icons', 'noun-butterfly-1866908.png')
+]
+
+A = [
     os.path.join(os.path.dirname(__file__), 'icons', 'noun-camel-1866909.png'),
     os.path.join(os.path.dirname(__file__), 'icons', 'noun-cat-1866911.png'),
     os.path.join(os.path.dirname(__file__), 'icons', 'noun-cow-1866910.png'),
