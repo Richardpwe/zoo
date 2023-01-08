@@ -10,6 +10,8 @@ TIERGESCHLECHTER = ["Männlich", "Weiblich", "Unbekannt"]
 # Dateipfade Tiere
 PLATZHALTER_BILD = os.path.join(os.path.dirname(__file__), 'icons', 'noun-square.png')
 
+ZOO_LOGO_PFAD = os.path.join(os.path.dirname(__file__), 'icons', 'noun-zoo-2965351.png')
+
 BEAR_PFAD = os.path.join(os.path.dirname(__file__), 'icons', 'noun-bear-1866942.png')
 BUTTERFLY_PFAD = os.path.join(os.path.dirname(__file__), 'icons', 'noun-butterfly-1866908.png')
 CAMEL_PFAD = os.path.join(os.path.dirname(__file__), 'icons', 'noun-camel-1866909.png')
