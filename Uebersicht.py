@@ -74,7 +74,7 @@ class UebersichtFenster(tk.Tk):
         combo.bind("<<ComboboxSelected>>", combo_selection)
 
     def renew_diagram_frame(self):
-        # Frame löschen und neu hinzufügen
+        # Frame löschen und neu hinzufügen.
         self.diagram_frame.destroy()
         self.diagram_frame = tk.Frame(self)
         self.diagram_frame.grid(row=4, column=1)
