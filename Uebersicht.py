@@ -104,33 +104,27 @@ class UebersichtFenster(tk.Tk):
         # Erstelle ein Canvas-Element und ein Frame, um das Histogramm anzuzeigen
         diagram_geburtstage_frame = tk.Frame(self)
         diagram_geburtstage_frame.grid(row=4, column=1)
-        canvas = FigureCanvasTkAgg(fig, master=diagram_geburtstage_frame)
-        canvas.draw()
-        canvas.get_tk_widget().pack(fill="both", expand=True)
+        canvas1 = FigureCanvasTkAgg(fig, master=diagram_geburtstage_frame)
+        # canvas1.draw()
+        canvas1.get_tk_widget().pack(fill="both", expand=True)
 
     def ausgabe_geschlechter(self):
 
-        male = 10
-        female = 13
 
-        # Definieren Sie die x- und y-Werte der Säulen
-        x = [1, 2]
-        y = [male, female]
+        # Definieren der x- und y-Werte der Säulen
+        beschriftungen = [1, 2]
+        werte = [10, 20]
 
-        # Erstellen Sie die Grafik mit den Säulen
-        plt.bar(x, y)
+        # Erstellen der Grafik mit den Säulen
+        plt.bar(beschriftungen, werte)
 
-        # Setzen Sie die x-Achsenbeschriftungen
-        plt.xticks(x, ["Männlich", "Weiblich"])
-
-        # Gibt die Grafik aus
-        plt.show()
+        # Setzen der x-Achsenbeschriftungen
+        plt.xticks(beschriftungen, ["Männlich", "Weiblich"])
 
         diagram_geschlechter_frame = tk.Frame(self)
         diagram_geschlechter_frame.grid(row=4, column=1)
-        canvas_geschlechter = FigureCanvasTkAgg(plt, master=diagram_geschlechter_frame)
-        canvas_geschlechter.draw()
-        canvas_geschlechter.get_tk_widget().pack(fill="both", expand=True)
+        canvas2 = FigureCanvasTkAgg(plt.gcf(), master=diagram_geschlechter_frame)
+        canvas2.get_tk_widget().pack(fill="both", expand=True)
 
     def back_home(self):
         from Hauptmenue import Hauptmenue
