@@ -3,6 +3,9 @@ from tkinter import ttk
 from PIL import Image, ImageTk
 import konstanten
 
+# Auskommentieren in VS Code mit Strg+K und anschließend Strg+C
+# Aufheben mit Strg+K und anschließend Strg+U
+
 root = tk.Tk()
 
 root.geometry("500x350")
