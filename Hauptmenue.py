@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 import konstanten
+from PIL import Image, ImageTk
 # import zoo
 from Tieruebersicht import TierUebersichtFenster
 from einstellungen import EinstellungenFenster
@@ -11,12 +12,20 @@ class Hauptmenue(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Hauptmenü")
-        self.geometry("500" + "x350")
+        self.geometry("500x430")
         self.iconbitmap("favicon-zoo.ico")
+        self.resizable(width=False, height=False)
 
         # Frame erstellen
         self.frame = ttk.Frame(self)
         self.frame.pack(padx=20, pady=20)
+
+        # Bild einfügen
+        self.image = Image.open(konstanten.KANGAROO_PFAD).resize((200, 200))
+        self.photo = ImageTk.PhotoImage(self.image) 
+
+        self.bild_label = ttk.Label(self.frame, image=self.photo)
+        self.bild_label.pack()
 
         # Button erstellen, um Fenster 1 zu öffnen
         self.button_1 = ttk.Button(self.frame, text="Tierübersicht", command=self.open_tieruebersicht, width=500)
