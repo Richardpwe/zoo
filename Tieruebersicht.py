@@ -147,7 +147,7 @@ class TierInfo(tk.Toplevel):
 class TierErstellen(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
-        self.title("Tier Erstellung Formular")
+        self.title("Tier hinzufügen ...")
         self.iconbitmap("favicon-zoo.ico")
         self.resizable(width=False, height=False)
         self.label_artname = ttk.Label(self, text="Tierart:")
@@ -170,16 +170,16 @@ class TierErstellen(tk.Toplevel):
         self.entry_geschlecht = ttk.OptionMenu(self, self.tiergeschlecht, 'Geschlecht...', *konstanten.TIERGESCHLECHTER)
         self.button_create = ttk.Button(self, text="Erstelle Tier", command=self.create_tier)
 
-        self.label_artname.grid(row=0, column=0)
-        self.entry_artname.grid(row=0, column=1)
-        self.button_tierart_hinzufuegen.grid(row=0, column=2)
-        self.label_name.grid(row=3, column=0)
-        self.entry_name.grid(row=3, column=1)
-        self.label_geburtsdatum.grid(row=4, column=0)
-        self.entry_geburtsdatum.grid(row=4, column=1)
-        self.label_geschlecht.grid(row=5, column=0)
-        self.entry_geschlecht.grid(row=5, column=1)
-        self.button_create.grid(row=6, column=0)
+        self.label_artname.grid(row=0, column=0, sticky="w")
+        self.entry_artname.grid(row=0, column=1, sticky="w")
+        self.button_tierart_hinzufuegen.grid(row=0, column=2, sticky="w")
+        self.label_name.grid(row=3, column=0, sticky="w")
+        self.entry_name.grid(row=3, column=1, sticky="w")
+        self.label_geburtsdatum.grid(row=4, column=0, sticky="w")
+        self.entry_geburtsdatum.grid(row=4, column=1, sticky="w")
+        self.label_geschlecht.grid(row=5, column=0, sticky="w")
+        self.entry_geschlecht.grid(row=5, column=1, sticky="w")
+        self.button_create.grid(row=6, column=0, sticky="w")
 
     def create_tier(self):
         artname = self.artname.get()
@@ -207,7 +207,7 @@ class TierErstellen(tk.Toplevel):
 class TierartErstellen(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
-        self.title("Tierart Erstellung Formular")
+        self.title("Tierart hinzufügen ...")
         self.resizable(width=False, height=False)
         self.iconbitmap("favicon-zoo.ico")
         self.parent = parent
@@ -238,18 +238,18 @@ class TierartErstellen(tk.Toplevel):
 
         self.foto_frame = ttk.Frame(self)
 
-        self.label_tierart_bild.grid(row=0, column=0)
-        self.label_tierart_foto.grid(row=0, column=1)
-        self.button_bild_aendern.grid(row=0, column=2)
-        self.label_tierart_name.grid(row=1, column=0)
-        self.entry_tierart_name.grid(row=1, column=1)
-        self.label_tierklasse.grid(row=2, column=0)
-        self.entry_tierklasse.grid(row=2, column=1)
-        self.label_futter.grid(row=3, column=0)
-        self.entry_futter.grid(row=3, column=1)
-        self.button_futter_hinzufuegen.grid(row=3, column=2)
-        self.button_save_tierart.grid(row=4, column=1)
-        self.foto_frame.grid(row=0, column=3)
+        self.label_tierart_bild.grid(row=0, column=0, sticky="w")
+        self.label_tierart_foto.grid(row=0, column=1, sticky="w")
+        self.button_bild_aendern.grid(row=0, column=2, sticky="w")
+        self.label_tierart_name.grid(row=1, column=0, sticky="w")
+        self.entry_tierart_name.grid(row=1, column=1, sticky="w")
+        self.label_tierklasse.grid(row=2, column=0, sticky="w")
+        self.entry_tierklasse.grid(row=2, column=1, sticky="w")
+        self.label_futter.grid(row=3, column=0, sticky="w")
+        self.entry_futter.grid(row=3, column=1, sticky="w")
+        self.button_futter_hinzufuegen.grid(row=3, column=2, sticky="w")
+        self.button_save_tierart.grid(row=4, column=1, sticky="w")
+        self.foto_frame.grid(row=0, column=3, sticky="w")
 
     def bild_aendern(self):
         TierartBildAuswahl(self)
@@ -335,7 +335,7 @@ class TierartBildAuswahl(tk.Toplevel):
 class FutterErstellen(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
-        self.title("Futter Erstellung Formular")
+        self.title("Futter hinzufügen ...")
         self.resizable(width=False, height=False)
         self.iconbitmap("favicon-zoo.ico")
         self.parent = parent
@@ -347,11 +347,11 @@ class FutterErstellen(tk.Toplevel):
 
         self.button_save_futter = ttk.Button(self, text="Speichern", command=self.save_futter)
 
-        self.label_futter_name.grid(row=0, column=0)
-        self.entry_futter_name.grid(row=0, column=1)
-        self.label_preis.grid(row=1, column=0)
-        self.entry_preis.grid(row=1, column=1)
-        self.button_save_futter.grid(row=2, column=1)
+        self.label_futter_name.grid(row=0, column=0, sticky="w")
+        self.entry_futter_name.grid(row=0, column=1, sticky="w")
+        self.label_preis.grid(row=1, column=0, sticky="w")
+        self.entry_preis.grid(row=1, column=1, sticky="w")
+        self.button_save_futter.grid(row=2, column=1, sticky="w")
 
     def save_futter(self):
         futter_name = self.entry_futter_name.get()
