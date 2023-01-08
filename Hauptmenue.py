@@ -12,40 +12,54 @@ class Hauptmenue(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Hauptmenü")
-        self.geometry("500x430")
+        self.geometry("400x630")
         self.iconbitmap("favicon-zoo.ico")
         self.resizable(width=False, height=False)
 
-        # Frame erstellen
-        self.frame = ttk.Frame(self)
-        self.frame.pack(padx=20, pady=20)
+        # Frames erstellen
+        self.frame_title = ttk.Frame(self)
+        self.frame_title.pack(pady = 20)
+
+        self.frame_menu = ttk.Frame(self)
+        self.frame_menu.pack(padx = 20, pady = 20, )
+
+        self.frame_zooinfo = ttk.Frame(self)
+        self.frame_zooinfo.pack(padx = 20, pady = 20)
+        
+        # Style
+        s = ttk.Style()
+        s.configure('TLabel', font='default 24')
+
+        # Zoo Titel
+        self.label1 = ttk.Label(self.frame_title, text = "Zooverwaltung")
+        self.label1.pack(pady = 10)
 
         # Bild einfügen
-        self.image = Image.open(konstanten.KANGAROO_PFAD).resize((200, 200))
+        self.image = Image.open(konstanten.ZOO_LOGO_PFAD).resize((250, 250))
         self.photo = ImageTk.PhotoImage(self.image) 
 
-        self.bild_label = ttk.Label(self.frame, image=self.photo)
-        self.bild_label.pack()
+        self.bild_label = ttk.Label(self.frame_title, image=self.photo)
+        self.bild_label.pack(pady = 0)
 
         # Button erstellen, um Fenster 1 zu öffnen
-        self.button_1 = ttk.Button(self.frame, text="Tierübersicht", command=self.open_tieruebersicht, width=500)
-        self.button_1.pack(pady=10)
+        self.button_1 = ttk.Button(self.frame_menu, text="Tierübersicht", command=self.open_tieruebersicht, width=500)
+        self.button_1.pack(pady = 10)
 
         # Button erstellen, um Fenster 2 zu öffnen
-        self.button_2 = ttk.Button(self.frame, text="Fenster 2", command=self.open_tieruebersicht, width=500)
-        self.button_2.pack(pady=10)
+        self.button_2 = ttk.Button(self.frame_menu, text="Fenster 2", command=self.open_tieruebersicht, width=500)
+        self.button_2.pack(pady = 10)
 
         # Button erstellen, um Fenster 3 zu öffnen
-        self.button_3 = ttk.Button(self.frame, text="Übersicht", command=self.open_uebersicht, width=500)
-        self.button_3.pack(pady=10)
+        self.button_3 = ttk.Button(self.frame_menu, text="Übersicht", command=self.open_uebersicht, width=500)
+        self.button_3.pack(pady = 10)
 
         # Button erstellen, um Fenster 4 zu öffnen
-        self.button_4 = ttk.Button(self.frame, text="Einstellungen", command=self.open_einstellungen, width=500)
-        self.button_4.pack(pady=10)
+        self.button_4 = ttk.Button(self.frame_menu, text="Einstellungen", command=self.open_einstellungen, width=500)
+        self.button_4.pack(pady = 10)
 
         # Button erstellen, der das Programm beendet, wenn man darauf klickt
-        self.quit_button = ttk.Button(self.frame, text='Beenden', command=self.destroy, width=500)
-        self.quit_button.pack(pady=10)
+        self.quit_button = ttk.Button(self.frame_menu, text='Beenden', command=self.destroy, width=500)
+        self.quit_button.pack(pady = 10)
 
         if konstanten.DARK_MODE:
             style = ttk.Style()
@@ -65,7 +79,7 @@ class Hauptmenue(tk.Tk):
         tier_fenster.run()
 
     def open_personaluebersicht(self):
-        print("a")
+        print("Personaluebersicht")
 
     def open_uebersicht(self):
         self.destroy()
