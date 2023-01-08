@@ -1,0 +1,38 @@
+import tkinter as tk
+from tkinter import ttk
+from PIL import Image, ImageTk
+import konstanten
+
+root = tk.Tk()
+
+root.geometry("500x350")
+# Minimale Fenstergröße
+root.minsize(width = 250, height = 250)
+# Maximale Fenstergröße
+root.maxsize(width = 600, height = 600)
+
+# Fenstergröße sperren
+root.resizable(width=False, height=True)
+
+image = Image.open(konstanten.KANGAROO_PFAD)
+image = image.resize((200, 200))
+
+photo = ImageTk.PhotoImage(image)
+
+bild_label = ttk.Label(image=photo)
+bild_label.pack()
+
+label1 = tk.Label(root, text = "Hallo 007!", bg="#5048F8", highlightcolor="yellow")
+label1.pack(side="top", fill="x")
+
+label2 = tk.Label(root, text = "Moin!", bg="red")
+label2.pack()
+
+label3 = ttk.Label(root, text = "Moin TTK!")
+label3.pack()
+
+for item in label3.keys():
+    print(item, ": ", label3[item])
+
+
+root.mainloop()
