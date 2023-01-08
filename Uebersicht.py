@@ -15,7 +15,7 @@ class UebersichtFenster(tk.Tk):
         super().__init__()
 
         self.title("Übersicht")
-        self.geometry('500x250')
+        self.geometry('1200x700')
         # Fenster in die Mitte des Bildschirms
         self.geometry(
             "+{}+{}".format(int(self.winfo_screenwidth() / 2 - 200), int(self.winfo_screenheight() / 2 - 150)))
@@ -28,7 +28,9 @@ class UebersichtFenster(tk.Tk):
         self.label_anzahl_personal_wert = ttk.Label(self, text=zoo.neuer_zoo.get_personal_anzahl())
 
         combo = ttk.Combobox(self)
-        combo['values'] = ['Geburtsdaten Tiere', 'Geburtsdaten Personal', 'Futterbedarf', 'Geschlechterverteilung Tiere']
+        combo['state'] = 'readonly'
+        combo['values'] = ['Auswahl...', 'Geburtsdaten Tiere', 'Geburtsdaten Personal', 'Futterbedarf',
+                           'Geschlechterverteilung Tiere']
         combo.current(0)  # Setze die Standardauswahl auf "Option 1"
 
         if konstanten.DARK_MODE:
@@ -39,12 +41,17 @@ class UebersichtFenster(tk.Tk):
         self.button_zurueck_home.grid(row=0, column=0)
         self.label_anzahl_tiere.grid(row=1, column=3)
         self.label_anzahl_tiere_wert.grid(row=1, column=4)
+
         combo.grid(row=3, column=0)
         self.label_anzahl_personal.grid(row=2, column=3)
 
         # Erstelle eine Funktion zum Bearbeiten der Auswahl in der Combobox
         def combo_selection(event):
             selection = combo.get()  # Lese die aktuelle Auswahl aus der Combobox
+            if selection == 'Auswahl...':
+                # Zeige leeres Rechteck
+                print("Auswahl...")
+                self.ausgabe_auswahl()
             if selection == 'Geburtsdaten Tiere':
                 # Zeige Geburtsdaten Tiere an
                 print("Geburtsdaten Tiere")
@@ -62,6 +69,10 @@ class UebersichtFenster(tk.Tk):
         # Binde die Funktion an das "comboboxselected" -Ereignis
         combo.bind("<<ComboboxSelected>>", combo_selection)
 
+    def ausgabe_auswahl(self):
+        # Erstelle ein Canvas-Element, um das Histogramm anzuzeigen
+        diagram_auswahl_frame = tk.Frame(self, height=450, width=800, bg="grey")
+        diagram_auswahl_frame.grid(row=3, column=1)
 
     def ausgabe_geburtsdaten(self):
         # Erstelle das Histogramm-Figure
@@ -90,9 +101,14 @@ class UebersichtFenster(tk.Tk):
         ax.set_ylabel('Anzahl der Geburten')
 
         # Erstelle ein Canvas-Element, um das Histogramm anzuzeigen
-        canvas = FigureCanvasTkAgg(fig, master=self)
+        diagram_geburtstage_frame = tk.Frame(self, height=0, width=0, bg="grey")
+
+        diagram_geburtstage_frame.grid(row=3, column=1)
+        canvas = FigureCanvasTkAgg(fig, master=diagram_geburtstage_frame)
         canvas.draw()
-        canvas.get_tk_widget().grid(row=3, column=5)
+        canvas.get_tk_widget().pack(fill="both", expand=True)
+
+
 
     def back_home(self):
         from Hauptmenue import Hauptmenue
