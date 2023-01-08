@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from tkinter import Label
 from PIL import Image, ImageTk
 import zoo
 import konstanten
@@ -229,6 +230,8 @@ class TierartErstellen(tk.Toplevel):
 
         self.button_save_tierart = ttk.Button(self, text="Speichern", command=self.save_tierart)
 
+        self.foto_frame = ttk.Frame(self)
+
         self.label_tierart_bild.grid(row=0, column=0)
         self.label_tierart_foto.grid(row=0, column=1)
         self.button_bild_aendern.grid(row=0, column=2)
@@ -240,9 +243,35 @@ class TierartErstellen(tk.Toplevel):
         self.entry_futter.grid(row=3, column=1)
         self.button_futter_hinzufuegen.grid(row=3, column=2)
         self.button_save_tierart.grid(row=4, column=1)
+        self.foto_frame.grid(row=0, column=3)
 
     def bild_aendern(self):
         TierartBildAuswahl(self)
+
+    def bilder_anzeigen(self):
+        bilder = konstanten.TIERFOTOS
+        row = 0
+        col = 0
+
+        for bild in bilder:
+            # second_frame = ttk.Frame(self.bilder_frame)
+            image = Image.open(bild)
+            image = image.resize((100, 100))
+            photo = ImageTk.PhotoImage(image)
+            label_tierart_foto = ttk.Label(self.foto_frame, image=self.tierart_foto)
+
+            if col < 4:
+                label_tierart_foto.grid(row=row, column=col)
+                col += 1
+            else:
+                col = 0
+                row += 1
+                label_tierart_foto.grid(row=row, column=col)
+
+        # sebutton_ok = ttk.Button(self, text="OK", command=self.bild_uebergeben)
+        # self.button_ok.grid(row=1, column=0)
+        # self.button_ok2 = ttk.Button(self, text="OK", command=self.bild_uebergeben)
+        # self.button_ok2.grid(row=1, column=1)
 
     def save_tierart(self):
         tierart_name = self.entry_tierart_name.get()
@@ -285,16 +314,14 @@ class TierartBildAuswahl(tk.Toplevel):
         self.row = 0
         self.col = 0
 
-        for bild in self.bilder:
-            # print(bild)
-            try:
-                tierart_bild = Image.open(bild)
-            except IOError:
-                print("Konnte Bild nicht öffnen:", bild)
-                continue
-            tierart_bild = tierart_bild.resize((50, 50))
-            tierart_bild = ImageTk.PhotoImage(tierart_bild)
-            label_tierart_foto = ttk.Label(self.bilder_frame, image=tierart_bild, text="a")
+        for i in range(len(self.bilder)):
+            image = Image.open(self.bilder[i])
+            image = image.resize((50, 50))
+            photo = ImageTk.PhotoImage(image)
+
+            name = "bild" + str(i)
+
+            label_tierart_foto = ttk.Label(self.bilder_frame, image=photo, name=name)
 
             if self.col < 4:
                 label_tierart_foto.grid(row=self.row, column=self.col)
