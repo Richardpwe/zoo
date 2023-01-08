@@ -52,7 +52,7 @@ class UebersichtFenster(tk.Tk):
                 # Zeige leeres Rechteck
                 print("Auswahl...")
                 self.ausgabe_auswahl()
-            if selection == 'Geburtsdaten Tiere':
+            elif selection == 'Geburtsdaten Tiere':
                 # Zeige Geburtsdaten Tiere an
                 print("Geburtsdaten Tiere")
                 self.ausgabe_geburtsdaten()
@@ -63,7 +63,7 @@ class UebersichtFenster(tk.Tk):
                 # Zeige Futterbedarf an
                 print("Futterbedarf")
             elif selection == 'Geschlechterverteilung Tiere':
-                self.ausgabe_geschlechter()
+                self.ausgabe_geschlechter_tiere()
                 # Zeige Geschlechterverteilung an
                 print("Geschlechterverteilung")
 
@@ -108,12 +108,13 @@ class UebersichtFenster(tk.Tk):
         # canvas1.draw()
         canvas1.get_tk_widget().pack(fill="both", expand=True)
 
-    def ausgabe_geschlechter(self):
-
+    def ausgabe_geschlechter_tiere(self):
 
         # Definieren der x- und y-Werte der Säulen
         beschriftungen = [1, 2]
-        werte = [10, 20]
+        male = 15
+        female = 20
+        werte = [male, female]
 
         # Erstellen der Grafik mit den Säulen
         plt.bar(beschriftungen, werte)
@@ -121,9 +122,9 @@ class UebersichtFenster(tk.Tk):
         # Setzen der x-Achsenbeschriftungen
         plt.xticks(beschriftungen, ["Männlich", "Weiblich"])
 
-        diagram_geschlechter_frame = tk.Frame(self)
-        diagram_geschlechter_frame.grid(row=4, column=1)
-        canvas2 = FigureCanvasTkAgg(plt.gcf(), master=diagram_geschlechter_frame)
+        diagram_geschlechter_tiere_frame = tk.Frame(self)
+        diagram_geschlechter_tiere_frame.grid(row=4, column=1)
+        canvas2 = FigureCanvasTkAgg(plt.gcf(), master=diagram_geschlechter_tiere_frame)
         canvas2.get_tk_widget().pack(fill="both", expand=True)
 
     def back_home(self):
