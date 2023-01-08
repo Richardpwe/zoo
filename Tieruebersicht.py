@@ -304,32 +304,36 @@ class TierartBildAuswahl(tk.Toplevel):
         super().__init__(parent)
         self.title("Bild auswählen")
         self.iconbitmap("favicon-zoo.ico")
-        self.geometry("800" + "x600")
+        # self.geometry("800" + "x600")
         self.parent = parent
 
         self.bilder_frame = ttk.Frame(self)
         self.bilder_frame.grid(row=0, column=0)
 
-        self.bilder = konstanten.TIERFOTOS
+        # self.bilder = konstanten.TIERFOTOS
+        self.image_labels = {}
         self.row = 0
         self.col = 0
 
-        for i in range(len(self.bilder)):
-            image = Image.open(self.bilder[i])
-            image = image.resize((50, 50))
-            photo = ImageTk.PhotoImage(image)
+        for name, path in konstanten.TIERFOTOS.items():
+            self.image = Image.open(path)
+            print(path)
+            self.image = self.image.resize((50, 50))
+            self.photo = ImageTk.PhotoImage(self.image)
+            self.image_labels[name] = self.photo
 
-            name = "bild" + str(i)
+        for label_name, image in self.image_labels.items():
+            self.label_tierart_foto = ttk.Label(self.bilder_frame, image=image, name=label_name)
+            print(image)
+            print(label_name)
 
-            label_tierart_foto = ttk.Label(self.bilder_frame, image=photo, name=name)
-
-            if self.col < 4:
-                label_tierart_foto.grid(row=self.row, column=self.col)
+            if self.col < 5:
+                self.label_tierart_foto.grid(row=self.row, column=self.col)
                 self.col += 1
             else:
                 self.col = 0
                 self.row += 1
-                label_tierart_foto.grid(row=self.row, column=self.col)
+                self.label_tierart_foto.grid(row=self.row, column=self.col)
 
         self.button_ok = ttk.Button(self, text="OK", command=self.bild_uebergeben)
         self.button_ok.grid(row=1, column=0)
