@@ -63,6 +63,7 @@ class UebersichtFenster(tk.Tk):
                 # Zeige Futterbedarf an
                 print("Futterbedarf")
             elif selection == 'Geschlechterverteilung Tiere':
+                self.ausgabe_geschlechter()
                 # Zeige Geschlechterverteilung an
                 print("Geschlechterverteilung")
 
@@ -72,7 +73,7 @@ class UebersichtFenster(tk.Tk):
     def ausgabe_auswahl(self):
         # Erstelle ein Canvas-Element, um das Histogramm anzuzeigen
         diagram_auswahl_frame = tk.Frame(self, height=450, width=800, bg="grey")
-        diagram_auswahl_frame.grid(row=3, column=1)
+        diagram_auswahl_frame.grid(row=4, column=1)
 
     def ausgabe_geburtsdaten(self):
         # Erstelle das Histogramm-Figure
@@ -100,15 +101,36 @@ class UebersichtFenster(tk.Tk):
         ax.set_xlabel('Jahr')
         ax.set_ylabel('Anzahl der Geburten')
 
-        # Erstelle ein Canvas-Element, um das Histogramm anzuzeigen
-        diagram_geburtstage_frame = tk.Frame(self, height=0, width=0, bg="grey")
-
-        diagram_geburtstage_frame.grid(row=3, column=1)
+        # Erstelle ein Canvas-Element und ein Frame, um das Histogramm anzuzeigen
+        diagram_geburtstage_frame = tk.Frame(self)
+        diagram_geburtstage_frame.grid(row=4, column=1)
         canvas = FigureCanvasTkAgg(fig, master=diagram_geburtstage_frame)
         canvas.draw()
         canvas.get_tk_widget().pack(fill="both", expand=True)
 
+    def ausgabe_geschlechter(self):
 
+        male = 10
+        female = 13
+
+        # Definieren Sie die x- und y-Werte der Säulen
+        x = [1, 2]
+        y = [male, female]
+
+        # Erstellen Sie die Grafik mit den Säulen
+        plt.bar(x, y)
+
+        # Setzen Sie die x-Achsenbeschriftungen
+        plt.xticks(x, ["Männlich", "Weiblich"])
+
+        # Gibt die Grafik aus
+        plt.show()
+
+        diagram_geschlechter_frame = tk.Frame(self)
+        diagram_geschlechter_frame.grid(row=4, column=1)
+        canvas_geschlechter = FigureCanvasTkAgg(plt, master=diagram_geschlechter_frame)
+        canvas_geschlechter.draw()
+        canvas_geschlechter.get_tk_widget().pack(fill="both", expand=True)
 
     def back_home(self):
         from Hauptmenue import Hauptmenue
