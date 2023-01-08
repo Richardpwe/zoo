@@ -63,7 +63,7 @@ class Hauptmenue(tk.Tk):
         self.button_1.pack(pady=10)
 
         # Button erstellen, um Fenster 2 zu öffnen
-        self.button_2 = ttk.Button(self.frame_menu, text="Fenster 2", command=self.open_tieruebersicht, width=20)
+        self.button_2 = ttk.Button(self.frame_menu, text="Personalübersicht", command=self.open_tieruebersicht, width=20)
         self.button_2.pack(pady=10)
 
         # Button erstellen, um Fenster 3 zu öffnen
