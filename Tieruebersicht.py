@@ -10,17 +10,16 @@ class TierUebersichtFenster(tk.Tk):
         super().__init__()
 
         self.title("Tier Übersicht")
-        self.geometry(str(konstanten.MAX_LABELS_PER_ROW) * 100 + "x500")
-        self.minsize(width=500, height=500)
+        self.geometry("420" + "x500")
+        # self.minsize(width=500, height=500)
         self.iconbitmap("favicon-zoo.ico")
 
-        self.button_zurueck_home = ttk.Button(self, text="Home", command=self.back_home)
-        self.button_tier_hinzufuegen = ttk.Button(self, text="Tier hinzufügen", command=self.tier_hinzufuegen)
+        self.button_frame = ttk.Frame(self)
+        self.button_zurueck_home = ttk.Button(self.button_frame, text="Home", command=self.back_home)
+        self.button_tier_hinzufuegen = ttk.Button(self.button_frame, text="Tier hinzufügen",
+                                                  command=self.tier_hinzufuegen)
 
-        self.image = Image.open(konstanten.KANGAROO_PFAD)
-        self.image = self.image.resize((100, 100))
-        self.photo = ImageTk.PhotoImage(self.image)
-
+        self.button_frame.grid(column=0, row=0)
         self.button_zurueck_home.grid(row=0, column=0)
         self.button_tier_hinzufuegen.grid(row=0, column=1)
 
@@ -40,7 +39,7 @@ class TierUebersichtFenster(tk.Tk):
         for tier in tiere:
             new_frame = ttk.Frame(self.tier_frame)
             tiername = tier.get_tiername()
-            new_frame.bind("<Button-1>", lambda event, arg=tiername: self.neue_tierinfo(event, arg))
+            new_frame.bind("<Button-1>", lambda event, arg=tiername: self.neue_tierinfo(arg))
 
             tierart_bild = konstanten.TIERFOTOS[tier.get_bild()]
             image = Image.open(tierart_bild)
@@ -57,7 +56,7 @@ class TierUebersichtFenster(tk.Tk):
             text2_label.grid(row=2, column=0)
 
             for widget in new_frame.winfo_children():
-                widget.bind("<Button-1>", lambda event, arg=tiername: self.neue_tierinfo(event, arg))
+                widget.bind("<Button-1>", lambda event, arg=tiername: self.neue_tierinfo(arg))
 
             if col < 4:
                 new_frame.grid(row=row, column=col)
@@ -66,13 +65,12 @@ class TierUebersichtFenster(tk.Tk):
                 row += 1
                 col = 0
                 new_frame.grid(row=row, column=col)
+                col += 1
 
     def tier_hinzufuegen(self):
         TierErstellen(self)
 
-    def neue_tierinfo(self, event, tiername):
-        widget = event.widget
-        print(widget)
+    def neue_tierinfo(self, tiername):
         TierInfo(self, tiername)
 
     def update(self):
@@ -266,7 +264,7 @@ class TierartErstellen(tk.Toplevel):
         futter = self.futter_auswahl.get()
         # bild = repr(self.fotopfad)[1:-1]
         bild = self.bild_name
-        print(bild)
+        # print(bild)
 
         tierart = zoo.Tierart(bild, tierart_name, tierklasse, zoo.neuer_zoo.get_futter_by_name(futter))
         zoo.neuer_zoo.tierarten.append(tierart)
@@ -332,9 +330,9 @@ class TierartBildAuswahl(tk.Toplevel):
                 self.label_tierart_foto.grid(row=self.row, column=self.col)
 
         for widget in self.bilder_frame.winfo_children():
-            widget.bind("<Button-1>", lambda event, arg=widget.widgetName: self.bild_auswahl(event, arg))
+            widget.bind("<Button-1>", lambda event: self.bild_auswahl(event))
 
-    def bild_auswahl(self, event, label_name):
+    def bild_auswahl(self, event):
         widget = event.widget
         punkt = str(widget).rfind(".")
         animal_name = str(widget)[punkt + 1:]

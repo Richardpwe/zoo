@@ -130,7 +130,6 @@ class Tierart(object):
         return self.futter
 
     def get_bild(self):
-        print(self.bild)
         return self.bild
 
 
