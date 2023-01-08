@@ -42,7 +42,7 @@ class TierUebersichtFenster(tk.Tk):
             tiername = tier.get_tiername()
             new_frame.bind("<Button-1>", lambda event, arg=tiername: self.neue_tierinfo(event, arg))
 
-            tierart_bild = tier.get_bild()
+            tierart_bild = konstanten.TIERFOTOS[tier.get_bild()]
             image = Image.open(tierart_bild)
             image = image.resize((100, 100))
             photo = ImageTk.PhotoImage(image)
@@ -104,7 +104,7 @@ class TierInfo(tk.Toplevel):
         self.frame = ttk.Frame(self)
         self.frame.pack(padx=20, pady=20)
 
-        self.image = Image.open(konstanten.KANGAROO_PFAD)
+        self.image = Image.open(konstanten.TIERFOTOS[self.tier.get_bild()])
         self.image = self.image.resize((200, 200))
         self.photo = ImageTk.PhotoImage(self.image)
 
@@ -158,9 +158,6 @@ class TierErstellen(tk.Toplevel):
         self.label_artname = ttk.Label(self, text="Tierart:")
         self.parent = parent
         self.tierarten_liste = zoo.neuer_zoo.get_tierarten_namen()
-
-        # self.frame = ttk.Frame(self)
-        # self.frame.pack(padx=20, pady=20)
 
         self.artname = tk.StringVar()
         if not self.tierarten_liste:
@@ -220,13 +217,10 @@ class TierartErstellen(tk.Toplevel):
         self.iconbitmap("favicon-zoo.ico")
         self.parent = parent
         self.futter_liste = zoo.neuer_zoo.get_futter_namen()
-        self.fotopfad = konstanten.PLATZHALTER_BILD
-
-        # self.frame = ttk.Frame(self)
-        # self.frame.pack(padx=20, pady=20)
+        self.bild_name = ""
 
         self.label_tierart_bild = ttk.Label(self, text="Bild:")
-        self.tierart_bild = Image.open(self.fotopfad)
+        self.tierart_bild = Image.open(konstanten.PLATZHALTER_BILD)
         self.tierart_bild = self.tierart_bild.resize((50, 50))
         self.tierart_foto = ImageTk.PhotoImage(self.tierart_bild)
         self.label_tierart_foto = ttk.Label(self, image=self.tierart_foto)
@@ -270,7 +264,8 @@ class TierartErstellen(tk.Toplevel):
         tierart_name = self.entry_tierart_name.get()
         tierklasse = self.tierklasse.get()
         futter = self.futter_auswahl.get()
-        bild = repr(self.fotopfad)[1:-1]
+        # bild = repr(self.fotopfad)[1:-1]
+        bild = self.bild_name
         print(bild)
 
         tierart = zoo.Tierart(bild, tierart_name, tierklasse, zoo.neuer_zoo.get_futter_by_name(futter))
@@ -282,18 +277,19 @@ class TierartErstellen(tk.Toplevel):
     def update(self):
         self.futter_liste = zoo.neuer_zoo.get_futter_namen()
         self.entry_futter.destroy()
-        self.entry_futter = ttk.OptionMenu(self, self.futter_auswahl, *self.futter_liste)
-        self.entry_futter.grid(row=2, column=1)
+        self.entry_futter = ttk.OptionMenu(self, self.futter_auswahl, 'Futter...', *self.futter_liste)
+        self.entry_futter.grid(row=3, column=1)
 
         self.tierklasse.set("Tierklasse...")
 
         zoo.neuer_zoo.zoo_speichern()
 
-    def update_bild(self, pfad):
+    def update_bild(self, bildname):
         self.label_tierart_foto.destroy()
-        self.fotopfad = pfad
+        self.bild_name = bildname
+        pfad = konstanten.TIERFOTOS[bildname]
 
-        self.tierart_bild = Image.open(self.fotopfad)
+        self.tierart_bild = Image.open(pfad)
         self.tierart_bild = self.tierart_bild.resize((50, 50))
         self.tierart_foto = ImageTk.PhotoImage(self.tierart_bild)
         self.label_tierart_foto = ttk.Label(self, image=self.tierart_foto)
@@ -309,11 +305,7 @@ class TierartBildAuswahl(tk.Toplevel):
         self.title("Bild auswählen")
         self.resizable(width=False, height=False)
         self.iconbitmap("favicon-zoo.ico")
-        # self.geometry("800" + "x600")
         self.parent = parent
-
-        # self.frame = ttk.Frame(self)
-        # self.frame.pack(padx=20, pady=20)
 
         self.bilder_frame = ttk.Frame(self)
         self.bilder_frame.grid(row=0, column=0)
@@ -339,11 +331,6 @@ class TierartBildAuswahl(tk.Toplevel):
                 self.row += 1
                 self.label_tierart_foto.grid(row=self.row, column=self.col)
 
-        # self.button_ok = ttk.Button(self, text="OK", command=self.bild_uebergeben)
-        # self.button_ok.grid(row=1, column=0)
-        # self.button_ok2 = ttk.Button(self, text="OK", command=self.bild_uebergeben)
-        # self.button_ok2.grid(row=1, column=1)
-
         for widget in self.bilder_frame.winfo_children():
             widget.bind("<Button-1>", lambda event, arg=widget.widgetName: self.bild_auswahl(event, arg))
 
@@ -351,11 +338,10 @@ class TierartBildAuswahl(tk.Toplevel):
         widget = event.widget
         punkt = str(widget).rfind(".")
         animal_name = str(widget)[punkt + 1:]
-        print(label_name)
+        # print(animal_name)
 
-        bildpfad = konstanten.TIERFOTOS[animal_name]
         self.destroy()
-        self.parent.update_bild(bildpfad)
+        self.parent.update_bild(animal_name)
 
 
 class FutterErstellen(tk.Toplevel):
@@ -365,9 +351,6 @@ class FutterErstellen(tk.Toplevel):
         self.resizable(width=False, height=False)
         self.iconbitmap("favicon-zoo.ico")
         self.parent = parent
-
-        # self.frame = ttk.Frame(self)
-        # self.frame.pack(padx=20, pady=20)
 
         self.label_futter_name = ttk.Label(self, text="Futtername:")
         self.entry_futter_name = ttk.Entry(self)
