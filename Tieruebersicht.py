@@ -11,7 +11,7 @@ class TierUebersichtFenster(tk.Tk):
 
         self.title("Tier Übersicht")
         self.geometry(str(konstanten.MAX_LABELS_PER_ROW) * 100 + "x500")
-        self.minsize(width = 500, height = 500)
+        self.minsize(width=500, height=500)
         self.iconbitmap("favicon-zoo.ico")
 
         self.button_zurueck_home = ttk.Button(self, text="Home", command=self.back_home)
