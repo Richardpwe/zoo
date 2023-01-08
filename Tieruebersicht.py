@@ -91,45 +91,48 @@ class TierUebersichtFenster(tk.Tk):
 class TierInfo(tk.Toplevel):
     def __init__(self, parent, tiername):
         super().__init__(parent)
-        self.title("Tierinfo")
+        self.tier = zoo.neuer_zoo.get_tiere_by_name(tiername)
+        self.title("Tierinfo zu " + tiername + " (" + self.tier.get_artname() + ")")
         self.iconbitmap("favicon-zoo.ico")
         self.parent = parent
-        self.tier = zoo.neuer_zoo.get_tiere_by_name(tiername)
+
+        self.frame = ttk.Frame(self)
+        self.frame.pack(padx=20, pady=20)
 
         self.image = Image.open(konstanten.KANGAROO_PFAD)
         self.image = self.image.resize((200, 200))
         self.photo = ImageTk.PhotoImage(self.image)
 
-        self.bild_label = ttk.Label(self, image=self.photo)
-        self.label_tier_name = ttk.Label(self, text="Name:")
-        self.label_tier_name_wert = ttk.Label(self, text=self.tier.get_tiername())
-        self.label_tier_tierklasse = ttk.Label(self, text="Tierklasse:")
-        self.label_tier_tierklasse_wert = ttk.Label(self, text=self.tier.get_tierklasse())
-        self.label_tier_tierart = ttk.Label(self, text="Tierart:")
-        self.label_tier_tierart_wert = ttk.Label(self, text=self.tier.get_artname())
-        self.label_tier_geschlecht = ttk.Label(self, text="Geschlecht:")
-        self.label_tier_geschlecht_wert = ttk.Label(self, text=self.tier.get_geschlecht())
-        self.label_tier_geburtsdatum = ttk.Label(self, text="Geburtsdatum:")
-        self.label_tier_geburtsdatum_wert = ttk.Label(self, text=self.tier.get_geburtsdatum())
-        self.label_tier_futter = ttk.Label(self, text="Futter:")
-        self.label_tier_futter_wert = ttk.Label(self, text=self.tier.futter.get_name())
+        self.bild_label = ttk.Label(self.frame, image=self.photo)
+        self.label_tier_name = ttk.Label(self.frame, text="Name:")
+        self.label_tier_name_wert = ttk.Label(self.frame, text=self.tier.get_tiername())
+        self.label_tier_tierklasse = ttk.Label(self.frame, text="Tierklasse:")
+        self.label_tier_tierklasse_wert = ttk.Label(self.frame, text=self.tier.get_tierklasse())
+        self.label_tier_tierart = ttk.Label(self.frame, text="Tierart:")
+        self.label_tier_tierart_wert = ttk.Label(self.frame, text=self.tier.get_artname())
+        self.label_tier_geschlecht = ttk.Label(self.frame, text="Geschlecht:")
+        self.label_tier_geschlecht_wert = ttk.Label(self.frame, text=self.tier.get_geschlecht())
+        self.label_tier_geburtsdatum = ttk.Label(self.frame, text="Geburtsdatum:")
+        self.label_tier_geburtsdatum_wert = ttk.Label(self.frame, text=self.tier.get_geburtsdatum())
+        self.label_tier_futter = ttk.Label(self.frame, text="Futter:")
+        self.label_tier_futter_wert = ttk.Label(self.frame, text=self.tier.futter.get_name())
 
-        self.button_schliessen = ttk.Button(self, text="Schließen", command=self.destroy)
-        self.button_loeschen = ttk.Button(self, text="Tier löschen", command=self.tier_loeschen)
+        self.button_schliessen = ttk.Button(self.frame, text="Schließen", command=self.destroy)
+        self.button_loeschen = ttk.Button(self.frame, text="Tier löschen", command=self.tier_loeschen)
 
         self.bild_label.grid(row=0, column=1)
-        self.label_tier_name.grid(row=1, column=0)
-        self.label_tier_name_wert.grid(row=1, column=1)
-        self.label_tier_tierklasse.grid(row=2, column=0)
-        self.label_tier_tierklasse_wert.grid(row=2, column=1)
-        self.label_tier_tierart.grid(row=3, column=0)
-        self.label_tier_tierart_wert.grid(row=3, column=1)
-        self.label_tier_geschlecht.grid(row=4, column=0)
-        self.label_tier_geschlecht_wert.grid(row=4, column=1)
-        self.label_tier_geburtsdatum.grid(row=5, column=0)
-        self.label_tier_geburtsdatum_wert.grid(row=5, column=1)
-        self.label_tier_futter.grid(row=6, column=0)
-        self.label_tier_futter_wert.grid(row=6, column=1)
+        self.label_tier_name.grid(row=1, column=0, sticky="w", padx=10)
+        self.label_tier_name_wert.grid(row=1, column=1, sticky="w", padx=10)
+        self.label_tier_tierklasse.grid(row=2, column=0, sticky="w", padx=10)
+        self.label_tier_tierklasse_wert.grid(row=2, column=1, sticky="w", padx=10)
+        self.label_tier_tierart.grid(row=3, column=0, sticky="w", padx=10)
+        self.label_tier_tierart_wert.grid(row=3, column=1, sticky="w", padx=10)
+        self.label_tier_geschlecht.grid(row=4, column=0, sticky="w", padx=10)
+        self.label_tier_geschlecht_wert.grid(row=4, column=1, sticky="w", padx=10)
+        self.label_tier_geburtsdatum.grid(row=5, column=0, sticky="w", padx=10)
+        self.label_tier_geburtsdatum_wert.grid(row=5, column=1, sticky="w", padx=10)
+        self.label_tier_futter.grid(row=6, column=0, sticky="w", padx=10)
+        self.label_tier_futter_wert.grid(row=6, column=1, sticky="w", padx=10)
 
         self.button_schliessen.grid(row=7, column=0)
         self.button_loeschen.grid(row=7, column=1)
@@ -146,6 +149,7 @@ class TierErstellen(tk.Toplevel):
         super().__init__(parent)
         self.title("Tier Erstellung Formular")
         self.iconbitmap("favicon-zoo.ico")
+        self.resizable(width=False, height=False)
         self.label_artname = ttk.Label(self, text="Tierart:")
         self.parent = parent
         self.tierarten_liste = zoo.neuer_zoo.get_tierarten_namen()
@@ -204,6 +208,7 @@ class TierartErstellen(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.title("Tierart Erstellung Formular")
+        self.resizable(width=False, height=False)
         self.iconbitmap("favicon-zoo.ico")
         self.parent = parent
         self.futter_liste = zoo.neuer_zoo.get_futter_namen()
@@ -279,6 +284,7 @@ class TierartBildAuswahl(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.title("Bild auswählen")
+        self.resizable(width=False, height=False)
         self.iconbitmap("favicon-zoo.ico")
         # self.geometry("800" + "x600")
         self.parent = parent
@@ -330,6 +336,7 @@ class FutterErstellen(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.title("Futter Erstellung Formular")
+        self.resizable(width=False, height=False)
         self.iconbitmap("favicon-zoo.ico")
         self.parent = parent
 
