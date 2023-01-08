@@ -13,7 +13,7 @@ class Hauptmenue(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Hauptmenü")
-        self.geometry("400x720")
+        self.geometry("300x750")
         self.resizable(width=False, height=False)
         self.iconbitmap("favicon-zoo.ico")
 
@@ -27,9 +27,10 @@ class Hauptmenue(tk.Tk):
         self.frame_menu = ttk.Frame(self)
         self.frame_menu.pack(padx=20, pady=20)
         
-        # Style
+        # TTK Style
         s = ttk.Style()
         s.configure('Heading.TLabel', font='default 24 bold')
+        s.configure('Sub1.TLabel', font='default 8 bold')
         s.configure('TButton', width = 20)
 
         # Zoo Titel
@@ -44,30 +45,37 @@ class Hauptmenue(tk.Tk):
         self.bild_label.pack(pady=0)
 
         # Zooinfos
-        self.label_tier_name_wert = ttk.Label(self.frame_zooinfo, text=zoo.neuer_zoo.get_name() + "\n"
-            + zoo.neuer_zoo.get_strasse() + " " + str(zoo.neuer_zoo.get_hausnummer()) + "\n"
-            + str(zoo.neuer_zoo.get_plz()) + " " + zoo.neuer_zoo.get_ort() + "\n\nEröffnet am:\t"
-            + zoo.neuer_zoo.get_eroeffnungsdatum() + "\nTiere:\t\t" + str(zoo.neuer_zoo.get_tiere_anzahl())
-            + "\nPersonal:\t" + str(zoo.neuer_zoo.get_personal_anzahl())).pack()
+        self.label_zookartei = ttk.Label(self.frame_zooinfo, text="Aktuelle Zookartei:").grid(row=0, column=0, sticky="w")
+        self.label_zooinfo1 = ttk.Label(self.frame_zooinfo, text=zoo.neuer_zoo.get_name(), style='Sub1.TLabel').grid(row=1, column=0, sticky="w")
+        self.label_zooinfo2 = ttk.Label(self.frame_zooinfo, text=zoo.neuer_zoo.get_strasse()
+            + " " + str(zoo.neuer_zoo.get_hausnummer()), anchor="w", style='Sub1.TLabel').grid(row=2, column=0, sticky="w")
+        self.label_zooinfo3 = ttk.Label(self.frame_zooinfo, text=str(zoo.neuer_zoo.get_plz())
+            + " " + zoo.neuer_zoo.get_ort(), style='Sub1.TLabel').grid(row=3, column=0, sticky="w")
+        self.label_zooinfo4 = ttk.Label(self.frame_zooinfo, text="Eröffnet am:", style='Sub1.TLabel').grid(row=4, column=0, sticky="w")
+        self.label_zooinfo5 = ttk.Label(self.frame_zooinfo, text=zoo.neuer_zoo.get_eroeffnungsdatum()).grid(row=4, column=1, sticky="w")
+        self.label_zooinfo6 = ttk.Label(self.frame_zooinfo, text="Tiere:", style='Sub1.TLabel').grid(row=5, column=0, sticky="w")
+        self.label_zooinfo7 = ttk.Label(self.frame_zooinfo, text=str(zoo.neuer_zoo.get_tiere_anzahl())).grid(row=5, column=1, sticky="w")
+        self.label_zooinfo8 = ttk.Label(self.frame_zooinfo, text="Personal:", style='Sub1.TLabel').grid(row=6, column=0, sticky="w")
+        self.label_zooinfo9 = ttk.Label(self.frame_zooinfo, text=str(zoo.neuer_zoo.get_personal_anzahl())).grid(row=6, column=1, sticky="w")
 
         # Button erstellen, um Fenster 1 zu öffnen
-        self.button_1 = ttk.Button(self.frame_menu, text="Tierübersicht", command=self.open_tieruebersicht, width=200)
+        self.button_1 = ttk.Button(self.frame_menu, text="Tierübersicht", command=self.open_tieruebersicht, width=20)
         self.button_1.pack(pady=10)
 
         # Button erstellen, um Fenster 2 zu öffnen
-        self.button_2 = ttk.Button(self.frame_menu, text="Fenster 2", command=self.open_tieruebersicht, width=200)
+        self.button_2 = ttk.Button(self.frame_menu, text="Personalübersicht", command=self.open_tieruebersicht, width=20)
         self.button_2.pack(pady=10)
 
         # Button erstellen, um Fenster 3 zu öffnen
-        self.button_3 = ttk.Button(self.frame_menu, text="Übersicht", command=self.open_uebersicht, width=200)
+        self.button_3 = ttk.Button(self.frame_menu, text="Übersicht", command=self.open_uebersicht, width=20)
         self.button_3.pack(pady=10)
 
         # Button erstellen, um Fenster 4 zu öffnen
-        self.button_4 = ttk.Button(self.frame_menu, text="Einstellungen", command=self.open_einstellungen, width=200)
+        self.button_4 = ttk.Button(self.frame_menu, text="Einstellungen", command=self.open_einstellungen, width=20)
         self.button_4.pack(pady=10)
 
         # Button erstellen, der das Programm beendet, wenn man darauf klickt
-        self.quit_button = ttk.Button(self.frame_menu, text='Beenden', command=self.destroy, width=200)
+        self.quit_button = ttk.Button(self.frame_menu, text='Beenden', command=self.destroy, width=20)
         self.quit_button.pack(pady=10)
 
         if konstanten.DARK_MODE:
