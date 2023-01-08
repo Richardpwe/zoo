@@ -48,7 +48,6 @@ TURTLE_PFAD = os.path.join(os.path.dirname(__file__), 'icons', 'noun-turtle-1866
 WHALE_PFAD = os.path.join(os.path.dirname(__file__), 'icons', 'noun-whale-1866937.png')
 ZEBRA_PFAD = os.path.join(os.path.dirname(__file__), 'icons', 'noun-zebra-1866941.png')
 
-
 TIERFOTOS = {
     "bear": BEAR_PFAD,
     "butterfly": BUTTERFLY_PFAD,

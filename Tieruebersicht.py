@@ -248,31 +248,6 @@ class TierartErstellen(tk.Toplevel):
     def bild_aendern(self):
         TierartBildAuswahl(self)
 
-    def bilder_anzeigen(self):
-        bilder = konstanten.TIERFOTOS
-        row = 0
-        col = 0
-
-        for bild in bilder:
-            # second_frame = ttk.Frame(self.bilder_frame)
-            image = Image.open(bild)
-            image = image.resize((100, 100))
-            photo = ImageTk.PhotoImage(image)
-            label_tierart_foto = ttk.Label(self.foto_frame, image=self.tierart_foto)
-
-            if col < 4:
-                label_tierart_foto.grid(row=row, column=col)
-                col += 1
-            else:
-                col = 0
-                row += 1
-                label_tierart_foto.grid(row=row, column=col)
-
-        # sebutton_ok = ttk.Button(self, text="OK", command=self.bild_uebergeben)
-        # self.button_ok.grid(row=1, column=0)
-        # self.button_ok2 = ttk.Button(self, text="OK", command=self.bild_uebergeben)
-        # self.button_ok2.grid(row=1, column=1)
-
     def save_tierart(self):
         tierart_name = self.entry_tierart_name.get()
         tierklasse = self.tierklasse.get()
@@ -310,22 +285,18 @@ class TierartBildAuswahl(tk.Toplevel):
         self.bilder_frame = ttk.Frame(self)
         self.bilder_frame.grid(row=0, column=0)
 
-        # self.bilder = konstanten.TIERFOTOS
         self.image_labels = {}
         self.row = 0
         self.col = 0
 
         for name, path in konstanten.TIERFOTOS.items():
             self.image = Image.open(path)
-            print(path)
             self.image = self.image.resize((50, 50))
             self.photo = ImageTk.PhotoImage(self.image)
             self.image_labels[name] = self.photo
 
         for label_name, image in self.image_labels.items():
             self.label_tierart_foto = ttk.Label(self.bilder_frame, image=image, name=label_name)
-            print(image)
-            print(label_name)
 
             if self.col < 5:
                 self.label_tierart_foto.grid(row=self.row, column=self.col)
@@ -339,6 +310,15 @@ class TierartBildAuswahl(tk.Toplevel):
         self.button_ok.grid(row=1, column=0)
         self.button_ok2 = ttk.Button(self, text="OK", command=self.bild_uebergeben)
         self.button_ok2.grid(row=1, column=1)
+
+        for widget in self.bilder_frame.winfo_children():
+            widget.bind("<Button-1>", lambda event, arg=widget.widgetName: self.bild_auswahl(event, arg))
+
+    def bild_auswahl(self, event, label_name):
+        widget = event.widget
+        punkt = str(widget).rfind(".")
+        animal_name = str(widget)[punkt + 1:]
+        print(animal_name)
 
     def bild_uebergeben(self):
         self.destroy()
