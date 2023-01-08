@@ -26,11 +26,12 @@ class UebersichtFenster(tk.Tk):
         self.label_anzahl_tiere_wert = ttk.Label(self, text=zoo.neuer_zoo.get_tiere_anzahl())
         self.label_anzahl_personal = ttk.Label(self, text="Gesamtanzahl Mitarbeiter:")
         self.label_anzahl_personal_wert = ttk.Label(self, text=zoo.neuer_zoo.get_personal_anzahl())
+        self.diagram_frame = tk.Frame(self)
 
         combo = ttk.Combobox(self)
         combo['state'] = 'readonly'
-        combo['values'] = ['Auswahl...', 'Geburtsdaten Tiere', 'Geburtsdaten Personal', 'Futterbedarf',
-                           'Geschlechterverteilung Tiere']
+        combo['values'] = ['Auswahl...', 'Geburtsdaten Tiere', 'Geschlechter Tiere']
+        # ,'Geburtsdaten Personal', 'Futterbedarf'
         combo.current(0)  # Setze die Standardauswahl auf "Option 1"
 
         if konstanten.DARK_MODE:
@@ -41,9 +42,11 @@ class UebersichtFenster(tk.Tk):
         self.button_zurueck_home.grid(row=0, column=0)
         self.label_anzahl_tiere.grid(row=1, column=3)
         self.label_anzahl_tiere_wert.grid(row=1, column=4)
+        self.diagram_frame.grid(row=4, column=1)
 
         combo.grid(row=3, column=0)
         self.label_anzahl_personal.grid(row=2, column=3)
+        self.ausgabe_auswahl()
 
         # Erstelle eine Funktion zum Bearbeiten der Auswahl in der Combobox
         def combo_selection(event):
@@ -56,27 +59,39 @@ class UebersichtFenster(tk.Tk):
                 # Zeige Geburtsdaten Tiere an
                 print("Geburtsdaten Tiere")
                 self.ausgabe_geburtsdaten()
-            elif selection == 'Geburtsdaten Personal':
-                # Zeige Geburtsdaten Personal an
-                print("Geburtsdaten Personal")
-            elif selection == 'Futterbedarf':
-                # Zeige Futterbedarf an
-                print("Futterbedarf")
-            elif selection == 'Geschlechterverteilung Tiere':
+            elif selection == 'Geschlechter Tiere':
                 self.ausgabe_geschlechter_tiere()
                 # Zeige Geschlechterverteilung an
                 print("Geschlechterverteilung")
+            # elif selection == 'Geburtsdaten Personal':
+            # Zeige Geburtsdaten Personal an
+            # print("Geburtsdaten Personal")
+            # elif selection == 'Futterbedarf':
+            # Zeige Futterbedarf an
+            # print("Futterbedarf")
 
         # Binde die Funktion an das "comboboxselected" -Ereignis
         combo.bind("<<ComboboxSelected>>", combo_selection)
 
+    def renew_diagram_frame(self):
+        # Frame löschen und neu hinzufügen
+        self.diagram_frame.destroy()
+        self.diagram_frame = tk.Frame(self)
+        self.diagram_frame.grid(row=4, column=1)
+        print("Frame für Grafik erneuert.")
+
     def ausgabe_auswahl(self):
-        # Erstelle ein Canvas-Element, um das Histogramm anzuzeigen
-        diagram_auswahl_frame = tk.Frame(self, height=450, width=800, bg="grey")
-        diagram_auswahl_frame.grid(row=4, column=1)
+        self.renew_diagram_frame()
+        # Leere Grafik, Canvas in den Frame packen
+        grafik = plt.figure()
+        canvas = FigureCanvasTkAgg(grafik, master=self.diagram_frame)
+        canvas.get_tk_widget().pack(fill="both", expand=True)
 
     def ausgabe_geburtsdaten(self):
+        self.renew_diagram_frame()
+
         # Erstelle das Histogramm-Figure
+
         fig = plt.figure()
         ax = fig.add_subplot(111)
 
@@ -102,13 +117,11 @@ class UebersichtFenster(tk.Tk):
         ax.set_ylabel('Anzahl der Geburten')
 
         # Erstelle ein Canvas-Element und ein Frame, um das Histogramm anzuzeigen
-        diagram_geburtstage_frame = tk.Frame(self)
-        diagram_geburtstage_frame.grid(row=4, column=1)
-        canvas1 = FigureCanvasTkAgg(fig, master=diagram_geburtstage_frame)
-        # canvas1.draw()
-        canvas1.get_tk_widget().pack(fill="both", expand=True)
+        canvas = FigureCanvasTkAgg(fig, master=self.diagram_frame)
+        canvas.get_tk_widget().pack(fill="both", expand=True)
 
     def ausgabe_geschlechter_tiere(self):
+        self.renew_diagram_frame()
 
         # Definieren der x- und y-Werte der Säulen
         beschriftungen = [1, 2]
@@ -122,10 +135,8 @@ class UebersichtFenster(tk.Tk):
         # Setzen der x-Achsenbeschriftungen
         plt.xticks(beschriftungen, ["Männlich", "Weiblich"])
 
-        diagram_geschlechter_tiere_frame = tk.Frame(self)
-        diagram_geschlechter_tiere_frame.grid(row=4, column=1)
-        canvas2 = FigureCanvasTkAgg(plt.gcf(), master=diagram_geschlechter_tiere_frame)
-        canvas2.get_tk_widget().pack(fill="both", expand=True)
+        canvas = FigureCanvasTkAgg(plt.gcf(), master=self.diagram_frame)
+        canvas.get_tk_widget().pack(fill="both", expand=True)
 
     def back_home(self):
         from Hauptmenue import Hauptmenue
