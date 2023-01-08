@@ -11,11 +11,12 @@ class TierUebersichtFenster(tk.Tk):
         super().__init__()
 
         self.title("Tier Übersicht")
-        self.geometry(str(konstanten.MAX_LABELS_PER_ROW) * 100 + "x600")
+        self.geometry(str(konstanten.MAX_LABELS_PER_ROW) * 100 + "x500")
+        self.minsize(width = 500, height = 500)
         self.iconbitmap("favicon-zoo.ico")
 
         self.button_zurueck_home = ttk.Button(self, text="Home", command=self.back_home)
-        self.button_tier_hinzufuegen = ttk.Button(self, text="Tier Hinzufügen", command=self.tier_hinzufuegen)
+        self.button_tier_hinzufuegen = ttk.Button(self, text="Tier hinzufügen", command=self.tier_hinzufuegen)
 
         self.image = Image.open(konstanten.KANGAROO_PFAD)
         self.image = self.image.resize((100, 100))
