@@ -154,6 +154,9 @@ class TierErstellen(tk.Toplevel):
         self.parent = parent
         self.tierarten_liste = zoo.neuer_zoo.get_tierarten_namen()
 
+        # self.frame = ttk.Frame(self)
+        # self.frame.pack(padx=20, pady=20)
+
         self.artname = tk.StringVar()
         if not self.tierarten_liste:
             self.tierarten_liste = ["leer"]
@@ -212,6 +215,9 @@ class TierartErstellen(tk.Toplevel):
         self.iconbitmap("favicon-zoo.ico")
         self.parent = parent
         self.futter_liste = zoo.neuer_zoo.get_futter_namen()
+
+        # self.frame = ttk.Frame(self)
+        # self.frame.pack(padx=20, pady=20)
 
         self.label_tierart_bild = ttk.Label(self, text="Bild:")
         self.tierart_bild = Image.open(konstanten.PLATZHALTER_BILD)
@@ -289,6 +295,9 @@ class TierartBildAuswahl(tk.Toplevel):
         # self.geometry("800" + "x600")
         self.parent = parent
 
+        # self.frame = ttk.Frame(self)
+        # self.frame.pack(padx=20, pady=20)
+
         self.bilder_frame = ttk.Frame(self)
         self.bilder_frame.grid(row=0, column=0)
 
@@ -339,6 +348,9 @@ class FutterErstellen(tk.Toplevel):
         self.resizable(width=False, height=False)
         self.iconbitmap("favicon-zoo.ico")
         self.parent = parent
+
+        # self.frame = ttk.Frame(self)
+        # self.frame.pack(padx=20, pady=20)
 
         self.label_futter_name = ttk.Label(self, text="Futtername:")
         self.entry_futter_name = ttk.Entry(self)
