@@ -2,9 +2,10 @@ import tkinter as tk
 from tkinter import ttk
 import konstanten
 from PIL import Image, ImageTk
-from Tieruebersicht import TierUebersichtFenster
+from tieruebersicht import TierUebersichtFenster
+from personaluebersicht import PersonalUebersichtFenster
 from einstellungen import EinstellungenFenster
-from Uebersicht import UebersichtFenster
+from uebersicht import UebersichtFenster
 import zoo
 
 
@@ -14,6 +15,8 @@ class Hauptmenue(tk.Tk):
         self.title("Hauptmenü")
         # self.geometry("1000x1000")
         # self.resizable(width=False, height=False)
+        # Fenster in die Mitte des Bildschirms
+        self.geometry("+{}+{}".format(int(self.winfo_screenwidth() / 2-200), int(self.winfo_screenheight() / 2-150)))
         self.iconbitmap("favicon-zoo.ico")
 
         # TTK Style
@@ -110,7 +113,9 @@ class Hauptmenue(tk.Tk):
         tier_fenster.run()
 
     def open_personaluebersicht(self):
-        print("Personaluebersicht")
+        self.destroy()
+        personal_fenster = PersonalUebersichtFenster()
+        personal_fenster.run()
 
     def open_uebersicht(self):
         self.destroy()

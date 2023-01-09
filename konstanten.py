@@ -1,7 +1,5 @@
 import os
 
-MAX_LABELS_PER_ROW = 10
-TESTKONSTANTE = 60
 DARK_MODE = False
 DARK_MODE_COLOR = "#777777"
 TIERKLASSEN = ["Säugetier", "Vogel", "Reptil", "Amphib", "Fisch", "Muschel", "Spinnentier", "Insekt"]

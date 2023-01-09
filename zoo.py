@@ -1,11 +1,11 @@
+import datetime
 import os
 import pickle
-import konstanten
 
 
 class Zoo(object):
-    def __init__(self, name: str, strasse, hausnummer, plz, ort, eroeffnungsdatum, tierarten=[],
-                 tiere=[], personal=[], futter=[]):
+    def __init__(self, name: str, strasse: str, hausnummer: str, plz: int, ort: str, eroeffnungsdatum: datetime.date,
+                 tierarten, tiere, personal, futter):
         self.name = name
         self.strasse = strasse
         self.hausnummer = hausnummer
@@ -85,8 +85,8 @@ class Zoo(object):
             pickle.dump(self, zoo_datei)
 
     def __str__(self):
-        return 'ZOO: ' + self.get_name() + '\nAdresse: ' + self.get_strasse() + ' ' + str(self.get_hausnummer()) + ', ' + \
-            str(self.get_plz()) + ' ' + self.get_ort() + '\nEröffnet am: ' + str(self.get_eroeffnungsdatum())
+        return 'ZOO: ' + self.get_name() + '\nAdresse: ' + self.get_strasse() + ' ' + str(self.get_hausnummer()) + \
+            ', ' + str(self.get_plz()) + ' ' + self.get_ort() + '\nEröffnet am: ' + str(self.get_eroeffnungsdatum())
 
 
 class Personal(object):
@@ -175,4 +175,5 @@ if os.path.exists(file_path):
     with open(file_path, 'rb') as datei:
         neuer_zoo = pickle.load(datei)
 else:
-    neuer_zoo = Zoo("Mein Zoo", "Strasse", 1, 22222, "Beispielhausen", "01.01.2023", [], [], [])
+    date = datetime.date.today()
+    neuer_zoo = Zoo("Mein Zoo", "Strasse", "1", 22222, "Beispielhausen", date, [], [], [], [])

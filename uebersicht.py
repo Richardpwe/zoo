@@ -139,7 +139,7 @@ class UebersichtFenster(tk.Tk):
         canvas.get_tk_widget().pack(fill="both", expand=True)
 
     def back_home(self):
-        from Hauptmenue import Hauptmenue
+        from hauptmenue import Hauptmenue
         self.destroy()
         Hauptmenue()
 

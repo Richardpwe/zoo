@@ -16,7 +16,7 @@ class EinstellungenFenster(tk.Tk):
         self.geometry('300x150')
         self.resizable(width=False, height=False)
         # Fenster in die Mitte des Bildschirms
-        self.geometry("+{}+{}".format(int(self.winfo_screenwidth() / 2 - 200), int(self.winfo_screenheight() / 2 - 150)))
+        self.geometry("+{}+{}".format(int(self.winfo_screenwidth()/2-200), int(self.winfo_screenheight()/2-150)))
         self.iconbitmap("favicon-zoo.ico")
 
         self.button_zurueck_home = ttk.Button(self, text="Home", command=self.back_home)
@@ -33,7 +33,7 @@ class EinstellungenFenster(tk.Tk):
         self.button_zoo_exportieren.grid(row=0, column=2)
 
     def back_home(self):
-        from Hauptmenue import Hauptmenue
+        from hauptmenue import Hauptmenue
         self.destroy()
         Hauptmenue()
 
