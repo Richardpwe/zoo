@@ -17,6 +17,15 @@ class Zoo(object):
         self.personal = personal
         self.futter = futter
 
+    def set_zoo_name(self, new_name):
+        self.name = new_name
+
+    def set_adresse(self, strasse, hausnummer, plz, ort):
+        self.strasse = strasse
+        self.hausnummer = hausnummer
+        self.plz = plz
+        self.ort = ort
+
     def get_futter_namen(self):
         futter_namen = []
         for futter in self.futter:

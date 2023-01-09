@@ -22,6 +22,7 @@ class EinstellungenFenster(tk.Tk):
         self.button_zurueck_home = ttk.Button(self, text="Home", command=self.back_home)
         self.button_zoo_laden = ttk.Button(self, text="Zoo laden ...", command=self.zoo_laden)
         self.button_zoo_exportieren = ttk.Button(self, text="Zoo exportieren ...", command=self.zoo_exportieren)
+        self.button_zoo_bearbeiten = ttk.Button(self, text="Zoo Daten Ändern", command=self.back_home)
 
         if konstanten.DARK_MODE:
             self.config(bg=konstanten.DARK_MODE_COLOR)
@@ -29,8 +30,9 @@ class EinstellungenFenster(tk.Tk):
             # self.button_zurueck_home.config(fg='#FFFFFF')
 
         self.button_zurueck_home.grid(row=0, column=0)
-        self.button_zoo_laden.grid(row=0, column=1)
-        self.button_zoo_exportieren.grid(row=0, column=2)
+        self.button_zoo_laden.grid(row=1, column=0)
+        self.button_zoo_exportieren.grid(row=2, column=0)
+        self.button_zoo_bearbeiten.grid(row=3, column=0)
 
     def back_home(self):
         from hauptmenue import Hauptmenue
