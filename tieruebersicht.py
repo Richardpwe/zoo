@@ -10,18 +10,19 @@ class TierUebersichtFenster(tk.Tk):
         super().__init__()
 
         self.title("Tier Übersicht")
-        self.geometry("420" + "x500")
-        # self.minsize(width=500, height=500)
+        self.geometry("500" + "x500")
+        self.resizable(width=False, height=True)
         # Fenster in die Mitte des Bildschirms
         self.geometry("+{}+{}".format(int(self.winfo_screenwidth() / 2-200), int(self.winfo_screenheight() / 2-150)))
         self.iconbitmap("favicon-zoo.ico")
+        self.grid_propagate(False)
 
-        self.button_frame = ttk.Frame(self)
+        self.button_frame = ttk.Frame(self, padding=10)
         self.button_zurueck_home = ttk.Button(self.button_frame, text="Home", command=self.back_home)
         self.button_tier_hinzufuegen = ttk.Button(self.button_frame, text="Tier hinzufügen",
                                                   command=self.tier_hinzufuegen)
 
-        self.button_frame.grid(column=0, row=0)
+        self.button_frame.grid(column=0, row=0, sticky="w")
         self.button_zurueck_home.grid(row=0, column=0)
         self.button_tier_hinzufuegen.grid(row=0, column=1)
 
@@ -42,7 +43,8 @@ class TierUebersichtFenster(tk.Tk):
         row = 0
         col = 0
         for tier in tiere:
-            new_frame = ttk.Frame(self.tier_frame)
+            new_frame = ttk.Frame(self.tier_frame, padding=10, width=125, height=180, relief="solid")
+            new_frame.grid_propagate(False)
             tiername = tier.get_tiername()
             new_frame.bind("<Button-1>", lambda event, arg=tiername: self.neue_tierinfo(arg))
 
@@ -55,9 +57,9 @@ class TierUebersichtFenster(tk.Tk):
             bild_label.image = photo
             bild_label.grid(row=0, column=0)
 
-            text_label = ttk.Label(new_frame, text=tier.name)
+            text_label = ttk.Label(new_frame, text=tier.get_tiername(), wraplength=100)
             text_label.grid(row=1, column=0)
-            text2_label = ttk.Label(new_frame, text=tier.get_artname())
+            text2_label = ttk.Label(new_frame, text=tier.get_artname(), wraplength=100)
             text2_label.grid(row=2, column=0)
 
             for widget in new_frame.winfo_children():
@@ -101,17 +103,24 @@ class TierInfo(tk.Toplevel):
         super().__init__(parent)
         self.tier = zoo.neuer_zoo.get_tiere_by_name(tiername)
         self.title("Tierinfo zu " + tiername + " (" + self.tier.get_artname() + ")")
+        self.resizable(width=False, height=False)
+        # Fenster in die Mitte des Bildschirms
+        self.geometry("+{}+{}".format(int(self.winfo_screenwidth() / 2+300), int(self.winfo_screenheight() / 2 - 150)))
         self.iconbitmap("favicon-zoo.ico")
         self.parent = parent
 
-        self.frame = ttk.Frame(self)
-        self.frame.pack(padx=20, pady=20)
+        self.bild_frame = ttk.Frame(self, padding=20)
+        self.bild_frame.grid(row=0, column=0)
+        self.frame = ttk.Frame(self, padding=20)
+        self.frame.grid(row=1, column=0)
+        self.frame_buttonleiste = ttk.Frame(self, padding=20)
+        self.frame_buttonleiste.grid(row=2, column=0)
 
         self.image = Image.open(konstanten.TIERFOTOS[self.tier.get_bild()])
         self.image = self.image.resize((200, 200))
         self.photo = ImageTk.PhotoImage(self.image)
 
-        self.bild_label = ttk.Label(self.frame, image=self.photo)
+        self.bild_label = ttk.Label(self.bild_frame, image=self.photo)
         self.label_tier_name = ttk.Label(self.frame, text="Name:")
         self.label_tier_name_wert = ttk.Label(self.frame, text=self.tier.get_tiername())
         self.label_tier_tierklasse = ttk.Label(self.frame, text="Tierklasse:")
@@ -125,8 +134,8 @@ class TierInfo(tk.Toplevel):
         self.label_tier_futter = ttk.Label(self.frame, text="Futter:")
         self.label_tier_futter_wert = ttk.Label(self.frame, text=self.tier.futter.get_name())
 
-        self.button_schliessen = ttk.Button(self.frame, text="Schließen", command=self.destroy)
-        self.button_loeschen = ttk.Button(self.frame, text="Tier löschen", command=self.tier_loeschen)
+        self.button_schliessen = ttk.Button(self.frame_buttonleiste, text="Schließen", command=self.destroy)
+        self.button_loeschen = ttk.Button(self.frame_buttonleiste, text="Tier löschen", command=self.tier_loeschen)
 
         self.bild_label.grid(row=0, column=1)
         self.label_tier_name.grid(row=1, column=0, sticky="w", padx=10)
@@ -142,8 +151,8 @@ class TierInfo(tk.Toplevel):
         self.label_tier_futter.grid(row=6, column=0, sticky="w", padx=10)
         self.label_tier_futter_wert.grid(row=6, column=1, sticky="w", padx=10)
 
-        self.button_schliessen.grid(row=7, column=0)
-        self.button_loeschen.grid(row=7, column=1)
+        self.button_schliessen.grid(row=0, column=0)
+        self.button_loeschen.grid(row=0, column=1)
 
     def tier_loeschen(self):
         zoo.neuer_zoo.tier_loeschen(self.tier)
@@ -157,7 +166,10 @@ class TierErstellen(tk.Toplevel):
         super().__init__(parent)
         self.title("Tier hinzufügen ...")
         self.iconbitmap("favicon-zoo.ico")
+        # Fenster in die Mitte des Bildschirms
+        self.geometry("+{}+{}".format(int(self.winfo_screenwidth() / 2-200), int(self.winfo_screenheight() / 2 - 150)))
         self.resizable(width=False, height=False)
+
         self.label_artname = ttk.Label(self, text="Tierart:")
         self.parent = parent
         self.tierarten_liste = zoo.neuer_zoo.get_tierarten_namen()
@@ -217,6 +229,8 @@ class TierartErstellen(tk.Toplevel):
         super().__init__(parent)
         self.title("Tierart hinzufügen ...")
         self.resizable(width=False, height=False)
+        # Fenster in die Mitte des Bildschirms
+        self.geometry("+{}+{}".format(int(self.winfo_screenwidth() / 2-200), int(self.winfo_screenheight() / 2 - 150)))
         self.iconbitmap("favicon-zoo.ico")
         self.parent = parent
         self.futter_liste = zoo.neuer_zoo.get_futter_namen()
@@ -307,6 +321,8 @@ class TierartBildAuswahl(tk.Toplevel):
         super().__init__(parent)
         self.title("Bild auswählen")
         self.resizable(width=False, height=False)
+        # Fenster in die Mitte des Bildschirms
+        self.geometry("+{}+{}".format(int(self.winfo_screenwidth() / 2-200), int(self.winfo_screenheight() / 2 - 150)))
         self.iconbitmap("favicon-zoo.ico")
         self.parent = parent
 
@@ -352,6 +368,8 @@ class FutterErstellen(tk.Toplevel):
         super().__init__(parent)
         self.title("Futter hinzufügen ...")
         self.resizable(width=False, height=False)
+        # Fenster in die Mitte des Bildschirms
+        self.geometry("+{}+{}".format(int(self.winfo_screenwidth() / 2-200), int(self.winfo_screenheight() / 2 - 150)))
         self.iconbitmap("favicon-zoo.ico")
         self.parent = parent
 
