@@ -6,6 +6,7 @@ import zoo
 import konstanten
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from datetime import date
 import pickle
 import os
 
@@ -26,12 +27,16 @@ class UebersichtFenster(tk.Tk):
         self.label_anzahl_tiere_wert = ttk.Label(self, text=zoo.neuer_zoo.get_tiere_anzahl())
         self.label_anzahl_personal = ttk.Label(self, text="Gesamtanzahl Mitarbeiter:")
         self.label_anzahl_personal_wert = ttk.Label(self, text=zoo.neuer_zoo.get_personal_anzahl())
-        self.diagram_frame = tk.Frame(self)
+        self.diagram_frame = ttk.Frame(self)
+        grafik = plt.figure()
+        self.canvas = FigureCanvasTkAgg(grafik, master=self)
 
         combo = ttk.Combobox(self)
         combo['state'] = 'readonly'
         combo['values'] = ['Auswahl...', 'Geburtsdaten Tiere', 'Geschlechter Tiere']
-        # ,'Geburtsdaten Personal', 'Futterbedarf'
+        # ,'Geburtsdaten Personal', 'Futterbedarf', 'Kosten pro Tierart', 'Futterkosten pro Tag', 'Wie alt ist der Zoo',
+        # 'Wie alt ist sind die Tiere', 'Durchschnittsalter der Belegschaft', 'Personalkosten',
+        # 'Tierbetreeungsschlüssel AnzahlTiere/AnzahlPfleger',
         combo.current(0)  # Setze die Standardauswahl auf "Option 1"
 
         if konstanten.DARK_MODE:
@@ -84,30 +89,32 @@ class UebersichtFenster(tk.Tk):
         self.renew_diagram_frame()
         # Leere Grafik, Canvas in den Frame packen
         grafik = plt.figure()
-        canvas = FigureCanvasTkAgg(grafik, master=self.diagram_frame)
-        canvas.get_tk_widget().pack(fill="both", expand=True)
+        self.canvas.get_tk_widget().pack_forget()
+        self.canvas = FigureCanvasTkAgg(grafik, master=self.diagram_frame)
+        self.canvas.get_tk_widget().pack(fill="both", expand=True)
+
+    def update_geburtsdaten_liste(self):
+        print("Liste von Geburtsdaten geupdatet")
+        tiere = zoo.neuer_zoo.get_tiere()
+        geburtstage_tiere = []
+        for tier in tiere:
+            geburtstage_tiere.append(tier.get_geburtsdatum())
+        print(geburtstage_tiere)
+        return geburtstage_tiere
 
     def ausgabe_geburtsdaten(self):
         self.renew_diagram_frame()
 
         # Erstelle das Histogramm-Figure
-
         fig = plt.figure()
         ax = fig.add_subplot(111)
 
-        # Liste von Geburtsdaten im Format (Jahr, Monat, Tag)
-        birthdays = [
-            (1980, 1, 1),
-            (1985, 3, 15),
-            (1990, 9, 20),
-            (1995, 4, 5),
-            (2000, 6, 30),
-            (2005, 8, 15),
-            (2010, 12, 31),
-        ]
-
         # Extrahiere die Jahre aus den Geburtsdaten und speichere sie in einer Liste
-        years = [year for (year, month, day) in birthdays]
+        geburtstage_tiere = self.update_geburtsdaten_liste()
+        years = []
+        for datum in geburtstage_tiere:
+            years.append(datum.year)
+        print(years)
 
         # Erstelle das Histogramm
         ax.hist(years, bins=50)
@@ -117,26 +124,44 @@ class UebersichtFenster(tk.Tk):
         ax.set_ylabel('Anzahl der Geburten')
 
         # Erstelle ein Canvas-Element und ein Frame, um das Histogramm anzuzeigen
+        self.canvas.get_tk_widget().pack_forget()
         canvas = FigureCanvasTkAgg(fig, master=self.diagram_frame)
         canvas.get_tk_widget().pack(fill="both", expand=True)
 
     def ausgabe_geschlechter_tiere(self):
         self.renew_diagram_frame()
+        self.ausgabe_auswahl()
+        # weil ansonsten die Grafik nicht korrekt geladen wird, falls die Geburtsdaten vorher ausgegeben wurden
+
+        tiere = zoo.neuer_zoo.get_tiere()
+        maennliche_tiere = 0
+        weibliche_tiere = 0
+        unbekannte_tiere = 0
+        for tier in tiere:
+            if tier.get_geschlecht() == "Weiblich":
+                weibliche_tiere += 1
+                print("w" + str(weibliche_tiere))
+            elif tier.get_geschlecht() == "Männlich":
+                maennliche_tiere += 1
+                print("m" + str(maennliche_tiere))
+            elif tier.get_geschlecht() == "Unbekannt":
+                unbekannte_tiere += 1
+            else:
+                print("else")
 
         # Definieren der x- und y-Werte der Säulen
-        beschriftungen = [1, 2]
-        male = 15
-        female = 20
-        werte = [male, female]
+        beschriftungen = [1, 2, 3]
+
+        werte = [maennliche_tiere, weibliche_tiere, unbekannte_tiere]
 
         # Erstellen der Grafik mit den Säulen
         plt.bar(beschriftungen, werte)
 
         # Setzen der x-Achsenbeschriftungen
-        plt.xticks(beschriftungen, ["Männlich", "Weiblich"])
-
-        canvas = FigureCanvasTkAgg(plt.gcf(), master=self.diagram_frame)
-        canvas.get_tk_widget().pack(fill="both", expand=True)
+        plt.xticks(beschriftungen, ["Männlich", "Weiblich", "Unbekannt"])
+        self.canvas.get_tk_widget().pack_forget()
+        self.canvas = FigureCanvasTkAgg(plt.gcf(), master=self.diagram_frame)
+        self.canvas.get_tk_widget().pack(fill="both", expand=True)
 
     def back_home(self):
         from hauptmenue import Hauptmenue
