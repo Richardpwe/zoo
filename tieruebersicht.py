@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
+from dateutil.parser import parse
 import zoo
 import konstanten
 
@@ -208,7 +209,7 @@ class TierErstellen(tk.Toplevel):
     def create_tier(self):
         artname = self.artname.get()
         name = self.entry_name.get()
-        geburtsdatum = self.entry_geburtsdatum.get()
+        geburtsdatum = parse(self.entry_geburtsdatum.get()).date()
         geschlecht = self.tiergeschlecht.get()
         new_tier = zoo.Tier(name, geburtsdatum, geschlecht, zoo.neuer_zoo.get_tierart_by_name(artname))
         zoo.neuer_zoo.tiere.append(new_tier)
