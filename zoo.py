@@ -99,8 +99,8 @@ class Zoo(object):
 
 
 class Personal(object):
-    def __init__(self, name, anrede, geburtsdatum, strasse, hausnummer, plz, ort,
-                 berufsbezeichnung, personalnummer, telefonnummer, gehalt):
+    def __init__(self, name: str, anrede: str, geburtsdatum: datetime.date, strasse: str, hausnummer: str, plz: int,
+                 ort: str, berufsbezeichnung: str, personalnummer: str, telefonnummer: int, gehalt: float):
         self.name = name
         self.anrede = anrede
         self.geburtsdatum = geburtsdatum
@@ -115,15 +115,15 @@ class Personal(object):
 
 
 class Tierpfleger(Personal):
-    def __init__(self, name, anrede, geburtsdatum, strasse, hausnummer, plz,
-                 berufsbezeichnung, personalnummer, telefonnummer, gehalt, tierart):
+    def __init__(self, name: str, anrede: str, geburtsdatum: datetime.date, strasse: str, hausnummer: str, plz: int,
+                 berufsbezeichnung: str, personalnummer: str, telefonnummer: int, gehalt: float, tierart):
         Personal.__init__(name, anrede, geburtsdatum, strasse, hausnummer, plz,
                           berufsbezeichnung, personalnummer, telefonnummer, gehalt)
         self.tierart = tierart
 
 
 class Tierart(object):
-    def __init__(self, bild, artname, tierklasse, futter):
+    def __init__(self, bild: str, artname: str, tierklasse: str, futter):
         self.bild = bild
         self.artname = artname
         self.tierklasse = tierklasse
@@ -143,13 +143,14 @@ class Tierart(object):
 
 
 class Tier(Tierart):
-    def __init__(self, bild, artname, tierklasse, futter, name, geburtsdatum, geschlecht):
+    def __init__(self, bild: str, artname: str, tierklasse: str, futter, name: str,
+                 geburtsdatum: datetime.date, geschlecht: str):
         super().__init__(bild, artname, tierklasse, futter)
         self.name = name
         self.geburtsdatum = geburtsdatum
         self.geschlecht = geschlecht
 
-    def __init__(self, name, geburtsdatum, geschlecht, tierart):
+    def __init__(self, name: str, geburtsdatum: datetime.date, geschlecht: str, tierart):
         self.name = name
         self.geburtsdatum = geburtsdatum
         self.geschlecht = geschlecht
@@ -171,7 +172,7 @@ class Tier(Tierart):
 
 
 class Futter(object):
-    def __init__(self, name, preis):
+    def __init__(self, name: str, preis: float):
         self.name = name
         self.preis = preis
 
